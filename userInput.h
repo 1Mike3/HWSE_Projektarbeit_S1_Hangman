@@ -6,3 +6,8 @@
 #define HANGMAN_USERINPUT_H
 
 #endif //HANGMAN_USERINPUT_H
+
+#include "stdio.h"
+
+int startSequence(char *userInput);
+unsigned char getSingleChar();
