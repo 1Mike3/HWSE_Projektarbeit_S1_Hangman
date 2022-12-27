@@ -34,9 +34,10 @@ int main(int argc, char **argv) {
 
     //#### Core Elements ####
     //the central and most often Used Elements which will be used throughout the Program will be initialised here
-    char *userInput;
+    char *userInput = "0";
 
     //### Program start ###
+    startSequence();
     startSequence();
 
     return 0;
