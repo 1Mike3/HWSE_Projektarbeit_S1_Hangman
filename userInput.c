@@ -4,13 +4,16 @@
 
 #include "userInput.h"
 #include "errorManagement.h"
+#include <string.h>
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
 #define DEBUG2 0 // Debug messages in the Functions
 //#define DEBUG3 0
 
-
+//my constants
+#define ALPHABETSIZE 26
+#define ALPHABETOFFSET 20
 
 
 /*
@@ -129,7 +132,7 @@ char *commLineArgManagement(int argc, char **argv){
             //TODO fix this edgecase (let user enter another word)
             //!!Not Fixed
             printf("No Input Argument detected \n");
-            return "#NULL1";
+            return "#ERROR";
         case 2:
             return *(argv+1);
         default:
@@ -137,11 +140,8 @@ char *commLineArgManagement(int argc, char **argv){
             //!!Not Fixed
             //TODO fix this edgecase (let user enter another word)
             printf("More than one Input detected\n");
-            return "#NULL2";
+            return "#ERROR";
     }
-
-    //TODO remove when finished
-    return "NULL";
 }
 
 
@@ -156,6 +156,21 @@ char *getWord(void){
 
 //checks if word entered according to input criteria (alphabet 26 upper and lower)
 //!!Unfinished
+//0: the word is incorrect
+//1: the word is correct
 int checkWord(char *Word){
+    unsigned long long stingLength = (size_t)strlen(Word);
+    int tempCompareChar= 'A';
+    int correctLetterDetected = 0;
 
+    for (unsigned long long i = 0; i < stingLength; ++i) {
+        for (unsigned long long j = 0; j < ALPHABETSIZE; ++j) {
+            if(*(Word+i) == (unsigned long long )(tempCompareChar+j)){
+
+            }
+
+        }
+    }
+
+    return 0;
 }

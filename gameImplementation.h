@@ -6,3 +6,5 @@
 #define HANGMAN_GAMEIMPLEMENTATION_H
 
 #endif //HANGMAN_GAMEIMPLEMENTATION_H
+
+int gameRuntime(char *activeWord);

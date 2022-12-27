@@ -15,6 +15,7 @@
 #include "errorManagement.h"
 
 //Including of external Header-Files
+#include <string.h>
 
 //Debugging Helpers
 #define DEBUG1 1 //TestPrint argc argv
@@ -33,20 +34,36 @@ int main(int argc, char **argv){
 
     //### Program start ###
     int bufferStartSequenceValue = startSequence();//execute the start sequence and proceed depending on it's ret val.
-
     //switch-case to interpret the return Value of the StartSequence
     switch (bufferStartSequenceValue) {
-        case 0: //the user has selected to run the Programm
 
-          activeWord = commLineArgManagement(argc,argv);
-          //todo make active Word Null exepction
+//               #### Hangman Game Active ####
+        case 0: //the user has selected to run the Programm
+          activeWord = commLineArgManagement(argc,argv); //assign the activeWord from the commLineArg Function
+
+          //Error handling of the commLineArgManagement Function
+          //finishing with 104 is on purpose
+            int tempCompareValue = 1;
+            tempCompareValue = strcmp(activeWord, "#ERROR");
+            if(tempCompareValue == 0){ //error handling
+              return ERComLineArgManagementFailed;
+          }
 #if DEBUG1
             printf("the input Word is: %s", activeWord);
 #endif
+
+
+            // #### Start game Sequence ####
+            gameRuntime(activeWord);
+
+
             break;
+         //   #### END Hangman Game Active ####
+
 
 
             //#### Edge cases and abort behavior ####
+
         case 1://the user has selected to abort the programm
             printf("the program has been stopped by the user.\n");
             return 0;
@@ -57,12 +74,15 @@ int main(int argc, char **argv){
         default://undefined return error behavior
             errorManagement(ERStartSequenceDef);
             return ERStartSequenceDef;
-
     }
     return 0;
 }
 
 //all the todos
 //TODO !!before final version set all DEBUG to 0!!
-//TODO change errorManagement() to write to Error log
-//TODO give get Word parameter to determine Use Case
+
+//TODO change errorManagement() to write to Error log (add or change)
+//TODO give getWord() parameter to determine Use Case
+
+//!!
+//TODO implement the checkWord function in the CommLineArgManagement function

@@ -3,3 +3,7 @@
 //
 
 #include "gameImplementation.h"
+
+int gameRuntime(char *activeWord){
+
+}
