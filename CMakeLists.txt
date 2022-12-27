@@ -3,4 +3,4 @@ project(hangman C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(hangman main.c)
+add_executable(hangman main.c userInput.c userInput.h dataLogging.c dataLogging.h gameImplementation.c gameImplementation.h)
