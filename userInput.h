@@ -9,5 +9,6 @@
 
 #include "stdio.h"
 
-int startSequence(char *userInput);
-unsigned char getSingleChar();
+int startSequence(void);
+unsigned char getSingleChar(void);
+char *commLineArgManagement(int argc, char **argv);
