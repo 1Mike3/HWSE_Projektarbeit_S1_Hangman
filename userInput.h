@@ -12,3 +12,5 @@
 int startSequence(void);
 unsigned char getSingleChar(void);
 char *commLineArgManagement(int argc, char **argv);
+char *getWord(void);
+int checkWord(char *Word);

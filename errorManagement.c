@@ -6,9 +6,6 @@
 #include "stdio.h"
 
 
-
-
-
 void errorManagement(int errorCode){
     printf("##Runtime Error##\n");
     printf("Errorcode: [ %i ]\n",errorCode);

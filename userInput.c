@@ -3,11 +3,15 @@
 //
 
 #include "userInput.h"
+#include "errorManagement.h"
 
 //Debugging Helpers
-#define DEBUG1 1 //TestPrint argc argv
-//#define DEBUG2 0
+#define DEBUG1 0 //TestPrint argc argv
+#define DEBUG2 0 // Debug messages in the Functions
 //#define DEBUG3 0
+
+
+
 
 /*
 Start sequence, meaning of return value:
@@ -59,6 +63,11 @@ int startSequence(void) {
 
 }
 
+
+
+
+
+
 //used in start sequence
 //returns the following chars while dealing with wrong user Input:
 //q: quit
@@ -92,10 +101,16 @@ unsigned char getSingleChar(void){
 
 }
 
-//manages the Input of the Word to be guessed on the command line
-char *commLineArgManagement(int argc, char **argv){
-    printf("checking the Input of the Word to be guessed...\n");
 
+
+
+
+//manages the Input of the Word to be guessed on the command line
+//!!Unfinished
+char *commLineArgManagement(int argc, char **argv){
+#if DEBUG2
+    printf("#F comLineArgManagement\n");
+#endif
 
 #if DEBUG1
     //printf("Hello World");
@@ -106,5 +121,41 @@ char *commLineArgManagement(int argc, char **argv){
         }
     }
 #endif
-    return "teststring";
+
+    //switch case to handle the different
+    switch (argc){
+        case 1:
+            errorManagement(ERNotEnoughInputArgs);
+            //TODO fix this edgecase (let user enter another word)
+            //!!Not Fixed
+            printf("No Input Argument detected \n");
+            return "#NULL1";
+        case 2:
+            return *(argv+1);
+        default:
+            errorManagement(ERMoreThanOneInputArg);
+            //!!Not Fixed
+            //TODO fix this edgecase (let user enter another word)
+            printf("More than one Input detected\n");
+            return "#NULL2";
+    }
+
+    //TODO remove when finished
+    return "NULL";
+}
+
+
+
+//allows the User to enter a String
+//!!Unfinished
+char *getWord(void){
+#if DEBUG2
+    printf("#F get word Function\n");
+#endif
+}
+
+//checks if word entered according to input criteria (alphabet 26 upper and lower)
+//!!Unfinished
+int checkWord(char *Word){
+
 }
