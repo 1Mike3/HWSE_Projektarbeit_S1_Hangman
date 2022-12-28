@@ -126,6 +126,7 @@ char *commLineArgManagement(int argc, char **argv){
 #endif
 
     //switch case to handle the different
+    int wordValid = 0;
     switch (argc){
         case 1:
             errorManagement(ERNotEnoughInputArgs);
@@ -134,7 +135,14 @@ char *commLineArgManagement(int argc, char **argv){
             printf("No Input Argument detected \n");
             return "#ERROR";
         case 2:
-            return *(argv+1);
+             wordValid = checkWord(*(argv+1)); //check if the active Word meets the input criteria
+             if(wordValid == 0){ //behavior if word does not meet input criteria
+
+             } else{ //behavior if the word meets the input criteria
+                 return *(argv+1); //return the word
+             }
+
+
         default:
             errorManagement(ERMoreThanOneInputArg);
             //!!Not Fixed
@@ -159,18 +167,28 @@ char *getWord(void){
 //0: the word is incorrect
 //1: the word is correct
 int checkWord(char *Word){
-    unsigned long long stingLength = (size_t)strlen(Word);
-    int tempCompareChar= 'A';
-    int correctLetterDetected = 0;
+    unsigned long long stingLength = (size_t)strlen(Word); //unsigned long long so no conversion error from size_t
+    int tempCompareChar= 'A'; //Starts with A and moves through the Alphabet, uses offset constant to also compare lowercase
+    unsigned int correctLetterCounter = 0;
+    unsigned char tempWord = *Word;
 
     for (unsigned long long i = 0; i < stingLength; ++i) {
-        for (unsigned long long j = 0; j < ALPHABETSIZE; ++j) {
-            if(*(Word+i) == (unsigned long long )(tempCompareChar+j)){
-
+        //checking all letters of the Alphabet, lower and upper case with offset
+        //premeditated style-change to improve visibility
+        for (unsigned long long j = 1; j <= ALPHABETSIZE; ++j) {
+            if(     (tempWord+i)== (unsigned long long) (tempCompareChar+j)
+                    ||
+                    (tempWord+i)== (unsigned long long)(tempCompareChar+ALPHABETOFFSET+j)
+                    ){
+            correctLetterCounter++;
+                continue;
             }
-
         }
     }
 
-    return 0;
+    if((correctLetterCounter+1) == (stingLength) ){
+        return 1;
+    } else{
+        return 0;
+    }
 }
