@@ -35,15 +35,18 @@ if(uncoveredArray == NULL){
 }
 
 //              ### start the Game ###
-    printVariablyCoveredWord(wordLength, uncoveredArray);
+    printVariablyCoveredWord(wordLength, uncoveredArray, activeWord);
 
     free(uncoveredArray);
     return 0;
 }
 
-void printVariablyCoveredWord(short int wordSize,const short int *uncoveredArray){
+//!!Current Constr Site :)
+void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWord){
     printf("My Word: ");
-    for (int i = 0; i < wordSize; ++i) {
+
+    for (unsigned int i = 0; i < wordSize; ++i) {
+
         if(*(uncoveredArray+i) == 0){
             printf("_");
         }
@@ -54,5 +57,9 @@ void printVariablyCoveredWord(short int wordSize,const short int *uncoveredArray
 
 //todo implement in User Input
 void letUserGuessLetters(void){
+
+}
+
+void uncoverSelectedLetters(void){
 
 }
