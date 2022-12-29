@@ -22,7 +22,22 @@
 //#define DEBUG2 0
 //#define DEBUG3 0
 
+
+
 int main(int argc, char **argv){
+//Error Messages
+    errorStruct EEStartSequenceReturn  = {
+            .code = ERStartSequenceRet,
+            .message = "start sequence returned a value it should not return during normal operation (2)"
+    };
+    errorStruct EEStartSequenceDefault = {
+            .code = ERStartSequenceDef,
+            .message = "default of switch-case after start sequence"
+    };
+    errorStruct EECommandLineArgumentFunctionFailed = {
+            .code =  ERComLineArgManagementFailed,
+            .message = "//The ComLineArgManagement function has returned an error"
+    };
 
 #if DEBUG1
     printf("°No of argc: %i\n", argc);
@@ -46,6 +61,7 @@ int main(int argc, char **argv){
             int tempCompareValue = 1;
             tempCompareValue = strcmp(activeWord, "#ERROR");
             if(tempCompareValue == 0){ //error handling
+                errorManagement(EECommandLineArgumentFunctionFailed, ERROR);
               return ERComLineArgManagementFailed;
           }
 #if DEBUG1
@@ -68,11 +84,11 @@ int main(int argc, char **argv){
             printf("the program has been stopped by the user.\n");
             return 0;
         case 2://Return value of start sequence signals there has been an error in its function
-            errorManagement(ERStartSequenceRet);
+            errorManagement(EEStartSequenceReturn, ERROR);
             return ERStartSequenceRet;
 
         default://undefined return error behavior
-            errorManagement(ERStartSequenceDef);
+            errorManagement(EEStartSequenceDefault, ERROR);
             return ERStartSequenceDef;
     }
     return 0;

@@ -4,9 +4,19 @@
 
 #include "errorManagement.h"
 #include "stdio.h"
+/*
+ * Use preProz const
+ type 1 = Error
+ type 0 = Warning
+ */
+//function used to print error-codes and messages
+//the errorStruct contains the message and the error-code, the type differentiates between warnings and errors
 
 
-void errorManagement(int errorCode){
-    printf("##Runtime Error##\n");
-    printf("Errorcode: [ %i ]\n",errorCode);
+void errorManagement(errorStruct error, const short int type){
+    type ? printf("\n## Runtime Error ##\n") : printf("\n## Warning ##\n");
+
+   type ? printf("Error-code: [ %i ]\n", error.code) : printf("WarningID: [ %i ]\n", error.code);
+    printf("[ %s ]\n\n", error.message);
+
 }

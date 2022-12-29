@@ -13,7 +13,7 @@
 
 //my constants
 #define ALPHABETSIZE 26
-#define ALPHABETOFFSET 20
+#define ALPHABETOFFSET 32
 
 
 /*
@@ -23,6 +23,8 @@ Start sequence, meaning of return value:
  2: Error
 */
 int startSequence(void) {
+
+
 
     static int textFormat = 0; //prints out a different textblock depending on if this is the first function call
 
@@ -111,6 +113,19 @@ unsigned char getSingleChar(void){
 //manages the Input of the Word to be guessed on the command line
 //!!Unfinished
 char *commLineArgManagement(int argc, char **argv){
+    errorStruct EENotEnoughInputArguments = {
+            .code = ERNotEnoughInputArgs  ,
+            .message = "No Input Argument Detected"
+    };
+    errorStruct EEMoreThanOneInputArgument = {
+            .code = ERMoreThanOneInputArg ,
+            .message = "More than one Input Argument has been entered"
+    };
+
+    errorStruct EEInputCriteriaNotMet = {
+            .code = ERInputCriteriaNotMet ,
+            .message = "The function which checks the Word for correctness determined it does not meet the requirements"
+    };
 #if DEBUG2
     printf("#F comLineArgManagement\n");
 #endif
@@ -128,26 +143,27 @@ char *commLineArgManagement(int argc, char **argv){
     //switch case to handle the different
     int wordValid = 0;
     switch (argc){
-        case 1:
-            errorManagement(ERNotEnoughInputArgs);
+        case 1: //not enough input args
+            errorManagement(EENotEnoughInputArguments, WARNING);
             //TODO fix this edgecase (let user enter another word)
             //!!Not Fixed
-            printf("No Input Argument detected \n");
             return "#ERROR";
-        case 2:
+        case 2:// one Input arg, correct
              wordValid = checkWord(*(argv+1)); //check if the active Word meets the input criteria
              if(wordValid == 0){ //behavior if word does not meet input criteria
 
+                 errorManagement(EEInputCriteriaNotMet, WARNING);
+                 return "#ERROR";
+
              } else{ //behavior if the word meets the input criteria
-                 return *(argv+1); //return the word
+                 return *(argv+1); //return the input word
              }
 
 
-        default:
-            errorManagement(ERMoreThanOneInputArg);
+        default: //too many input args
+            errorManagement(EEMoreThanOneInputArgument, WARNING);
             //!!Not Fixed
             //TODO fix this edgecase (let user enter another word)
-            printf("More than one Input detected\n");
             return "#ERROR";
     }
 }
@@ -163,6 +179,7 @@ char *getWord(void){
 }
 
 //checks if word entered according to input criteria (alphabet 26 upper and lower)
+//!!build for "" case
 //!!Unfinished
 //0: the word is incorrect
 //1: the word is correct
@@ -170,23 +187,34 @@ int checkWord(char *Word){
     unsigned long long stingLength = (size_t)strlen(Word); //unsigned long long so no conversion error from size_t
     int tempCompareChar= 'A'; //Starts with A and moves through the Alphabet, uses offset constant to also compare lowercase
     unsigned int correctLetterCounter = 0;
-    unsigned char tempWord = *Word;
-
+    unsigned char tempLetter;
+//little debug helper
+/*
+    char debugcharUpper;
+    char DebugcharLower;
+    char ComparedWord;
+*/
     for (unsigned long long i = 0; i < stingLength; ++i) {
+        tempLetter = *(Word+i);
         //checking all letters of the Alphabet, lower and upper case with offset
         //premeditated style-change to improve visibility
-        for (unsigned long long j = 1; j <= ALPHABETSIZE; ++j) {
-            if(     (tempWord+i)== (unsigned long long) (tempCompareChar+j)
+        for (unsigned long long j = 0; j < ALPHABETSIZE; ++j) {
+            /*//little debug helper
+            debugcharUpper = (tempCompareChar+j);
+            DebugcharLower = (tempCompareChar+ALPHABETOFFSET+j);
+            ComparedWord = (tempLetter + i);
+             *///
+            if((tempLetter) == (unsigned long long) (tempCompareChar + j) //comp w upper case
                     ||
-                    (tempWord+i)== (unsigned long long)(tempCompareChar+ALPHABETOFFSET+j)
+               (tempLetter) == (unsigned long long)(tempCompareChar + ALPHABETOFFSET + j) //comp w lower case
                     ){
-            correctLetterCounter++;
-                continue;
+            correctLetterCounter++; //if hit one of the words increment correct letter counter and don't check other ones
+                break;
             }
         }
     }
-
-    if((correctLetterCounter+1) == (stingLength) ){
+//\0 not accounted on purpose because of strlen behavior
+    if((correctLetterCounter) == (stingLength) ){
         return 1;
     } else{
         return 0;
