@@ -160,6 +160,7 @@ char *getWord(void){
 //1: the word is correct
 int checkWord(char *Word){
     unsigned long long stingLength = (size_t)strlen(Word);
+    unsigned int sting2 = (unsigned long long )stingLength;
     int tempCompareChar= 'A';
     int correctLetterDetected = 0;
 
