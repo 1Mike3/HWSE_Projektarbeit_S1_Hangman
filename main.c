@@ -87,6 +87,7 @@ int main(int argc, char **argv){
             errorManagement(EEStartSequenceReturn, ERROR);
             return ERStartSequenceRet;
 
+
         default://undefined return error behavior
             errorManagement(EEStartSequenceDefault, ERROR);
             return ERStartSequenceDef;
@@ -100,5 +101,6 @@ int main(int argc, char **argv){
 //TODO change errorManagement() to write to Error log (add or change)
 //TODO give getWord() parameter to determine Use Case
 
-
+//!!
+//TODO check malloc function & small functions file
 

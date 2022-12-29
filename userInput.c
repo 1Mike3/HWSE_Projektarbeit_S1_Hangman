@@ -25,7 +25,6 @@ Start sequence, meaning of return value:
 int startSequence(void) {
 
 
-
     static int textFormat = 0; //prints out a different textblock depending on if this is the first function call
 
 
