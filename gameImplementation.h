@@ -8,3 +8,5 @@
 #endif //HANGMAN_GAMEIMPLEMENTATION_H
 
 int gameRuntime(char *activeWord);
+void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWord);
+

@@ -7,15 +7,38 @@
 
 #endif //HANGMAN_ERRORMANAGEMENT_H
 
-//Listing of all the error codes, start with ER for easier autocomplete
+//Differentiating between Warning and Error Messages in ErrorManagement Function
+#define ERROR 1
+#define WARNING 0
+
+
+
+//Listing of all the error codes and WaringIDs, start with ER for easier autocomplete
+//The corresponding Structs Start with EE
+//find the corresponding struckt by serarching for usages of the enum elements
+//manually initialized for better overview of the codes
 enum errorCodes{
-    ERStartSequenceRet = 100, //start sequence returned a value it should not return during normal operation (2)
-    ERStartSequenceDef = 101, //default of switch-case after start sequence
+    ERStartSequenceRet = 100,
+    ERStartSequenceDef = 101,
+    ERNotEnoughInputArgs = 102,
+    ERMoreThanOneInputArg = 103,
+    ERComLineArgManagementFailed = 104,
+    ERInputCriteriaNotMet = 105,
 
-    ERNotEnoughInputArgs = 102, //the User has not submitted an argument on the command line
-    ERMoreThanOneInputArg = 103, //the User has entered more than one Input Arg
-    ERComLineArgManagementFailed = 104, //the ComLineArgManagement function has produced an error, subsequent error 102 103
 };
+// creating a const struct for easier Error Management
+typedef const struct errorStruct {
+    short int code;
+   char message[150];
+}errorStruct;
 
-void errorManagement(int errorCode);
+
+
+/*
+errorStruct  = {
+        .code =  ,
+        .message = ""
+};
+*/
+void errorManagement(errorStruct error, short int type);
 
