@@ -113,6 +113,7 @@ unsigned char getSingleChar(void){
 //manages the Input of the Word to be guessed on the command line
 //!!Unfinished
 char *commLineArgManagement(int argc, char **argv){
+    //Error Messages
     errorStruct EENotEnoughInputArguments = {
             .code = ERNotEnoughInputArgs  ,
             .message = "No Input Argument Detected"

@@ -18,7 +18,7 @@
 #include <string.h>
 
 //Debugging Helpers
-#define DEBUG1 1 //TestPrint argc argv
+#define DEBUG1 0 //TestPrint argc argv
 //#define DEBUG2 0
 //#define DEBUG3 0
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv){
     };
     errorStruct EECommandLineArgumentFunctionFailed = {
             .code =  ERComLineArgManagementFailed,
-            .message = "//The ComLineArgManagement function has returned an error"
+            .message = "The ComLineArgManagement function has returned an error"
     };
 
 #if DEBUG1
@@ -100,5 +100,5 @@ int main(int argc, char **argv){
 //TODO change errorManagement() to write to Error log (add or change)
 //TODO give getWord() parameter to determine Use Case
 
-//!!
-//TODO implement the checkWord function in the CommLineArgManagement function
+
+
