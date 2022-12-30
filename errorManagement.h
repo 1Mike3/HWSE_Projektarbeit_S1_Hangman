@@ -15,7 +15,7 @@
 
 //Listing of all the error codes and WaringIDs, start with ER for easier autocomplete
 //The corresponding Structs Start with EE
-//find the corresponding struckt by serarching for usages of the enum elements
+//find the corresponding struct by searching for usages of the enum elements
 //manually initialized for better overview of the codes
 enum errorCodes{
     ERStartSequenceRet = 100,
@@ -24,6 +24,8 @@ enum errorCodes{
     ERMoreThanOneInputArg = 103,
     ERComLineArgManagementFailed = 104,
     ERInputCriteriaNotMet = 105,
+    ERMemoryAllocationFailed = 106,
+    ERGameRuntimeFunctionFailed = 107,
 
 };
 // creating a const struct for easier Error Management

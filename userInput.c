@@ -30,13 +30,18 @@ int startSequence(void) {
 
     if (textFormat == 0) { // text on first call
         //start block to be printed on every Programm start
-        printf("======= HANGMAN =======\n");
+        printf("\n\n======= HANGMAN =======\n");
         printf("Welcome to my version of the Hangman-Game!\n\n");
+
+        printf("How to Play:\n");
+        printf("-between letter Guesses, press [Enter] to continue, [q] to quit the game, [g] to guess the whole word.\n\n");
+
         printf("With the Version you're using the word to guess should\n have been selected while starting the Program.\n\n");
         printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");
     }
     if (textFormat == 1) { //text on the following calls
     printf("Do you want to Play another Game?\n");
+
     printf("Press \"s\" to start a new Game / press \"q\" to quit.\n");
 }
     textFormat = 1;//set to 1 so different text on following calls
@@ -110,7 +115,6 @@ unsigned char getSingleChar(void){
 
 
 //manages the Input of the Word to be guessed on the command line
-//!!Unfinished
 char *commLineArgManagement(int argc, char **argv){
     //Error Messages
     errorStruct EENotEnoughInputArguments = {
@@ -220,3 +224,54 @@ int checkWord(char *Word){
         return 0;
     }
 }
+
+//Function which lets the User Make decisions between the guesses
+//Return Value meaning:
+//0:  (Enter)  user decided to guess another letter
+//1:  (g or G) user decided to try to guess the whole Word
+//2:  (q or Q) user decided to abort the game
+//!!VERY unfinished
+//TODO finish or delete
+int sequenceBetweenGuesses(void) {
+
+    static int textFormat = 0; //prints out a different textblock depending on if this is the first function call
+
+
+    if (textFormat == 0) { // text on first call
+        //start block to be printed on every Programm start
+        printf("======= HANGMAN =======\n");
+        printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");
+    }
+    if (textFormat == 1) { //text on the following calls
+        printf("Do you want to Play another Game?\n");
+        printf("Press \"s\" to start a new Game / press \"q\" to quit.\n");
+    }
+    textFormat = 1;//set to 1 so different text on following calls
+
+    //#### start control character input ####
+    unsigned char controlCharacter = getSingleChar(); //get the formatted char from the get single char function
+    short int wrongInputCounter = 0; //if there are more than 5 wrong inputs the Program stops
+
+    //"I" is the "invalid input" return of the getSingleChar function
+    while (controlCharacter == 'I'){ //try again if there has been a wrong input
+        if(wrongInputCounter == 4){ //abort if too many wrong inputs (4 because first input outside of loop)
+            printf("Too many wrong Inputs, the programm stops now!\n");
+            return 1;
+        }
+        wrongInputCounter++; //increment counter so know how many wrong inputs
+        controlCharacter = getSingleChar();//trying again after wrong input
+    }
+
+    //generate the return value
+    if(controlCharacter == 's'){
+        return 0;
+    }
+    if(controlCharacter == 'q'){
+        return 1;
+    } else{
+        return 2; // error something went wrong if this is the return value
+    }
+
+}
+
+//REFERENCE to void letUserGuessLetters(void) in gameImplementation.c

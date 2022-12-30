@@ -38,6 +38,10 @@ int main(int argc, char **argv){
             .code =  ERComLineArgManagementFailed,
             .message = "The ComLineArgManagement function has returned an error"
     };
+    errorStruct EEGameRuntimeFailed= {
+            .code = ERGameRuntimeFunctionFailed,
+            .message = "An Error or Warning has caused the gameRuntime function to fail!"
+    };
 
 #if DEBUG1
     printf("°No of argc: %i\n", argc);
@@ -70,8 +74,9 @@ int main(int argc, char **argv){
 
 
             // #### Start game Sequence ####
-            gameRuntime(activeWord);
-
+           int returnGameRuntime = gameRuntime(activeWord);
+           if(returnGameRuntime == 1)
+               errorManagement(EEGameRuntimeFailed, ERROR);
 
             break;
          //   #### END Hangman Game Active ####
