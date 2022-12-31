@@ -4,6 +4,8 @@
 
 #include "userInput.h"
 #include "errorManagement.h"
+#include "helperFunctions.h"
+
 #include <string.h>
 
 //Debugging Helpers
@@ -182,48 +184,7 @@ char *getWord(void){
 #endif
 }
 
-//checks if word entered according to input criteria (alphabet 26 upper and lower)
-//!!build for "" case
-//!!Unfinished
-//0: the word is incorrect
-//1: the word is correct
-int checkWord(char *Word){
-    unsigned long long stingLength = (size_t)strlen(Word); //unsigned long long so no conversion error from size_t
-    int tempCompareChar= 'A'; //Starts with A and moves through the Alphabet, uses offset constant to also compare lowercase
-    unsigned int correctLetterCounter = 0;
-    unsigned char tempLetter;
-//little debug helper
-/*
-    char debugcharUpper;
-    char DebugcharLower;
-    char ComparedWord;
-*/
-    for (unsigned long long i = 0; i < stingLength; ++i) {
-        tempLetter = *(Word+i);
-        //checking all letters of the Alphabet, lower and upper case with offset
-        //premeditated style-change to improve visibility
-        for (unsigned long long j = 0; j < ALPHABETSIZE; ++j) {
-            /*//little debug helper
-            debugcharUpper = (tempCompareChar+j);
-            DebugcharLower = (tempCompareChar+ALPHABETOFFSET+j);
-            ComparedWord = (tempLetter + i);
-             *///
-            if((tempLetter) == (unsigned long long) (tempCompareChar + j) //comp w upper case
-                    ||
-               (tempLetter) == (unsigned long long)(tempCompareChar + ALPHABETOFFSET + j) //comp w lower case
-                    ){
-            correctLetterCounter++; //if hit one of the words increment correct letter counter and don't check other ones
-                break;
-            }
-        }
-    }
-//\0 not accounted on purpose because of strlen behavior
-    if((correctLetterCounter) == (stingLength) ){
-        return 1;
-    } else{
-        return 0;
-    }
-}
+
 
 
 //function which allows the user to guess letters or enter a control Value during runtime
@@ -231,30 +192,72 @@ int checkWord(char *Word){
 //todo add 12 gamecontrol to this function
 //1: quit
 //2: guess whole word
+//return-value # if error in function
+//!! ++++ UNTESTED
 char letUserGuessLetters(short int *controlValue){
-    char letterToGuess;
-    //#### start control character input ####
-    unsigned char controlCharacter = getSingleChar(); //get the formatted char from the get single char function
-    short int wrongInputCounter = 0; //if there are more than 5 wrong inputs the Program stops
 
-    //"I" is the "invalid input" return of the getSingleChar function
-    while (controlCharacter == 'I'){ //try again if there has been a wrong input
-        if(wrongInputCounter == 4){ //abort if too many wrong inputs (4 because first input outside of loop)
-            printf("Too many wrong Inputs, the program stops now!\n");
-            return 1;
+
+    unsigned char userInput = (int) getchar(); //main input char
+    unsigned char enterCatcher = (int) getchar(); // temp var to catch the \n input and check if only one char has been entered
+
+    int loopCounter = 0; //counts the amount of chars other than enter
+
+    while (enterCatcher != '\n' && enterCatcher != '\r') { //loop till enter has been pressed
+        enterCatcher = (int) getchar();//catch the second input
+        loopCounter++;
+    }
+
+
+    short int tryCounter = 0;
+
+
+    if(loopCounter != 0){ //checking if more than one letter in input
+
+        while (1){ // broken in end of loop
+        printf("invalid input or more than one letter, try again!\n");
+
+
+        userInput = (int) getchar(); //main input char
+        enterCatcher = (int) getchar(); // temp var to catch the \n input and check if only one char has been entered
+
+        loopCounter = 0; //counts the amount of chars other than enter
+
+        while (enterCatcher != '\n' && enterCatcher != '\r') { //loop till enter has been pressed
+            enterCatcher = (int) getchar();//catch the second input
+            loopCounter++;
         }
-        wrongInputCounter++; //increment counter so know how many wrong inputs
-        controlCharacter = getSingleChar();//trying again after wrong input
+
+        if(loopCounter != 0) { //checking if more than one letter in input
+            tryCounter ++;
+        } else{
+            break;
+        }
+
+
+        if (tryCounter == 5){ // five trys to enter Valid char
+            //TODO add error message
+            printf("too many wrong trys !\n");
+            return '#';
+        }
+    }//end while true loop
+
+
+
     }
 
-    //generate the return value
-    if(controlCharacter == 's'){
-        return 0;
+    if(userInput == '1'){ //case if control character pressed
+        return  '1';
+    } else if (userInput == '2'){
+        return '2';
     }
-    if(controlCharacter == 'q'){
-        return 1;
+
+
+    unsigned char checkedChar = checkIfCharPartOfAlphabet(userInput);
+    if(checkedChar == '#'){ //check if function failed
+        return '#';
     } else{
-        return 2; // error something went wrong if this is the return value
+        printf("invalid input or more than one letter, try again!\n");
+        return '#';
     }
 
 }

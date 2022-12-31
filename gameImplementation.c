@@ -13,6 +13,7 @@
 #include <stdlib.h>
 
 #define DEBUG1 0
+#define DEBUG2 1
 
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
 #define NOOFROUNDS 10          //the number of game rounds that is set from the start
@@ -89,8 +90,10 @@ char gameControlCharacter;  //character used to let the user control the game du
     //insert control sequence here( q, g, enter)
     //insert control sequence return handeling here
     short int controlValueGuessLetters = 0;
-
-    letUserGuessLetters(&controlValueGuessLetters);
+    char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
+#if DEBUG2
+    printf("DB The guessed Letter is: %c", guessedLetter);
+#endif
 
 
 
@@ -128,9 +131,6 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
 }
 
 
-
-//todo convert everything to uppercase with standard string function
-//works now?
 
 void uncoverSelectedLetters(void){
 

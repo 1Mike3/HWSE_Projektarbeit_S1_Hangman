@@ -9,3 +9,4 @@
 
 unsigned char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked);
 void convertInputWordToUppercase(char *wordToBeConverted, unsigned char *convertedWord,unsigned long long stringLength);
+int checkWord(char *Word);
