@@ -5,7 +5,8 @@
 
 #include "helperFunctions.h"
 
-#include <string.h>
+#include <ctype.h>
+#include <stdio.h>
 
 //my constants
 #define ALPHABETSIZE 26
@@ -51,7 +52,21 @@ unsigned char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
 
 }
 
+
 //converts the InputWord to uppercase
-void convertInputWordToUppercase(void){
-  //  strcasecmp_l();
+//TODO add error handling
+//+++ Tested +++ Works
+void convertInputWordToUppercase(char *wordToBeConverted,unsigned char *convertedWord,unsigned long long stringLength){
+    char *tempStringValue = wordToBeConverted; //assigning temp var to be used in function
+
+    // loop through string and convert the chars
+    for (unsigned int a = 0; a < stringLength; a++)
+    {
+        //writing the converted chars into the converted Word
+        convertedWord[a] = toupper(tempStringValue[a]);
+    }
+
+#if DEBUG1
+    printf("%s tempStringValue in Function \n", convertedWord);
+#endif
 }

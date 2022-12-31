@@ -240,7 +240,7 @@ char letUserGuessLetters(short int *controlValue){
     //"I" is the "invalid input" return of the getSingleChar function
     while (controlCharacter == 'I'){ //try again if there has been a wrong input
         if(wrongInputCounter == 4){ //abort if too many wrong inputs (4 because first input outside of loop)
-            printf("Too many wrong Inputs, the programm stops now!\n");
+            printf("Too many wrong Inputs, the program stops now!\n");
             return 1;
         }
         wrongInputCounter++; //increment counter so know how many wrong inputs

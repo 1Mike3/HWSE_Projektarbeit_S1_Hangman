@@ -30,12 +30,10 @@ int gameRuntime(char *activeWord){
 
                //#### Uncovered Value Array ###
     //create An array which contains the Information if a letter was Uncovered or not
-
     unsigned long long wordLength = strlen(activeWord); //var., contains length of word for uncov.arr. intialization
 #if DEBUG1
     printf("DB the length of your Word is: %i \n", wordLength);
 #endif
-
     //undiscovered Char with preprozconst "UNDISCOVEREDSYMBOL"
     //1: discovered , 0: undiscovered
     //this array contains the Information if a letter has been discovered by the player or not
@@ -44,7 +42,7 @@ if(uncoveredArray == NULL){
     errorManagement(EEMemoryAllocationFailed, WARNING);
     return 1;
 }
-
+// END #### Uncovered Value Array
 
 
 
@@ -59,7 +57,7 @@ char inputCharsMisses[NOOFROUNDS] = ""; //all the chars that have been entered b
 
 char gameControlCharacter;  //character used to let the user control the game during game runtime
 
-    char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
+  unsigned char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
         return 1;
@@ -68,7 +66,18 @@ char gameControlCharacter;  //character used to let the user control the game du
 
 
 
-//                  ### start the Game ###
+
+
+// #### Convert lowercase input into uppercase input ####
+    convertInputWordToUppercase(activeWord, activeWordConverted, wordLength);
+#if DEBUG1
+    printf("word Converted outside of funnction: %s\n", activeWordConverted);
+#endif
+
+
+
+
+//                  ###### start the Game ######
 
 //while(1) { //Round loop, one Game-round is one loop through this while loop
     printVariablyCoveredWord(wordLength, uncoveredArray, activeWord);
@@ -93,6 +102,11 @@ char gameControlCharacter;  //character used to let the user control the game du
     free(uncoveredArray);
     return 0;
 }// End Game Runtime function
+
+
+
+
+
 
 
 // ##################### Start Subfunctions ##############################################
