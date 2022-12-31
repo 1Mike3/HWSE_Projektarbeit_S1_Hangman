@@ -124,7 +124,7 @@ void letUserGuessLetters(void){
 
 
 //todo convert everything to uppercase with standard string function
-
+//works now?
 
 void uncoverSelectedLetters(void){
 
