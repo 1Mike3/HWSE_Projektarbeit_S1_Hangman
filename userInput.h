@@ -14,3 +14,4 @@ unsigned char getSingleChar(void);
 char *commLineArgManagement(int argc, char **argv);
 char *getWord(void);
 int checkWord(char *Word);
+char letUserGuessLetters(short int *controlValue);

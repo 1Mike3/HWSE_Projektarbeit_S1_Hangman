@@ -34,9 +34,9 @@ int startSequence(void) {
         printf("Welcome to my version of the Hangman-Game!\n\n");
 
         printf("How to Play:\n");
-        printf("-between letter Guesses, press [Enter] to continue, [q] to quit the game, [g] to guess the whole word.\n\n");
+        printf("-during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n");
 
-        printf("With the Version you're using the word to guess should\n have been selected while starting the Program.\n\n");
+        printf("With the version you're using the word to guess should\n have been selected while starting the program.\n\n");
         printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");
     }
     if (textFormat == 1) { //text on the following calls
@@ -225,29 +225,14 @@ int checkWord(char *Word){
     }
 }
 
-//Function which lets the User Make decisions between the guesses
-//Return Value meaning:
-//0:  (Enter)  user decided to guess another letter
-//1:  (g or G) user decided to try to guess the whole Word
-//2:  (q or Q) user decided to abort the game
-//!!VERY unfinished
-//TODO finish or delete
-int sequenceBetweenGuesses(void) {
 
-    static int textFormat = 0; //prints out a different textblock depending on if this is the first function call
-
-
-    if (textFormat == 0) { // text on first call
-        //start block to be printed on every Programm start
-        printf("======= HANGMAN =======\n");
-        printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");
-    }
-    if (textFormat == 1) { //text on the following calls
-        printf("Do you want to Play another Game?\n");
-        printf("Press \"s\" to start a new Game / press \"q\" to quit.\n");
-    }
-    textFormat = 1;//set to 1 so different text on following calls
-
+//function which allows the user to guess letters or enter a control Value during runtime
+//todo Finish and test
+//todo add 12 gamecontrol to this function
+//1: quit
+//2: guess whole word
+char letUserGuessLetters(short int *controlValue){
+    char letterToGuess;
     //#### start control character input ####
     unsigned char controlCharacter = getSingleChar(); //get the formatted char from the get single char function
     short int wrongInputCounter = 0; //if there are more than 5 wrong inputs the Program stops
@@ -274,4 +259,5 @@ int sequenceBetweenGuesses(void) {
 
 }
 
-//REFERENCE to void letUserGuessLetters(void) in gameImplementation.c
+
+

@@ -5,10 +5,12 @@
 
 #include "gameImplementation.h"
 #include "errorManagement.h"
+#include "userInput.h"
+#include "helperFunctions.h"
 
-#include "string.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define DEBUG1 0
 
@@ -77,7 +79,11 @@ char gameControlCharacter;  //character used to let the user control the game du
 
     //insert control sequence here( q, g, enter)
     //insert control sequence return handeling here
-    letUserGuessLetters();
+    short int controlValueGuessLetters = 0;
+
+    letUserGuessLetters(&controlValueGuessLetters);
+
+
 
     //insert check letter for correctness and print function here
 
@@ -105,20 +111,6 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
 
     }
     printf("\n\n");
-}
-
-
-
-
-
-
-
-//function which allows the user to
-//todo Finish and test
-void letUserGuessLetters(void){
-    char letterToGuess;
-    int returnscan = scanf("%1c", &letterToGuess);
-    printf("retun value scanf = %i", returnscan);
 }
 
 

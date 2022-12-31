@@ -6,6 +6,8 @@
   -Hangman Game with visualisation, user input and data logging
 
   -I added Debug-Helpers in the source code: #if DEBUG segments are irrelevant for the programs functionality
+
+  -convert to Uppercase functions in helperFunctions.c
  */
 
 //Including of project-related Header-Files
@@ -49,7 +51,7 @@ int main(int argc, char **argv){
 
     //#### Core Elements ####
     //the central and most often Used Elements which will be used throughout the Program will be initialised here
-    char *activeWord = "0"; //the Word which will be used to play the game (comm line arg || user input)
+    char *activeWord; //the Word which will be used to play the game (comm line arg || user input)
 
     //### Program start ###
     int bufferStartSequenceValue = startSequence();//execute the start sequence and proceed depending on it's ret val.
