@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG1 1
-#define DEBUG2 1
+#define DEBUG1 0
+#define DEBUG2 0
 
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
 #define NOOFROUNDS 10          //the number of game rounds that is set from the start
@@ -33,7 +33,7 @@ int gameRuntime(char *activeWord){
     //create An array which contains the Information if a letter was Uncovered or not
     unsigned long long wordLength = strlen(activeWord); //var., contains length of word for uncov.arr. intialization
 #if DEBUG1
-    printf("DB the length of your Word is: %i \n", wordLength);
+    printf("DB the length of your Word is: %i \n", (unsigned long long)wordLength);
 #endif
     //undiscovered Char with preprozconst "UNDISCOVEREDSYMBOL"
     //1: discovered , 0: undiscovered
@@ -52,13 +52,14 @@ if(uncoveredArray == NULL){
 
 short int tryCounter = NOOFROUNDS; //counts the number of available trys
 
-unsigned char inputChars[NOOFROUNDS] = ""; //all the chars that have been entered by the User
-unsigned char inputCharsHits[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are correct
-unsigned char inputCharsMisses[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are incorrect
+ char inputChars[NOOFROUNDS] = ""; //all the chars that have been entered by the User
+ char inputCharsHits[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are correct
+ char inputCharsMisses[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are incorrect
 
-unsigned  char gameControlCharacter;  //character used to let the user control the game during game runtime
+ char gameControlCharacter;  //character used to let the user control the game during game runtime
+    short int controlValueGuessLetters = 0;
 
-  unsigned char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
+ char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
         return 1;
@@ -80,8 +81,8 @@ unsigned  char gameControlCharacter;  //character used to let the user control t
 
 //                  ###### start the Game ######
 
-//while(1) { //Round loop, one Game-round is one loop through this while loop
-    printVariablyCoveredWord(wordLength, uncoveredArray, activeWord);
+while(controlValueGuessLetters != 1 && tryCounter != 0) { //Round loop, one Game-round is one loop through this while loop
+    printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
 #if DEBUG1
     printf("Printout of the active Word: %s\n", activeWord);
 #endif
@@ -89,10 +90,12 @@ unsigned  char gameControlCharacter;  //character used to let the user control t
     printf("Guess a letter/ Guess the Word/ End this Round.\n");
     printf("Letters not in my word: %s\n", inputCharsMisses);
 
-    //insert control sequence here( q, g, enter)
-    //insert control sequence return handeling here
-    short int controlValueGuessLetters = 0;
-   unsigned char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
+
+    char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
+
+    coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
+                          inputCharsMisses, inputCharsHits);
+
 #if DEBUG2
     printf("DB The guessed Letter is: %c", guessedLetter);
 #endif
@@ -101,7 +104,8 @@ unsigned  char gameControlCharacter;  //character used to let the user control t
 
     //insert check letter for correctness and print function here
 
-//} // End Round-loop while
+tryCounter--; //decrement trycounter to keep track on how many guesses have been made
+} // End Round-loop while
 
     free(activeWordConverted);
     free(uncoveredArray);
@@ -119,7 +123,7 @@ unsigned  char gameControlCharacter;  //character used to let the user control t
 
 
 //function to print out the active-word with the parts that haven't been guessed substituted by a '_'
-void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWord){
+void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWordConverted){
     printf("My Word: ");
 
     for (unsigned int i = 0; i < wordSize; ++i) {
@@ -128,26 +132,45 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
             printf("%c", UNDISCOVEREDSYMBOL);
         }
 
+        if(*(uncoveredArray+i) == 1){
+            printf("%c", activeWordConverted[i]);
+        }
+
     }
     printf("\n\n");
 }
 
 
+
+
 //function to manage the Letter input and adjust the different Word-Arrays accordingly
-void coveredWordManagement(unsigned char inputChar, unsigned char *convertedWord, int *uncoveredArray,
-                           unsigned char *misses, unsigned char *hits){
+// 0: if finished successfully
+//1: if falied
+int coveredWordManagement(char inputChar, char *convertedWord,short int *uncoveredArray,
+                            char *misses,  char *hits){
+    char stringToAppend[2]; //converting input Char to string for StrCat functions
+   stringToAppend[0] = inputChar;
+           stringToAppend[1] = '\n';
 
+  unsigned int wordLength = strlen(convertedWord); //get the length of the word used in the game
+  short int appendedMarker = 0; //Marker so if word was once added to the hits or misses list, wont added again if two times in word
 
-   int wordLength = strlen(convertedWord);
+    for (unsigned int i = 0; i < wordLength; ++i) {//loop through word and check which uncovered
 
-    for (int i = 0; i < wordLength; ++i) {
-        if(inputChar == convertedWord[i]){
+        if(inputChar == convertedWord[i]){ //case if hit was made
             uncoveredArray[i] = 1;
-            //insert stringappend function for hits
-        }
+            if (appendedMarker == 0){ //so only once added to string even if 1+ in word
+                strcat(hits, stringToAppend);
+                appendedMarker++;
+            }
 
+        }
 
     }
 
+    if (appendedMarker == 0) //case if no hits were made
+        strcat(misses, stringToAppend);
 
+    return 0;
 }
+

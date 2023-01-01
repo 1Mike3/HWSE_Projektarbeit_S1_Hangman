@@ -12,14 +12,14 @@
 //my constants
 #define ALPHABETSIZE 26
 #define ALPHABETOFFSET 32
-#define DEBUG1 1
+#define DEBUG1 0
 
 
 
 //checks if char is part of the 26 lower or uppercase alphabet chars and converts them to uppercase for uniformity
 //returns '#' if failed and returns the converted char if succeeded
 //+++ Tested +++ Works
-unsigned char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
+char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
     int tempCompareChar= 'A'; //start character for start to compare
     short int correctLetterDetected = 0; //marker to set when correct letter was detected
     unsigned char letterReturnValue;

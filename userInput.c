@@ -194,7 +194,7 @@ char *getWord(void){
 //2: guess whole word
 //return-value # if error in function
 //!! ++++ Partly Tested, seems to work, code looks like garbage and needs to be optimized
-unsigned char letUserGuessLetters(short int *controlValue){
+ char letUserGuessLetters(short int *controlValue){
 
 
     unsigned char userInput = (int) getchar(); //main input char
@@ -251,13 +251,15 @@ unsigned char letUserGuessLetters(short int *controlValue){
     }
 
     if(userInput == '1'){ //case if control character pressed
-        return  '1';
+        *controlValue = 1;
+        return  '#';
     } else if (userInput == '2'){
-        return '2';
+        *controlValue = 2;
+        return '#';
     }
 
 
-    unsigned char checkedChar = checkIfCharPartOfAlphabet(userInput);
+     char checkedChar = checkIfCharPartOfAlphabet(userInput);
     if(checkedChar == '#'){ //check if function failed
         return '#';
     } else{
