@@ -9,5 +9,5 @@
 
 int gameRuntime(char *activeWord);
 void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWord);
-int coveredWordManagement(char inputChar, char *convertedWord, short int *uncoveredArray,
+short int coveredWordManagement(char inputChar, char *convertedWord, short int *uncoveredArray,
                           char *misses,  char *hits);

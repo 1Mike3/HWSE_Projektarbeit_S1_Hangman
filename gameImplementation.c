@@ -101,17 +101,15 @@ while(tryCounter != 0) { //Round loop, one Game-round is one loop through this w
     }
 //insert Error Case return #
 
-    coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
+   controlValueCoveredWordManagement = coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
                           inputCharsMisses, inputCharsHits);
 
 #if DEBUG2
     printf("DB The guessed Letter is: %c", guessedLetter);
 #endif
 
-
-
-    //insert check letter for correctness and print function here
-
+ //count the misses
+if (controlValueCoveredWordManagement == 2)
 tryCounter--; //decrement trycounter to keep track on how many guesses have been made
 
 if(tryCounter == 0)
@@ -156,9 +154,10 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
 
 
 //function to manage the Letter input and adjust the different Word-Arrays accordingly
-// 0: if finished successfully
+// 0: if finished successfully and word has been correctly guessed
 //1: if falied
-int coveredWordManagement(char inputChar, char *convertedWord,short int *uncoveredArray,
+//2: if no word has been correctly guessed
+short int coveredWordManagement(char inputChar, char *convertedWord,short int *uncoveredArray,
                             char *misses,  char *hits){
     char stringToAppend[2]; //converting input Char to string for StrCat functions
    stringToAppend[0] = inputChar;
@@ -180,8 +179,10 @@ int coveredWordManagement(char inputChar, char *convertedWord,short int *uncover
 
     }
 
-    if (appendedMarker == 0) //case if no hits were made
+    if (appendedMarker == 0) {//case if no hits were made
         strcat(misses, stringToAppend);
+        return 2;
+    }
 
     return 0;
 }
