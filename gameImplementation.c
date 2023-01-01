@@ -16,7 +16,7 @@
 #define DEBUG2 0
 
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
-#define NOOFROUNDS 10          //the number of game rounds that is set from the start
+#define NOOOFTRYS 10          //the number of game rounds that is set from the start
 
 
 
@@ -50,15 +50,17 @@ if(uncoveredArray == NULL){
 
 //    #########  Game Variables ###########
 
-short int tryCounter = NOOFROUNDS; //counts the number of available trys
+short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
- char inputChars[NOOFROUNDS] = ""; //all the chars that have been entered by the User
- char inputCharsHits[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are correct
- char inputCharsMisses[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are incorrect
+ char inputChars[NOOOFTRYS] = ""; //all the chars that have been entered by the User
+ char inputCharsHits[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are correct
+ char inputCharsMisses[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are incorrect
 
- char gameControlCharacter;  //character used to let the user control the game during game runtime
-    short int controlValueGuessLetters = 0;
 
+    short int controlValueGuessLetters = 0; //controlValue of the guessLetters function
+    short int controlValueCoveredWordManagement = 0; //controlValue of the CoveredWordManagement function
+
+    //assign space for the inputWord which has been converted into a
  char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
@@ -81,7 +83,8 @@ short int tryCounter = NOOFROUNDS; //counts the number of available trys
 
 //                  ###### start the Game ######
 
-while(controlValueGuessLetters != 1 && tryCounter != 0) { //Round loop, one Game-round is one loop through this while loop
+while(tryCounter != 0) { //Round loop, one Game-round is one loop through this while loop
+    printf("\n");
     printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
 #if DEBUG1
     printf("Printout of the active Word: %s\n", activeWord);
@@ -92,6 +95,11 @@ while(controlValueGuessLetters != 1 && tryCounter != 0) { //Round loop, one Game
 
 
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
+    if(controlValueGuessLetters == 1){
+        printf("You have chosen to abort the Game (Keystroke [1])!\n");
+        break;
+    }
+//insert Error Case return #
 
     coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
                           inputCharsMisses, inputCharsHits);
@@ -105,6 +113,10 @@ while(controlValueGuessLetters != 1 && tryCounter != 0) { //Round loop, one Game
     //insert check letter for correctness and print function here
 
 tryCounter--; //decrement trycounter to keep track on how many guesses have been made
+
+if(tryCounter == 0)
+    printf("You ran out of trys, GAME OVER!\n");
+
 } // End Round-loop while
 
     free(activeWordConverted);
@@ -150,7 +162,7 @@ int coveredWordManagement(char inputChar, char *convertedWord,short int *uncover
                             char *misses,  char *hits){
     char stringToAppend[2]; //converting input Char to string for StrCat functions
    stringToAppend[0] = inputChar;
-           stringToAppend[1] = '\n';
+           stringToAppend[1] = '\0';
 
   unsigned int wordLength = strlen(convertedWord); //get the length of the word used in the game
   short int appendedMarker = 0; //Marker so if word was once added to the hits or misses list, wont added again if two times in word
