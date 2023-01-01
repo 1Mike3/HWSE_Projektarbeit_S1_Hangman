@@ -52,11 +52,11 @@ if(uncoveredArray == NULL){
 
 short int tryCounter = NOOFROUNDS; //counts the number of available trys
 
-char inputChars[NOOFROUNDS] = ""; //all the chars that have been entered by the User
-char inputCharsHits[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are correct
-char inputCharsMisses[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are incorrect
+unsigned char inputChars[NOOFROUNDS] = ""; //all the chars that have been entered by the User
+unsigned char inputCharsHits[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are correct
+unsigned char inputCharsMisses[NOOFROUNDS] = ""; //all the chars that have been entered by the User and are incorrect
 
-char gameControlCharacter;  //character used to let the user control the game during game runtime
+unsigned  char gameControlCharacter;  //character used to let the user control the game during game runtime
 
   unsigned char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
@@ -92,7 +92,7 @@ char gameControlCharacter;  //character used to let the user control the game du
     //insert control sequence here( q, g, enter)
     //insert control sequence return handeling here
     short int controlValueGuessLetters = 0;
-    char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
+   unsigned char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
 #if DEBUG2
     printf("DB The guessed Letter is: %c", guessedLetter);
 #endif
@@ -133,7 +133,21 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
 }
 
 
+//function to manage the Letter input and adjust the different Word-Arrays accordingly
+void coveredWordManagement(unsigned char inputChar, unsigned char *convertedWord, int *uncoveredArray,
+                           unsigned char *misses, unsigned char *hits){
 
-void uncoverSelectedLetters(void){
+
+   int wordLength = strlen(convertedWord);
+
+    for (int i = 0; i < wordLength; ++i) {
+        if(inputChar == convertedWord[i]){
+            uncoveredArray[i] = 1;
+            //insert stringappend function for hits
+        }
+
+
+    }
+
 
 }
