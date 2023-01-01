@@ -193,6 +193,7 @@ char *getWord(void){
 //1: quit
 //2: guess whole word
 //return-value # if error in function
+//return Value + if control char has been entered
 //!! ++++ Partly Tested, seems to work, code looks like garbage and needs to be optimized
  char letUserGuessLetters(short int *controlValue){
 
@@ -209,6 +210,16 @@ char *getWord(void){
 
 
     short int tryCounter = 0;
+
+
+    if(userInput == '1'){ //case if control character pressed quit
+        *controlValue = 1;
+        return  '+';
+    } else if (userInput == '2'){ //case if control character pressed guess whole word
+        *controlValue = 2;
+        return '+';
+    }
+
 
     if('#' == checkIfCharPartOfAlphabet(userInput))
     errorDetector++;
@@ -228,6 +239,16 @@ char *getWord(void){
             enterCatcher = (int) getchar();//catch the second input
             errorDetector++;
         }
+
+            if(userInput == '1'){ //case if control character pressed quit
+                *controlValue = 1;
+                return  '+';
+            } else if (userInput == '2'){ //case if control character pressed guess whole word
+                *controlValue = 2;
+                return '+';
+            }
+
+
 
             if('#' == checkIfCharPartOfAlphabet(userInput))
                 errorDetector++;
@@ -252,18 +273,18 @@ char *getWord(void){
 
     if(userInput == '1'){ //case if control character pressed
         *controlValue = 1;
-        return  '#';
+        return  '+';
     } else if (userInput == '2'){
         *controlValue = 2;
-        return '#';
+        return '+';
     }
 
 
      char checkedChar = checkIfCharPartOfAlphabet(userInput);
     if(checkedChar == '#'){ //check if function failed
+        printf("invalid input or more than one letter, try again!\n");
         return '#';
     } else{
-        printf("invalid input or more than one letter, try again!\n");
         return checkedChar;
     }
 

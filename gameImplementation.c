@@ -18,6 +18,12 @@
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
 #define NOOOFTRYS 10          //the number of game rounds that is set from the start
 
+//enum containing the return Values of the game runtime function
+enum returnValuesGameRuntime{
+    gameWon = 0,
+    gameLost = 1,
+    gameUnpredictedBehavior = 2,
+};
 
 
 //Game behavior in runtime after all the checks have been done if another Game can/should start
@@ -52,15 +58,21 @@ if(uncoveredArray == NULL){
 
 short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
- char inputChars[NOOOFTRYS] = ""; //all the chars that have been entered by the User
- char inputCharsHits[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are correct
+
+//all the chars that have been entered by the User and are correct
+    char * inputCharsHits = calloc(wordLength +1 , sizeof(char));
+    if(inputCharsHits == NULL){
+        errorManagement(EEMemoryAllocationFailed, WARNING);
+        return 1;
+    }
+
  char inputCharsMisses[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are incorrect
 
 
     short int controlValueGuessLetters = 0; //controlValue of the guessLetters function
     short int controlValueCoveredWordManagement = 0; //controlValue of the CoveredWordManagement function
 
-    //assign space for the inputWord which has been converted into a
+    //assign space for the inputWord which has been converted into a only uppercase word
  char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
@@ -83,7 +95,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 //                  ###### start the Game ######
 
-while(tryCounter != 0) { //Round loop, one Game-round is one loop through this while loop
+while(1) { //Round loop, one Game-round is one loop through this while loop
     printf("\n");
     printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
 #if DEBUG1
@@ -93,7 +105,7 @@ while(tryCounter != 0) { //Round loop, one Game-round is one loop through this w
     printf("Guess a letter/ Guess the Word/ End this Round.\n");
     printf("Letters not in my word: %s\n", inputCharsMisses);
 
-
+//####    let User guess Letters ####
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
     if(controlValueGuessLetters == 1){
         printf("You have chosen to abort the Game (Keystroke [1])!\n");
@@ -101,25 +113,47 @@ while(tryCounter != 0) { //Round loop, one Game-round is one loop through this w
     }
 //insert Error Case return #
 
+//   ####       Manage the arrays responsible for the covered Word          ####
    controlValueCoveredWordManagement = coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
                           inputCharsMisses, inputCharsHits);
+
+
+    //        #####         Check if Game is Won        #####
+    unsigned int uncoveredLettersCounter = 0;
+    for (unsigned int i = 0; i < wordLength; ++i) {
+        if(uncoveredArray[i] == 1)
+            uncoveredLettersCounter++;
+    }
+    if(uncoveredLettersCounter == wordLength){
+        printf("\n");
+        printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
+        printf("!! CONGRATULATIONS, you guessed the Word !!\n");
+        return gameWon;
+    }
+
+        //END        #####         Check if Game is Won        #####
+
 
 #if DEBUG2
     printf("DB The guessed Letter is: %c", guessedLetter);
 #endif
 
  //count the misses
-if (controlValueCoveredWordManagement == 2)
-tryCounter--; //decrement trycounter to keep track on how many guesses have been made
+if (controlValueCoveredWordManagement == 2) //2 stands for input letter not contained in guess-word
+tryCounter--; //decrement try-counter to keep track on how many guesses have been made
 
-if(tryCounter == 0)
-    printf("You ran out of trys, GAME OVER!\n");
-
+  if(tryCounter == 0) {
+      printf("You ran out of trys, GAME OVER!\n");
+      return gameLost;
+  }
 } // End Round-loop while
 
+//      FREE Spot
+    free(inputCharsHits);
     free(activeWordConverted);
     free(uncoveredArray);
-    return 0;
+
+    return gameUnpredictedBehavior;
 }// End Game Runtime function
 
 
