@@ -13,4 +13,4 @@ int startSequence(void);
 unsigned char getSingleChar(void);
 char *commLineArgManagement(int argc, char **argv);
 char *getWord(void);
-char letUserGuessLetters(short int *controlValue);
+unsigned char letUserGuessLetters(short int *controlValue);

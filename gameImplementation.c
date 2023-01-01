@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG1 0
+#define DEBUG1 1
 #define DEBUG2 1
 
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
@@ -82,7 +82,9 @@ char gameControlCharacter;  //character used to let the user control the game du
 
 //while(1) { //Round loop, one Game-round is one loop through this while loop
     printVariablyCoveredWord(wordLength, uncoveredArray, activeWord);
-
+#if DEBUG1
+    printf("Printout of the active Word: %s\n", activeWord);
+#endif
     printf("You have %i tries left.\n", tryCounter);
     printf("Guess a letter/ Guess the Word/ End this Round.\n");
     printf("Letters not in my word: %s\n", inputCharsMisses);

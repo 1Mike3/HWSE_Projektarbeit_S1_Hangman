@@ -69,6 +69,8 @@ void convertInputWordToUppercase(char *wordToBeConverted,unsigned char *converte
         convertedWord[a] = toupper(tempStringValue[a]);
     }
 
+    convertedWord[stringLength] = '\0';
+
 #if DEBUG1
     printf("%s tempStringValue in Function \n", convertedWord);
 #endif

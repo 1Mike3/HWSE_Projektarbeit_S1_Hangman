@@ -193,25 +193,27 @@ char *getWord(void){
 //1: quit
 //2: guess whole word
 //return-value # if error in function
-//!! ++++ UNTESTED
-char letUserGuessLetters(short int *controlValue){
+//!! ++++ Partly Tested, seems to work, code looks like garbage and needs to be optimized
+unsigned char letUserGuessLetters(short int *controlValue){
 
 
     unsigned char userInput = (int) getchar(); //main input char
     unsigned char enterCatcher = (int) getchar(); // temp var to catch the \n input and check if only one char has been entered
 
-    int loopCounter = 0; //counts the amount of chars other than enter
+    int errorDetector = 0; //detects if something went wrong during the input phase
 
     while (enterCatcher != '\n' && enterCatcher != '\r') { //loop till enter has been pressed
         enterCatcher = (int) getchar();//catch the second input
-        loopCounter++;
+        errorDetector++;
     }
 
 
     short int tryCounter = 0;
 
+    if('#' == checkIfCharPartOfAlphabet(userInput))
+    errorDetector++;
 
-    if(loopCounter != 0){ //checking if more than one letter in input
+      if(errorDetector != 0){ //checking if more than one letter in input
 
         while (1){ // broken in end of loop
         printf("invalid input or more than one letter, try again!\n");
@@ -220,14 +222,17 @@ char letUserGuessLetters(short int *controlValue){
         userInput = (int) getchar(); //main input char
         enterCatcher = (int) getchar(); // temp var to catch the \n input and check if only one char has been entered
 
-        loopCounter = 0; //counts the amount of chars other than enter
+        errorDetector = 0; //counts the amount of chars other than enter
 
         while (enterCatcher != '\n' && enterCatcher != '\r') { //loop till enter has been pressed
             enterCatcher = (int) getchar();//catch the second input
-            loopCounter++;
+            errorDetector++;
         }
 
-        if(loopCounter != 0) { //checking if more than one letter in input
+            if('#' == checkIfCharPartOfAlphabet(userInput))
+                errorDetector++;
+
+        if(errorDetector != 0) { //checking if more than one letter in input
             tryCounter ++;
         } else{
             break;
@@ -236,7 +241,7 @@ char letUserGuessLetters(short int *controlValue){
 
         if (tryCounter == 5){ // five trys to enter Valid char
             //TODO add error message
-            printf("too many wrong trys !\n");
+            printf("too many wrong tries!\n");
             return '#';
         }
     }//end while true loop
@@ -257,7 +262,7 @@ char letUserGuessLetters(short int *controlValue){
         return '#';
     } else{
         printf("invalid input or more than one letter, try again!\n");
-        return '#';
+        return checkedChar;
     }
 
 }
