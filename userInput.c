@@ -5,6 +5,7 @@
 #include "userInput.h"
 #include "errorManagement.h"
 #include "helperFunctions.h"
+#include "dataLogging.h"
 
 #include <string.h>
 
@@ -188,8 +189,7 @@ char *getWord(void){
 
 
 //function which allows the user to guess letters or enter a control Value during runtime
-//todo Finish and test
-//todo add 12 gamecontrol to this function
+//control Value meaning:
 //1: quit
 //2: guess whole word
 //return-value # if error in function
@@ -227,6 +227,8 @@ char *getWord(void){
       if(errorDetector != 0){ //checking if more than one letter in input
 
         while (1){ // broken in end of loop
+            saveGameProgressIntoLogFile('a', "a",
+                                       controlCharSaveProgressToLog_invalidUserInput);
         printf("invalid input or more than one letter, try again!\n");
 
 
@@ -282,6 +284,8 @@ char *getWord(void){
 
      char checkedChar = checkIfCharPartOfAlphabet(userInput);
     if(checkedChar == '#'){ //check if function failed
+        saveGameProgressIntoLogFile('a', "a",
+                                    controlCharSaveProgressToLog_invalidUserInput);
         printf("invalid input or more than one letter, try again!\n");
         return '#';
     } else{
