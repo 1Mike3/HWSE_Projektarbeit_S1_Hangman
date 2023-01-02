@@ -6,3 +6,18 @@
 #define HANGMAN_DATALOGGING_H
 
 #endif //HANGMAN_DATALOGGING_H
+
+enum returnValueSaveGameProgressToLogFile{
+    saveProgressToLogFileFinishedSuccessfully = 0,
+    saveProgressToLogFileFailed = 1,
+};
+
+enum saveProgressToLogFileControlCharacter{
+    controlCharSaveProgressToLog_normalInputSaving = 1,
+    controlCharSaveProgressToLog_invalidUserInput = 2,
+    controlCharSaveProgressToLog_startOfTheGame = 3,
+    controlCharSaveProgressToLog_endOfTheGame = 4,
+
+};
+
+int saveGameProgressIntoLogFile(char UserInputChar, char* uncoveredWord, short int controlCharacter);

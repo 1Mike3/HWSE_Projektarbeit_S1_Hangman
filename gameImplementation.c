@@ -7,6 +7,7 @@
 #include "errorManagement.h"
 #include "userInput.h"
 #include "helperFunctions.h"
+#include "dataLogging.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -14,6 +15,7 @@
 
 #define DEBUG1 0
 #define DEBUG2 0
+#define DEBUG3 0
 
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
 #define NOOOFTRYS 10          //the number of game rounds that is set from the start
@@ -88,6 +90,13 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 //                  ###### start the Game ######
 
+//Write "Staert of Game Marker" to log File
+int saveGameProgressReturn = 0;
+saveGameProgressReturn = saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_startOfTheGame);
+#if DEBUG3
+    printf("DB print save game return = %i\n", saveGameProgressReturn);
+#endif
+
 while(1) { //Round loop, one Game-round is one loop through this while loop
     printf("\n");
     printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
@@ -102,6 +111,10 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
     if(controlValueGuessLetters == 1){
         printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
+        //      FREE Spot
+        free(inputCharsHits);
+        free(activeWordConverted);
+        free(uncoveredArray);
         return gameUserDecidedToQuit;
     }
 //insert Error Case return #
@@ -121,6 +134,10 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
         printf("\n");
         printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
         printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
+        //      FREE Spot
+        free(inputCharsHits);
+        free(activeWordConverted);
+        free(uncoveredArray);
         return gameWon;
     }
 
@@ -137,6 +154,10 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
 
   if(tryCounter == 0) {
       printf("You ran out of trys, GAME OVER!\n\n");
+      //      FREE Spot
+      free(inputCharsHits);
+      free(activeWordConverted);
+      free(uncoveredArray);
       return gameLost;
   }
 } // End Round-loop while

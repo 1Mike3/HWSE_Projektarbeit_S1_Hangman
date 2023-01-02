@@ -26,6 +26,8 @@ enum errorCodes{
     ERInputCriteriaNotMet = 105,
     ERMemoryAllocationFailed = 106,
     ERGameRuntimeFunctionFailed = 107,
+    ERFileManagementOpeningFileFailed = 108,
+    ERFileManagementOpeningFileUnexpectedControlCharacter = 109,
 
 };
 // creating a const struct for easier Error Management
