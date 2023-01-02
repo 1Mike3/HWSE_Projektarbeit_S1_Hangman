@@ -59,7 +59,7 @@ char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
 //converts the InputWord to uppercase
 //TODO add error handling
 //+++ Tested +++ Works
-void convertInputWordToUppercase(char *wordToBeConverted,unsigned char *convertedWord,unsigned long long stringLength){
+void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,unsigned long long stringLength){
     char *tempStringValue = wordToBeConverted; //assigning temp var to be used in function
 
     // loop through string and convert the chars

@@ -8,5 +8,5 @@
 #endif //HANGMAN_HELPERFUNCTIONS_H
 
 char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked);
-void convertInputWordToUppercase(char *wordToBeConverted, unsigned char *convertedWord,unsigned long long stringLength);
+void convertInputWordToUppercase(char *wordToBeConverted,char *convertedWord,unsigned long long stringLength);
 int checkWord(char *Word);

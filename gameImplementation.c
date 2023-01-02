@@ -63,7 +63,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 
     short int controlValueGuessLetters = 0; //controlValue of the guessLetters function
-    short int controlValueCoveredWordManagement = 0; //controlValue of the CoveredWordManagement function
+    short int controlValueCoveredWordManagement; //controlValue of the CoveredWordManagement function
 
     //assign space for the inputWord which has been converted into a only uppercase word
  char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
@@ -207,8 +207,18 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     }
 
     if (appendedMarker == 0) {//case if no hits were made
+
+        //loop to check if misses char has already been added to misses array so no double entries
+        unsigned long lengthOfMissesArray = strlen(misses);
+        short int charAlreadyInArrayMarker = 0;
+        for (unsigned long i = 0; i < lengthOfMissesArray; ++i) {
+            if(stringToAppend[0] == misses[i])
+                charAlreadyInArrayMarker++;
+        }
+        if(charAlreadyInArrayMarker == 0)
         strcat(misses, stringToAppend);
-        return 2;
+
+          return 2;
     }
 
     return 0;
