@@ -53,36 +53,39 @@ int main(int argc, char **argv){
     //the central and most often Used Elements which will be used throughout the Program will be initialised here
     char *activeWord; //the Word which will be used to play the game (comm line arg || user input)
 
-    //### Program start ###
+
+
+    do { //main loop to let the user run the Game multiple times
+
+    //      ###         Program         start ###
     int bufferStartSequenceValue = startSequence();//execute the start sequence and proceed depending on it's ret val.
+
     //switch-case to interpret the return Value of the StartSequence
     switch (bufferStartSequenceValue) {
 
 //               #### Hangman Game Active ####
         case 0: //the user has selected to run the Programm
-          activeWord = commLineArgManagement(argc,argv); //assign the activeWord from the commLineArg Function
+            activeWord = commLineArgManagement(argc, argv); //assign the activeWord from the commLineArg Function
 
-          //Error handling of the commLineArgManagement Function
-          //finishing with 104 is on purpose
+            //Error handling of the commLineArgManagement Function
+            //finishing with 104 is on purpose
             int tempCompareValue = 1;
             tempCompareValue = strcmp(activeWord, "#ERROR");
-            if(tempCompareValue == 0){ //error handling
+            if (tempCompareValue == 0) { //error handling
                 errorManagement(EECommandLineArgumentFunctionFailed, ERROR);
-              return ERComLineArgManagementFailed;
-          }
-#if DEBUG1
-            printf("the input Word is: %s", activeWord);
-#endif
-
+                return ERComLineArgManagementFailed;
+            }
 
             // #### Start game Sequence ####
-           int returnGameRuntime = gameRuntime(activeWord);
-           if(returnGameRuntime == 1)
-               errorManagement(EEGameRuntimeFailed, ERROR);
+            int returnGameRuntime = gameRuntime(activeWord);
+            if (returnGameRuntime == gameRuntimeError || returnGameRuntime == gameUnpredictedBehavior) {
+                errorManagement(EEGameRuntimeFailed, ERROR);
+                return ERGameRuntimeFunctionFailed;
+            }
 
-            break;
-         //   #### END Hangman Game Active ####
 
+            break; //break case 0
+            //   #### END Hangman Game Active ####
 
 
             //#### Edge cases and abort behavior ####
@@ -98,7 +101,9 @@ int main(int argc, char **argv){
         default://undefined return error behavior
             errorManagement(EEStartSequenceDefault, ERROR);
             return ERStartSequenceDef;
-    }
+    }//End switch case start sequence Return
+
+    }  while (1); //end of the loop which lets the user play multiple times
     return 0;
 }
 
@@ -106,7 +111,7 @@ int main(int argc, char **argv){
 //TODO !!before final version set all DEBUG to 0!!
 
 //TODO change errorManagement() to write to Error log (add or change)
-//TODO give getWord() parameter to determine Use Case
+
 
 //!!
 //TODO check malloc function & small functions file

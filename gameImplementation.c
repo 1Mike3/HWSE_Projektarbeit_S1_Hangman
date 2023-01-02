@@ -18,13 +18,6 @@
 #define UNDISCOVEREDSYMBOL '_' //the symbol that will be used for the uncovered parts of the word
 #define NOOOFTRYS 10          //the number of game rounds that is set from the start
 
-//enum containing the return Values of the game runtime function
-enum returnValuesGameRuntime{
-    gameWon = 0,
-    gameLost = 1,
-    gameUnpredictedBehavior = 2,
-};
-
 
 //Game behavior in runtime after all the checks have been done if another Game can/should start
 //returns 0 if Finished successfully and 1 if not
@@ -47,7 +40,7 @@ int gameRuntime(char *activeWord){
 short int *uncoveredArray = calloc( wordLength , sizeof(short int));
 if(uncoveredArray == NULL){
     errorManagement(EEMemoryAllocationFailed, WARNING);
-    return 1;
+    return gameRuntimeError;
 }
 // END #### Uncovered Value Array
 
@@ -63,7 +56,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
     char * inputCharsHits = calloc(wordLength +1 , sizeof(char));
     if(inputCharsHits == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
-        return 1;
+        return gameRuntimeError;
     }
 
  char inputCharsMisses[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are incorrect
@@ -76,7 +69,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
  char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
-        return 1;
+        return gameRuntimeError;
     }
 //END ######### Game Variables #############
 
@@ -101,9 +94,9 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 #if DEBUG1
     printf("Printout of the active Word: %s\n", activeWord);
 #endif
-    printf("You have %i tries left.\n", tryCounter);
-    printf("Guess a letter/ Guess the Word/ End this Round.\n");
-    printf("Letters not in my word: %s\n", inputCharsMisses);
+    printf("(You have %i tries left.)\n", tryCounter);
+    printf("-Guess a letter or enter a control Character.\n");
+    printf("-Letters not in my word: %s \n", inputCharsMisses);
 
 //####    let User guess Letters ####
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
@@ -127,7 +120,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
     if(uncoveredLettersCounter == wordLength){
         printf("\n");
         printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
-        printf("!! CONGRATULATIONS, you guessed the Word !!\n");
+        printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
         return gameWon;
     }
 
@@ -143,7 +136,7 @@ if (controlValueCoveredWordManagement == 2) //2 stands for input letter not cont
 tryCounter--; //decrement try-counter to keep track on how many guesses have been made
 
   if(tryCounter == 0) {
-      printf("You ran out of trys, GAME OVER!\n");
+      printf("You ran out of trys, GAME OVER!\n\n");
       return gameLost;
   }
 } // End Round-loop while
