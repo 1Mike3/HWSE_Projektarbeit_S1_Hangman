@@ -17,6 +17,8 @@ enum returnValuesGameRuntime{
 };
 
 int gameRuntime(char *activeWord);
-void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWord);
+void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray,
+                              char *activeWord, char *statusWordUncovered);
+
 short int coveredWordManagement(char inputChar, char *convertedWord, short int *uncoveredArray,
-                          char *misses,  char *hits);
+                                char *misses,  char *hits, char *StatusWordForDataLogging);

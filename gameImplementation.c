@@ -61,6 +61,13 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
         return gameRuntimeError;
     }
 
+    //the uncovered Word Formatted for Data logging function
+    char * statusWordUncovered = calloc(wordLength +1 , sizeof(char));
+    if(statusWordUncovered == NULL){
+        errorManagement(EEMemoryAllocationFailed, WARNING);
+        return gameRuntimeError;
+    }
+
  char inputCharsMisses[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are incorrect
 
 
@@ -90,16 +97,16 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 //                  ###### start the Game ######
 
-//Write "Staert of Game Marker" to log File
-int saveGameProgressReturn = 0;
-saveGameProgressReturn = saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_startOfTheGame);
+//Write "Start of Game Marker" to log File
+saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_startOfTheGame);
+
 #if DEBUG3
     printf("DB print save game return = %i\n", saveGameProgressReturn);
 #endif
 
 while(1) { //Round loop, one Game-round is one loop through this while loop
     printf("\n");
-    printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
+    printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted, statusWordUncovered);
 #if DEBUG1
     printf("Printout of the active Word: %s\n", activeWord);
 #endif
@@ -110,18 +117,21 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 //####    let User guess Letters ####
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
     if(controlValueGuessLetters == 1){
+
         printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
-        //      FREE Spot
-        free(inputCharsHits);
-        free(activeWordConverted);
-        free(uncoveredArray);
+
+        free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+
+        saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
         return gameUserDecidedToQuit;
     }
-//insert Error Case return #
+
+
 
 //   ####       Manage the arrays responsible for the covered Word          ####
    controlValueCoveredWordManagement = coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
-                          inputCharsMisses, inputCharsHits);
+                          inputCharsMisses, inputCharsHits , statusWordUncovered);
+
 
 
     //        #####         Check if Game is Won        #####
@@ -132,12 +142,16 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
     }
     if(uncoveredLettersCounter == wordLength){
         printf("\n");
-        printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted);
+        printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted, statusWordUncovered);
         printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
         //      FREE Spot
-        free(inputCharsHits);
-        free(activeWordConverted);
-        free(uncoveredArray);
+        free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+        //save to LOG
+        saveGameProgressIntoLogFile('a', "a",
+                                    controlCharSaveProgressToLog_gameHasBeenWon);
+        saveGameProgressIntoLogFile('a', "A",
+                                    controlCharSaveProgressToLog_endOfTheGame);
+
         return gameWon;
     }
 
@@ -155,19 +169,16 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
   if(tryCounter == 0) {
       printf("You ran out of trys, GAME OVER!\n\n");
       //      FREE Spot
-      free(inputCharsHits);
-      free(activeWordConverted);
-      free(uncoveredArray);
+      free(inputCharsHits);   free(activeWordConverted);      free(uncoveredArray);
+      //save to LOG
+      saveGameProgressIntoLogFile('a', "a",
+                                 controlCharSaveProgressToLog_gameHasBeenLost);
+      saveGameProgressIntoLogFile('a', "a",
+                                  controlCharSaveProgressToLog_endOfTheGame);
       return gameLost;
   }
 } // End Round-loop while
 
-//      FREE Spot
-    free(inputCharsHits);
-    free(activeWordConverted);
-    free(uncoveredArray);
-
-    return gameUnpredictedBehavior;
 }// End Game Runtime function
 
 
@@ -181,17 +192,20 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
 
 
 //function to print out the active-word with the parts that haven't been guessed substituted by a '_'
-void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray, char *activeWordConverted){
+void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray,
+                              char *activeWordConverted, char *statusWordUncovered){
     printf("My Word: ");
 
     for (unsigned int i = 0; i < wordSize; ++i) {
 
         if(*(uncoveredArray+i) == 0){
             printf("%c", UNDISCOVEREDSYMBOL);
+            statusWordUncovered[i] = UNDISCOVEREDSYMBOL;
         }
 
         if(*(uncoveredArray+i) == 1){
             printf("%c", activeWordConverted[i]);
+            statusWordUncovered[i] = activeWordConverted[i];
         }
 
     }
@@ -206,42 +220,54 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
 //1: if falied
 //2: if no word has been correctly guessed
 short int coveredWordManagement(char inputChar, char *convertedWord,short int *uncoveredArray,
-                            char *misses,  char *hits){
+                            char *misses,  char *hits, char *StatusWordForDataLogging) {
     char stringToAppend[2]; //converting input Char to string for StrCat functions
-   stringToAppend[0] = inputChar;
-           stringToAppend[1] = '\0';
+    stringToAppend[0] = inputChar;
+    stringToAppend[1] = '\0';
 
-  unsigned int wordLength = strlen(convertedWord); //get the length of the word used in the game
-  short int appendedMarker = 0; //Marker so if word was once added to the hits or misses list, wont added again if two times in word
+    unsigned int wordLength = strlen(convertedWord); //get the length of the word used in the game
+    short int appendedMarker = 0; //Marker so if word was once added to the hits or misses list, won't added again if two times in word
+
 
     for (unsigned int i = 0; i < wordLength; ++i) {//loop through word and check which uncovered
 
-        if(inputChar == convertedWord[i]){ //case if hit was made
+        if (inputChar == convertedWord[i]) { //case if hit was made
             uncoveredArray[i] = 1;
-            if (appendedMarker == 0){ //so only once added to string even if 1+ in word
+            if (appendedMarker == 0) { //so only once added to string even if 1+ in word
                 strcat(hits, stringToAppend);
                 appendedMarker++;
             }
-
         }
-
     }
 
-    if (appendedMarker == 0) {//case if no hits were made
+    //DATA Logging, code before for refreshing of Status Word
+        for (unsigned int j = 0; j < wordLength; ++j) {
+            if (*(uncoveredArray + j) == 0) {
+                StatusWordForDataLogging[j] = UNDISCOVEREDSYMBOL;
+            }
+            if (*(uncoveredArray + j) == 1) {
+                StatusWordForDataLogging[j] = convertedWord[j];
+            }
+        }
+        saveGameProgressIntoLogFile(inputChar, StatusWordForDataLogging,
+                                    controlCharSaveProgressToLog_normalInputSaving);
+
+
+        if (appendedMarker == 0) {//case if no hits were made
 
         //loop to check if misses char has already been added to misses array so no double entries
         unsigned long lengthOfMissesArray = strlen(misses);
         short int charAlreadyInArrayMarker = 0;
         for (unsigned long i = 0; i < lengthOfMissesArray; ++i) {
-            if(stringToAppend[0] == misses[i])
+            if (stringToAppend[0] == misses[i])
                 charAlreadyInArrayMarker++;
         }
-        if(charAlreadyInArrayMarker == 0)
-        strcat(misses, stringToAppend);
 
-          return 2;
+            if (charAlreadyInArrayMarker == 0)
+                strcat(misses, stringToAppend);
+            return 2;
+        }
+        return 0;
     }
 
-    return 0;
-}
 

@@ -17,7 +17,9 @@ enum saveProgressToLogFileControlCharacter{
     controlCharSaveProgressToLog_invalidUserInput = 2,
     controlCharSaveProgressToLog_startOfTheGame = 3,
     controlCharSaveProgressToLog_endOfTheGame = 4,
-
+    controlCharSaveProgressToLog_gameHasBeenWon = 5,
+    controlCharSaveProgressToLog_gameHasBeenLost = 6,
 };
 
 int saveGameProgressIntoLogFile(char UserInputChar, char* uncoveredWord, short int controlCharacter);
+char *getTimeString(void);
