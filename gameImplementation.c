@@ -101,8 +101,8 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 //####    let User guess Letters ####
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
     if(controlValueGuessLetters == 1){
-        printf("You have chosen to abort the Game (Keystroke [1])!\n");
-        break;
+        printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
+        return gameUserDecidedToQuit;
     }
 //insert Error Case return #
 

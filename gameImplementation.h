@@ -13,6 +13,7 @@ enum returnValuesGameRuntime{
     gameLost = 1,
     gameUnpredictedBehavior = 2,
     gameRuntimeError = 3,
+    gameUserDecidedToQuit = 4,
 };
 
 int gameRuntime(char *activeWord);
