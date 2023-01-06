@@ -295,9 +295,9 @@ char *getWord(unsigned long long wordLength){
     printf("#F get word Function\n");
 #endif
     char tempInputChar = '0';
-    char TempString[wordLength];
+ char TempString[wordLength];
    unsigned short int inputCounter = 0;
-    for (unsigned int i = 0; i < wordLength && tempInputChar != '\n'; ++i) {
+    for (unsigned int i = 0; i < wordLength ; ++i) {
         tempInputChar =  getSingleChar();
         TempString[i] =  tempInputChar;
         inputCounter++;

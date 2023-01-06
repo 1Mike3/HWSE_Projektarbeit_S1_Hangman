@@ -85,12 +85,14 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 
 
-    //!! DEBUG !!
+    //!! DEBUG TEMP GUESSWORD
+#if 0
     char *TempWord = calloc(wordLength+1, sizeof (char ));
         printf("test get word\n");
     strcpy(TempWord, getWord(wordLength));
     printf("the input Word is: %s", TempWord);
     free(TempWord);
+#endif
      //!! End Debug
 
 
@@ -133,8 +135,38 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
         free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
         saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
         return gameUserDecidedToQuit;
-    }else if(controlValueGuessLetters == 2){ //Case Let User Guess whole Word
 
+
+
+        //###### Let User Guess Word ######
+    }else if(controlValueGuessLetters == 2){ //Case Let User Guess whole Word GUESSWHOLEWORD
+        printf("You have chosen to guess the whole word(Keystroke [2])!\n\n");
+        short int retVal;
+        retVal = sequenceLetUserGuessWord(activeWordConverted, wordLength);
+        switch (retVal) {
+            case 1:
+                printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
+                //      FREE Spot
+                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+                //save to LOG
+                saveGameProgressIntoLogFile('a', "a",
+                                            controlCharSaveProgressToLog_gameHasBeenWon);
+                saveGameProgressIntoLogFile('a', "A",
+                                            controlCharSaveProgressToLog_endOfTheGame);
+
+                return gameWon;
+            case 2:
+                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+                saveGameProgressIntoLogFile('a', "a",
+                                            controlCharSaveProgressToLog_gameHasBeenWon);
+
+                saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
+                return gameLost;
+
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -173,7 +205,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
     printf("DB The guessed Letter is: %c", guessedLetter);
 #endif
 
- //count the misses
+ //count the wrong guesses
 if (controlValueCoveredWordManagement == 2) //2 stands for input letter not contained in guess-word
 tryCounter--; //decrement try-counter to keep track on how many guesses have been made
 
@@ -236,6 +268,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     stringToAppend[0] = inputChar;
     stringToAppend[1] = '\0';
 
+
     unsigned int wordLength = strlen(convertedWord); //get the length of the word used in the game
     short int appendedMarker = 0; //Marker so if word was once added to the hits or misses list, won't added again if two times in word
 
@@ -244,8 +277,10 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
 
         if (inputChar == convertedWord[i]) { //case if hit was made
             uncoveredArray[i] = 1;
-            if (appendedMarker == 0) { //so only once added to string even if 1+ in word
+
+            if (appendedMarker == 0) { //so only once added to string even if 1+ in word // and only once print guessmeassage
                 strcat(hits, stringToAppend);
+                printf("Correct Guess! :)\n");
                 appendedMarker++;
             }
         }
@@ -265,7 +300,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
 
 
         if (appendedMarker == 0) {//case if no hits were made
-
+            printf("Miss! :(\n");
         //loop to check if misses char has already been added to misses array so no double entries
         unsigned long lengthOfMissesArray = strlen(misses);
         short int charAlreadyInArrayMarker = 0;
@@ -287,7 +322,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     //1: user guessed correctly
     //2: user guessed incorrectly
     //3: function error
-   short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned long long activeWordLength){
+    short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned long long activeWordLength){
         printf("Enter the Word you want to guess:\n");
         char *guessedWord;
         guessedWord = getWord(activeWordLength);
@@ -296,11 +331,12 @@ char guessedWordConverted[activeWordLength];
 
         //case the words match
         if(0 == strcmp(guessedWordConverted, activeWordConvert)){
-            printf("Congratulations you guessed the word!\n\n");
+            printf("Congratulations you guessed the word!!\n\n");
             return 1;
         }
 
         //case the words don't match
+        printf("You guessed Wrong!!\n\n");
         return 2;
 
 }
