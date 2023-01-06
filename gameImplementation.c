@@ -35,10 +35,8 @@ int gameRuntime(char *activeWord){
             .message = "Exception function let user guess whole word, check switchCase Default!"
     };
 
-    //game Runtime Constans: (will be changed when new function available)
-    bool commandLineInputActive, fileInputActive;
-    commandLineInputActive = false;
-    fileInputActive = true;
+
+
 
                //#### Uncovered Value Array ###
     //create An array which contains the Information if a letter was Uncovered or not
@@ -129,7 +127,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
     //controlvalueLetUserGuessLetters Interpretation
     if(controlValueGuessLetters == 1){
         printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
-        free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+        free(inputCharsHits); free(activeWordConverted); free(uncoveredArray); free(statusWordUncovered);
         saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
         return gameUserDecidedToQuit;
 
@@ -144,7 +142,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
             case 1:
                 printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
                 //      FREE Spot
-                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
                 //save to LOG
                 saveGameProgressIntoLogFile('a', "a",
                                             controlCharSaveProgressToLog_gameHasBeenWon);
@@ -153,7 +151,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 
                 return gameWon;
             case 2:
-                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
                 saveGameProgressIntoLogFile('a', "a",
                                             controlCharSaveProgressToLog_gameHasBeenWon);
 
@@ -186,7 +184,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
         printVariablyCoveredWord(wordLength, uncoveredArray, activeWordConverted, statusWordUncovered);
         printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
         //      FREE Spot
-        free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
+        free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
         //save to LOG
         saveGameProgressIntoLogFile('a', "a",
                                     controlCharSaveProgressToLog_gameHasBeenWon);
@@ -210,7 +208,7 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
   if(tryCounter == 0) {
       printf("You ran out of trys, GAME OVER!\n\n");
       //      FREE Spot
-      free(inputCharsHits);   free(activeWordConverted);      free(uncoveredArray);
+      free(inputCharsHits);   free(activeWordConverted); free(uncoveredArray); free(statusWordUncovered);
       //save to LOG
       saveGameProgressIntoLogFile('a', "a",
                                  controlCharSaveProgressToLog_gameHasBeenLost);
@@ -331,6 +329,8 @@ while(retGetWord == 1 && (noOfWrongInputs < 5)){
     retGetWord = getWord(activeWordLength, guessedWord);
     noOfWrongInputs++;
 }
+if(noOfWrongInputs == 5)
+    printf("too many wrong Inputs!!\n");
 
 char guessedWordConverted[activeWordLength];
         convertInputWordToUppercase(guessedWord, guessedWordConverted,activeWordLength);

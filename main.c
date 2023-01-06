@@ -15,6 +15,7 @@
 #include "gameImplementation.h"
 #include "userInput.h"
 #include "errorManagement.h"
+#include "wordInputFile.h"
 
 //Including of external Header-Files
 #include <string.h>
@@ -28,6 +29,13 @@
 
 
 int main(int argc, char **argv){
+
+    //game Runtime Constans: (will be changed when new function available)
+    //!!i won't incude a check so only one is active so just set only one to tue
+    bool commandLineInputActive, fileInputActive;
+    commandLineInputActive = true;
+    fileInputActive = false;
+
 //Error Messages
     errorStruct EEStartSequenceReturn  = {
             .code = ERStartSequenceRet,
@@ -66,7 +74,14 @@ int main(int argc, char **argv){
 
 //               #### Hangman Game Active ####
         case 0: //the user has selected to run the Programm
+
+            if(commandLineInputActive == true)
             activeWord = commLineArgManagement(argc, argv); //assign the activeWord from the commLineArg Function
+
+            if(fileInputActive == true){
+                activeWord = getTheWordFromTheInputFile();
+            }
+
 
             //Error handling of the commLineArgManagement Function
             //finishing with 104 is on purpose

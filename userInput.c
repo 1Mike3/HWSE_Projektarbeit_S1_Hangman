@@ -39,10 +39,13 @@ int startSequence(void) {
         printf("\n\n======= HANGMAN =======\n");
         printf("Welcome to my version of the Hangman-Game!\n\n");
 
-        printf("How to Play:\n");
+        printf("        ##  How to Play: ##    \n");
+        printf("-valid input characters(except program control numbers)\n"
+                       "are 26 lat. alphabet letters(lower or uppercase).\n");
+        printf("-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss\n");
         printf("-during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n");
 
-        printf("With the version you're using the word to guess should\n have been selected while starting the program.\n\n");
+
         printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");
     }
     if (textFormat == 1) { //text on the following calls
@@ -257,7 +260,7 @@ char *commLineArgManagement(int argc, char **argv){
         if (tryCounter == 5){ // five trys to enter Valid char
             //TODO add error message
             printf("too many wrong tries!\n");
-            return '#';
+            return ' '; //space for better optics in misses array
         }
     }//end while true loop
 
@@ -305,7 +308,6 @@ short int getWord(unsigned long long wordLength, char *returnString){
    unsigned short int inputCounter = 0;
     for (unsigned int i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets
         tempInputChar =  getchar();
-getch()
         if(tempInputChar != '\n') //so enter not in string
         TempString[i] =  tempInputChar;
 
