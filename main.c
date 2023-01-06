@@ -20,6 +20,7 @@
 //Including of external Header-Files
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
@@ -30,11 +31,12 @@
 
 int main(int argc, char **argv){
 
-    //game Runtime Constans: (will be changed when new function available)
-    //!!i won't incude a check so only one is active so just set only one to tue
+    //game Runtime Constants: (will be changed when new function available)
+    //!!i won't include a check so only one is active so just set only one to true!
+    //differentiate between old command line function and
     bool commandLineInputActive, fileInputActive;
-    commandLineInputActive = true;
-    fileInputActive = false;
+    commandLineInputActive = false;
+    fileInputActive = true;
 
 //Error Messages
     errorStruct EEStartSequenceReturn  = {
@@ -60,8 +62,8 @@ int main(int argc, char **argv){
 
     //#### Core Elements ####
     //the central and most often Used Elements which will be used throughout the Program will be initialised here
-    char *activeWord; //the Word which will be used to play the game (comm line arg || user input)
-
+    char *activeWord = calloc(MAX_WORD_SIZE_FILE, sizeof (char )); //the Word which will be used to play the game (comm line arg || user input)
+    char** p_activeWord = &activeWord;
 
 
     do { //main loop to let the user run the Game multiple times
@@ -79,7 +81,7 @@ int main(int argc, char **argv){
             activeWord = commLineArgManagement(argc, argv); //assign the activeWord from the commLineArg Function
 
             if(fileInputActive == true){
-                activeWord = getTheWordFromTheInputFile();
+                 getTheWordFromTheInputFile(p_activeWord);
             }
 
 
@@ -108,14 +110,17 @@ int main(int argc, char **argv){
 
         case 1://the user has selected to abort the programm
             printf("the program has been stopped by the user.\n");
+            free(activeWord);
             return 0;
         case 2://Return value of start sequence signals there has been an error in its function
             errorManagement(EEStartSequenceReturn, ERROR);
+            free(activeWord);
             return ERStartSequenceRet;
 
 
         default://undefined return error behavior
             errorManagement(EEStartSequenceDefault, ERROR);
+            free(activeWord);
             return ERStartSequenceDef;
     }//End switch case start sequence Return
 

@@ -7,4 +7,6 @@
 
 #endif //HANGMAN_WORDINPUTFILE_H
 
-char* getTheWordFromTheInputFile();
+#define MAX_WORD_SIZE_FILE 40 //limit to the wordLength in the file
+
+short int getTheWordFromTheInputFile(char **activeWord);

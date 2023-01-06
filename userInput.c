@@ -40,6 +40,9 @@ int startSequence(void) {
         printf("Welcome to my version of the Hangman-Game!\n\n");
 
         printf("        ##  How to Play: ##    \n");
+        printf("-!!Configuration-File which contains the guess-words: hangmanWords.txt\n"
+               "if it doesn't exist it needs to be created in the same directory as the program.\n");
+        printf("-i have limited the word-length in the input file to 35 letters\n");
         printf("-valid input characters(except program control numbers)\n"
                        "are 26 lat. alphabet letters(lower or uppercase).\n");
         printf("-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss\n");
