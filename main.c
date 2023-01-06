@@ -18,6 +18,7 @@
 
 //Including of external Header-Files
 #include <string.h>
+#include <stdbool.h>
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
@@ -113,6 +114,6 @@ int main(int argc, char **argv){
 //TODO change errorManagement() to write to Error log (add or change)
 
 
-//!!
-//TODO check malloc function & small functions file
+
+
 

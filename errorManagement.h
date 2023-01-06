@@ -29,6 +29,7 @@ enum errorCodes{
     ERFileManagementOpeningFileFailed = 108,
     ERFileManagementOpeningFileUnexpectedControlCharacter = 109,
     ERWrongInputGetWordFunction = 110,
+    ERDefaultSwitchCaseGuessWholeWordFunction = 111,
 
 };
 // creating a const struct for easier Error Management

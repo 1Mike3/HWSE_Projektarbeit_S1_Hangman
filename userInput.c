@@ -7,8 +7,9 @@
 #include "helperFunctions.h"
 #include "dataLogging.h"
 
-#include <string.h>
 
+#include <string.h>
+#include <stdbool.h>
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
 #define DEBUG2 0 // Debug messages in the Functions
@@ -285,33 +286,39 @@ char *commLineArgManagement(int argc, char **argv){
 
 
 //allows the User to enter a String
-//!!Unfinished
-char *getWord(unsigned long long wordLength){
+//used for guess whole word function of the game
+//0: it's all good man
+//1: wrong input
+short int getWord(unsigned long long wordLength, char *returnString){
     errorStruct  EEWrongInputGetWordFunction = {
             .code = ERWrongInputGetWordFunction ,
-            .message = "Invalid Input, Try again!"
+            .message = "Invalid Input (not enough input characters), Try again!"
     };
+
 #if DEBUG2
     printf("#F get word Function\n");
 #endif
     char tempInputChar = '0';
  char TempString[wordLength];
    unsigned short int inputCounter = 0;
-    for (unsigned int i = 0; i < wordLength ; ++i) {
-        tempInputChar =  getSingleChar();
+    for (unsigned int i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets
+        tempInputChar =  getchar();
+
+        if(tempInputChar != '\n') //so enter not in string
         TempString[i] =  tempInputChar;
-        inputCounter++;
+
+          inputCounter++;
     }
 
     TempString[wordLength] = '\0';
 
-
-    if(wordLength < inputCounter){
+    if( wordLength  != (inputCounter- 1)){ //-1 because offset in for loop
         errorManagement(EEWrongInputGetWordFunction,ERROR);
+        return 1;
     }
 
-
-return TempString;
+    strcpy(returnString, TempString);
+    return 0;
 }
 
 

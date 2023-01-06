@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define DEBUG1 0
 #define DEBUG2 0
@@ -28,6 +29,10 @@ int gameRuntime(char *activeWord){
     errorStruct EEMemoryAllocationFailed = {
             .code = ERMemoryAllocationFailed,
             .message = "Heap ran out of Memory!"
+    };
+    errorStruct EEDefaultSwitchCaseGuessWholeWordSequence = {
+            .code = ERDefaultSwitchCaseGuessWholeWordFunction,
+            .message = "Exception function let user guess whole word, check switchCase Default!"
     };
 
 
@@ -165,7 +170,8 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 
                 break;
             default:
-                break;
+                errorManagement(EEDefaultSwitchCaseGuessWholeWordSequence, WARNING);
+                return gameRuntimeError;
         }
     }
 
@@ -324,8 +330,16 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     //3: function error
     short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned long long activeWordLength){
         printf("Enter the Word you want to guess:\n");
-        char *guessedWord;
-        guessedWord = getWord(activeWordLength);
+        char guessedWord[activeWordLength];
+
+
+short int retGetWord = getWord(activeWordLength, guessedWord);
+short int noOfWrongInputs = 0;
+while(retGetWord == 1 && (noOfWrongInputs < 5)){
+    retGetWord = getWord(activeWordLength, guessedWord);
+    noOfWrongInputs++;
+}
+
 char guessedWordConverted[activeWordLength];
         convertInputWordToUppercase(guessedWord, guessedWordConverted,activeWordLength);
 
