@@ -35,6 +35,10 @@ int gameRuntime(char *activeWord){
             .message = "Exception function let user guess whole word, check switchCase Default!"
     };
 
+    //game Runtime Constans: (will be changed when new function available)
+    bool commandLineInputActive, fileInputActive;
+    commandLineInputActive = false;
+    fileInputActive = true;
 
                //#### Uncovered Value Array ###
     //create An array which contains the Information if a letter was Uncovered or not
@@ -87,18 +91,6 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
         return gameRuntimeError;
     }
 //END ######### Game Variables #############
-
-
-
-    //!! DEBUG TEMP GUESSWORD
-#if 0
-    char *TempWord = calloc(wordLength+1, sizeof (char ));
-        printf("test get word\n");
-    strcpy(TempWord, getWord(wordLength));
-    printf("the input Word is: %s", TempWord);
-    free(TempWord);
-#endif
-     //!! End Debug
 
 
 

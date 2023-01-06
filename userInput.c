@@ -10,6 +10,8 @@
 
 #include <string.h>
 #include <stdbool.h>
+
+
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
 #define DEBUG2 0 // Debug messages in the Functions
@@ -303,7 +305,7 @@ short int getWord(unsigned long long wordLength, char *returnString){
    unsigned short int inputCounter = 0;
     for (unsigned int i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets
         tempInputChar =  getchar();
-
+getch()
         if(tempInputChar != '\n') //so enter not in string
         TempString[i] =  tempInputChar;
 
