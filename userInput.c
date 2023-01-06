@@ -177,17 +177,6 @@ char *commLineArgManagement(int argc, char **argv){
 
 
 
-//allows the User to enter a String
-//!!Unfinished
-char *getWord(void){
-#if DEBUG2
-    printf("#F get word Function\n");
-#endif
-}
-
-
-
-
 //function which allows the user to guess letters or enter a control Value during runtime
 //control Value meaning:
 //1: quit
@@ -291,8 +280,40 @@ char *getWord(void){
     } else{
         return checkedChar;
     }
-
 }
+
+
+
+//allows the User to enter a String
+//!!Unfinished
+char *getWord(unsigned long long wordLength){
+    errorStruct  EEWrongInputGetWordFunction = {
+            .code = ERWrongInputGetWordFunction ,
+            .message = "Invalid Input, Try again!"
+    };
+#if DEBUG2
+    printf("#F get word Function\n");
+#endif
+    char tempInputChar = '0';
+    char TempString[wordLength];
+   unsigned short int inputCounter = 0;
+    for (unsigned int i = 0; i < wordLength && tempInputChar != '\n'; ++i) {
+        tempInputChar =  getSingleChar();
+        TempString[i] =  tempInputChar;
+        inputCounter++;
+    }
+
+    TempString[wordLength] = '\0';
+
+
+    if(wordLength < inputCounter){
+        errorManagement(EEWrongInputGetWordFunction,ERROR);
+    }
+
+
+return TempString;
+}
+
 
 
 

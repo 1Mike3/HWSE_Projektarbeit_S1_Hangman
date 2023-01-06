@@ -43,14 +43,14 @@ char *timeString;
             case controlCharSaveProgressToLog_startOfTheGame:
 
                 timeString = getTimeString(); //get the time in the form of a String
-                fprintf(file, "\n\n++++ Start of a new Hangman game ++++");
+                fprintf(file, "\n\n==== Start of a new Hangman game ====");
                 fprintf(file, " [Timestamp: %s] \n\n", timeString);
                 break;
             case controlCharSaveProgressToLog_normalInputSaving:
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n++ User selected a letter: %c ", UserInputChar);
                 fprintf(file, " [Timestamp: %s] \n ", timeString);
-                fprintf(file, " ++ Status of the guess-word: %s ++\n", uncoveredWord);
+                fprintf(file, " Status of the guess-word: %s ++\n", uncoveredWord);
                 break;
             case controlCharSaveProgressToLog_invalidUserInput:
                 timeString = getTimeString(); //get the time in the form of a String
@@ -59,7 +59,7 @@ char *timeString;
                 break;
             case controlCharSaveProgressToLog_endOfTheGame:
                 timeString = getTimeString(); //get the time in the form of a String
-                fprintf(file, "\n\n++++ The Game has Ended ++++");
+                fprintf(file, "\n\n==== The Game has Ended ====");
                 fprintf(file, " [Timestamp: %s] \n\n", timeString);
                 break;
             case controlCharSaveProgressToLog_gameHasBeenWon:

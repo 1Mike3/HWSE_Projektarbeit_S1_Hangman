@@ -28,6 +28,7 @@ enum errorCodes{
     ERGameRuntimeFunctionFailed = 107,
     ERFileManagementOpeningFileFailed = 108,
     ERFileManagementOpeningFileUnexpectedControlCharacter = 109,
+    ERWrongInputGetWordFunction = 110,
 
 };
 // creating a const struct for easier Error Management

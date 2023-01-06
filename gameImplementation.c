@@ -30,6 +30,7 @@ int gameRuntime(char *activeWord){
             .message = "Heap ran out of Memory!"
     };
 
+
                //#### Uncovered Value Array ###
     //create An array which contains the Information if a letter was Uncovered or not
     unsigned long long wordLength = strlen(activeWord); //var., contains length of word for uncov.arr. intialization
@@ -84,6 +85,16 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 
 
+    //!! DEBUG !!
+    char *TempWord = calloc(wordLength+1, sizeof (char ));
+        printf("test get word\n");
+    strcpy(TempWord, getWord(wordLength));
+    printf("the input Word is: %s", TempWord);
+    free(TempWord);
+     //!! End Debug
+
+
+
 
 
 // #### Convert lowercase input into uppercase input ####
@@ -116,14 +127,14 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 
 //####    let User guess Letters ####
     char guessedLetter = letUserGuessLetters(&controlValueGuessLetters);
+    //controlvalueLetUserGuessLetters Interpretation
     if(controlValueGuessLetters == 1){
-
         printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
-
         free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);
-
         saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
         return gameUserDecidedToQuit;
+    }else if(controlValueGuessLetters == 2){ //Case Let User Guess whole Word
+
     }
 
 
@@ -271,3 +282,25 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     }
 
 
+    //sequence which activates the option to let the user guess a whole word
+    //Returnvalue Meaning
+    //1: user guessed correctly
+    //2: user guessed incorrectly
+    //3: function error
+   short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned long long activeWordLength){
+        printf("Enter the Word you want to guess:\n");
+        char *guessedWord;
+        guessedWord = getWord(activeWordLength);
+char guessedWordConverted[activeWordLength];
+        convertInputWordToUppercase(guessedWord, guessedWordConverted,activeWordLength);
+
+        //case the words match
+        if(0 == strcmp(guessedWordConverted, activeWordConvert)){
+            printf("Congratulations you guessed the word!\n\n");
+            return 1;
+        }
+
+        //case the words don't match
+        return 2;
+
+}
