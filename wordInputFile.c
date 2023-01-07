@@ -42,6 +42,8 @@ short int getTheWordFromTheInputFile(char** activeWord){
     //copy a random word from the wordArray into the active Word
     strcpy(*activeWord, wordArrayValid[randNum]);
 
+    //write Marker back into File
+    generateFileInformation(p_wordCount,wordArray, wordArrayMarkers, activeWord);
 
     return 0;
 }
@@ -156,8 +158,98 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
         return -1;
     }
 
-
-
-
 return 0;
+}
+
+
+
+
+
+
+//writes detected Word marker in place of the used Word
+short int writeMarkerInFile(unsigned short int *wordCount,char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE],
+                            short int *wordArrayMarkers, char usedWord[MAX_WORD_SIZE_FILE]){
+
+
+    FILE*file;
+    if((file=fopen("Hangman_Words.txt","a+"))) {
+        char *tempWordString = calloc(MAX_WORD_SIZE_FILE, sizeof(char));
+        char *tempMarkerString = calloc(SIZE_MARKERS, sizeof(char));
+
+        const char *compareFileMarkerUsable = "#";
+        const char *compareFileMarkerUnusable = "#+";
+        char checkIfNextCharEOF;
+
+
+// Block skip the Text in the beginning
+        long seekOffset = FILE_HEADER_OFFSET;
+        fseek(file, seekOffset, SEEK_CUR);
+        seekOffset = 1; //so skips newline and space
+//End Block skip the text in the beginning
+
+
+
+//wile Loop to run through the input Words and assign them to the wordArray
+//also generates the WordMarkersArray according to the tempMarkerStrings
+        int arrayIndex = 0;
+        while (true) {
+
+            fscanf(file, "%s", tempWordString); //assign word to tempWordString
+
+
+
+
+            strcpy(wordArray[arrayIndex], tempWordString);
+
+
+            fseek(file, seekOffset, SEEK_CUR); //skip Space
+            fscanf(file, "%s", tempMarkerString);//assign Marker to tempMarkerString
+
+
+            if (0 == (strcmp(tempMarkerString, compareFileMarkerUsable))) { //case #
+                wordArrayMarkers[arrayIndex] = 1;
+            } else if (0 == (strcmp(tempMarkerString, compareFileMarkerUnusable))) { //case #+
+                wordArrayMarkers[arrayIndex] = 0;
+            } else {
+                //todo error stuff
+            }
+
+            fseek(file, seekOffset, SEEK_CUR); //skip newline
+
+
+
+            *(wordCount) += 1; //Increment Word-counter so caller function knows how many entries in Array valid
+
+
+
+            //check if end of file is reached
+            checkIfNextCharEOF = fgetc(file);
+            if (checkIfNextCharEOF == EOF) {
+                break; //break loop if EOF is reached
+            } else {
+                seekOffset = -1; //go one byte back
+                fseek(file, seekOffset, SEEK_CUR);
+                seekOffset = 1; //reset to the def value
+            }
+
+            arrayIndex++; //increment arrayIndex so on next run written to next spot
+
+
+        }//endwhile true
+
+        //FreeSpot
+        free(tempWordString);
+        free(tempMarkerString);
+
+        //CLOSE the Filestream
+        fclose(file);
+
+    }else{ //file open error
+
+        printf("Error");
+        //todo usual error stuff + return
+        return -1;
+    }
+
+    return 0;
 }
