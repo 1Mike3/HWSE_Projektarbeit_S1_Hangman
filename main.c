@@ -16,11 +16,14 @@
 #include "userInput.h"
 #include "errorManagement.h"
 #include "wordInputFile.h"
+#include "helperFunctions.h"
+
 
 //Including of external Header-Files
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
@@ -30,6 +33,18 @@
 
 
 int main(int argc, char **argv){
+
+    //initialize random number generator
+   time_t t;
+   srand((unsigned) time(&t));
+
+#if 0 //debug random number generator
+    int r;
+    for (int i = 0; i < 20; ++i) {
+       r = generateRandomNumber(2);
+        printf("%i\n", r);
+    }
+#endif
 
 //Error Messages
     errorStruct EEStartSequenceReturn  = {

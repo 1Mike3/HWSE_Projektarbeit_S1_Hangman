@@ -8,6 +8,8 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 
 //my constants
 #define ALPHABETSIZE 26
@@ -120,6 +122,9 @@ int checkWord(char *Word){
     }
 }
 
-int generateRandomNumber(int min, int max){
-
+//generate random integer from 0 to max
+int generateRandomNumber(int max){
+    int r = 0;
+          r = rand() % max; //the +2,if weirdness is so 0 also generated
+    return r;
 }

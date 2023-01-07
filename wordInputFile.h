@@ -15,4 +15,4 @@
 
 short int getTheWordFromTheInputFile(char **activeWord);
 void createAnInputFileIfNoneExists(void);
-short int generateFileInformation(unsigned short int wordCount, char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE] ,short int *wordArrayMarkers, char ** activeWord);
+short int generateFileInformation(unsigned short int *wordCount, char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE] ,short int *wordArrayMarkers);
