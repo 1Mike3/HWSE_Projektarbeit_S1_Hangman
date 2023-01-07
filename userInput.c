@@ -36,15 +36,11 @@ int startSequence(void) {
 
     if (textFormat == 0) { // text on first call
         //start block to be printed on every Programm start
-        printf("\n\n======= HANGMAN =======\n");
+        printf("\n\n           ======= HANGMAN =======\n");
         printf("Welcome to my version of the Hangman-Game!\n\n");
 
-        printf("        ##  How to Play: ##    \n");
-        printf("-!!Configuration-File which contains the guess-words: Hangman_Words.txt(created on startup)\n");
-        printf("-valid input characters letter-guessing(except program control numbers)\n"
-                       "are 26 lat. alphabet letters(lower or uppercase).\n");
-        printf("-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss\n");
-        printf("-during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n");
+        printf("             ##  How to Play: ##    \n");
+        printf("Look up the Manual \"Hangman_Manual.txt\" (automatically generated on first startup)\n\n");
 
 
         printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");

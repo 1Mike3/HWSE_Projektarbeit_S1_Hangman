@@ -38,6 +38,9 @@ int main(int argc, char **argv){
    time_t t;
    srand((unsigned) time(&t));
 
+   //Print Manual
+   printManualInFileOnStartup();
+
 #if 0 //debug random number generator
     int r;
     for (int i = 0; i < 20; ++i) {

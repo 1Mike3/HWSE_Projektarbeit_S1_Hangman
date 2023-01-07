@@ -128,3 +128,27 @@ int generateRandomNumber(int max){
           r = rand() % max; //the +2,if weirdness is so 0 also generated
     return r;
 }
+
+//todo make Manualprint function
+void printManualInFileOnStartup(void){
+    FILE *file;
+    if ((file = fopen("Hangman_Manual.txt", "r"))) { //check if File Exists
+        fclose(file);
+    } else { //create file
+        if ((file = fopen("Hangman_Manual.txt", "w+"))) {
+            fprintf(file,"### Manual to my Hangman-Game :) ###\n\n");
+            fprintf(file,"-!!Configuration-File which contains the guess-words: Hangman_Words.txt(created on startup)\n");
+            fprintf(file,"-valid input characters letter-guessing(except program control numbers)\n"
+                   "are 26 lat. alphabet letters(lower or uppercase).\n");
+            fprintf(file,"-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss\n");
+            fprintf(file,"-during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n");
+
+            fclose(file);
+            return;
+        }else{
+            printf("Error big Nono\n");
+            //todo usual error stuff
+            return;
+        }
+    }
+}
