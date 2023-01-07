@@ -24,15 +24,16 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h> //for get-opt
+
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
-//#define DEBUG2 0
-//#define DEBUG3 0
 
 
 
 int main(int argc, char **argv){
+
 
     //initialize random number generator
    time_t t;

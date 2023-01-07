@@ -124,7 +124,7 @@ int checkWord(char *Word){
 
 //generate random integer from 0 to max
 int generateRandomNumber(int max){
-    int r = 0;
+    int r;
           r = rand() % max; //the +2,if weirdness is so 0 also generated
     return r;
 }
