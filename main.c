@@ -31,13 +31,6 @@
 
 int main(int argc, char **argv){
 
-    //game Runtime Constants: (will be changed when new function available)
-    //!!i won't include a check so only one is active so just set only one to true!
-    //differentiate between old command line function and
-    bool commandLineInputActive, fileInputActive;
-    commandLineInputActive = false;
-    fileInputActive = true;
-
 //Error Messages
     errorStruct EEStartSequenceReturn  = {
             .code = ERStartSequenceRet,
@@ -56,9 +49,14 @@ int main(int argc, char **argv){
             .message = "An Error or Warning has caused the gameRuntime function to fail!"
     };
 
-#if DEBUG1
-    printf("°No of argc: %i\n", argc);
-#endif
+    //game Runtime Constants: (will be changed when new function available)
+    //!!i won't include a check so only one is active so just set only one to true!
+    //differentiate between old command line function and
+    bool commandLineInputActive, fileInputActive;
+    commandLineInputActive = false;
+    fileInputActive = true;
+
+    createAnInputFileIfNoneExists();
 
     //#### Core Elements ####
     //the central and most often Used Elements which will be used throughout the Program will be initialised here

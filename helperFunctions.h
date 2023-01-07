@@ -10,3 +10,4 @@
 char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked);
 void convertInputWordToUppercase(char *wordToBeConverted,char *convertedWord,unsigned long long stringLength);
 int checkWord(char *Word);
+int generateRandomNumber(int min, int max);

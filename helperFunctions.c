@@ -119,3 +119,7 @@ int checkWord(char *Word){
         return 0;
     }
 }
+
+int generateRandomNumber(int min, int max){
+
+}
