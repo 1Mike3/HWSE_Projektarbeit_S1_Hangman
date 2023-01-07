@@ -20,6 +20,5 @@ void createAnInputFileIfNoneExists(void);
 short int generateFileInformation(unsigned short int *wordCount,
                                   char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE] ,short int *wordArrayMarkers);
 
-short int writeMarkerInFile(unsigned short int *wordCount,char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE],
-                            short int *wordArrayMarkers, char usedWord[MAX_WORD_SIZE_FILE]);
+short int writeMarkerInFile(char usedWord[MAX_WORD_SIZE_FILE]);
 

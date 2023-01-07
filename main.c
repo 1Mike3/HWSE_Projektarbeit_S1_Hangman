@@ -63,6 +63,10 @@ int main(int argc, char **argv){
             .code = ERGameRuntimeFunctionFailed,
             .message = "An Error or Warning has caused the gameRuntime function to fail!"
     };
+    errorStruct EENoInputDetectedFile = {
+            .code = ERNoUserInputDetectedFile ,
+            .message = "No Available Guess-Word in WordFile, Game is shutting Down!"
+    };
 
     //game Runtime Constants: (will be changed when new function available)
     //!!i won't include a check so only one is active so just set only one to true!
@@ -94,7 +98,14 @@ int main(int argc, char **argv){
             activeWord = commLineArgManagement(argc, argv); //assign the activeWord from the commLineArg Function
 
             if(fileInputActive == true){
-                 getTheWordFromTheInputFile(p_activeWord);
+             short int tempRetVal = getTheWordFromTheInputFile(p_activeWord);
+                 //Return Value Management:
+                switch (tempRetVal) {
+                    case 10: //no available words Abort Case
+                        free(activeWord);
+                        errorManagement(EENoInputDetectedFile, ERROR);
+                        return ERNoUserInputDetectedFile;
+                }
             }
 
 

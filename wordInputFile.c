@@ -11,6 +11,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+enum returnValues{
+    returnNoAvailableInputWords = 10,
+};
+
+
 
 short int getTheWordFromTheInputFile(char** activeWord){
 
@@ -35,6 +40,9 @@ short int getTheWordFromTheInputFile(char** activeWord){
         }
     }
 
+    if(wordCountValid == 0)
+        return returnNoAvailableInputWords;
+
     //get random Number for Word choosing
     int randNum = generateRandomNumber(wordCountValid);
 
@@ -43,7 +51,7 @@ short int getTheWordFromTheInputFile(char** activeWord){
     strcpy(*activeWord, wordArrayValid[randNum]);
 
     //write Marker back into File
-    generateFileInformation(p_wordCount,wordArray, wordArrayMarkers, activeWord);
+    writeMarkerInFile( *activeWord);
 
     return 0;
 }
@@ -57,7 +65,7 @@ void createAnInputFileIfNoneExists(void) {
     } else { //create file
         if ((file = fopen("Hangman_Words.txt", "w+"))) {
             fprintf(file,"## List of Hangman guess-words ## \n\n -enter guess-words in this Format: \n"
-                         "[Word]  [Space]  [#]  [+]\n-the # is a terminating character\n"
+                         "[Word]  [Space]  [#] or [+]\n                               \n"
                          "-the + is a marker if the word already was used\n"
                          "(write it only if this word should be skipped)"
                          "-max word length is 35 characters, more info in Manual\n"
@@ -74,8 +82,10 @@ void createAnInputFileIfNoneExists(void) {
 }
 
 
-//writes different in
-short int generateFileInformation(unsigned short int *wordCount,char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE], short int *wordArrayMarkers){
+//writes different Information from the file into the value arrays
+// which are passed as Parameters, and counts the amount of words contained in the file
+short int generateFileInformation(unsigned short int *wordCount,
+                                  char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE], short int *wordArrayMarkers){
 
 
     FILE*file;
@@ -84,7 +94,7 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
         char *tempMarkerString = calloc(SIZE_MARKERS, sizeof(char));
 
         const char *compareFileMarkerUsable = "#";
-        const char *compareFileMarkerUnusable = "#+";
+        const char *compareFileMarkerUnusable = "+";
         char checkIfNextCharEOF;
 
 
@@ -95,7 +105,6 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
 //End Block skip the text in the beginning
 
 
-
 //wile Loop to run through the input Words and assign them to the wordArray
 //also generates the WordMarkersArray according to the tempMarkerStrings
         int arrayIndex = 0;
@@ -103,15 +112,10 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
 
             fscanf(file, "%s", tempWordString); //assign word to tempWordString
 
-
-
-
             strcpy(wordArray[arrayIndex], tempWordString);
-
 
             fseek(file, seekOffset, SEEK_CUR); //skip Space
             fscanf(file, "%s", tempMarkerString);//assign Marker to tempMarkerString
-
 
             if (0 == (strcmp(tempMarkerString, compareFileMarkerUsable))) { //case #
                 wordArrayMarkers[arrayIndex] = 1;
@@ -123,11 +127,7 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
 
             fseek(file, seekOffset, SEEK_CUR); //skip newline
 
-
-
             *(wordCount) += 1; //Increment Word-counter so caller function knows how many entries in Array valid
-
-
 
             //check if end of file is reached
             checkIfNextCharEOF = fgetc(file);
@@ -140,7 +140,6 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
             }
 
             arrayIndex++; //increment arrayIndex so on next run written to next spot
-
 
         }//endwhile true
 
@@ -152,12 +151,10 @@ short int generateFileInformation(unsigned short int *wordCount,char wordArray[M
         fclose(file);
 
     }else{ //file open error
-
         printf("Error");
         //todo usual error stuff + return
         return -1;
     }
-
 return 0;
 }
 
@@ -166,18 +163,16 @@ return 0;
 
 
 
-//writes detected Word marker in place of the used Word
-short int writeMarkerInFile(unsigned short int *wordCount,char wordArray[MAX_WORD_COUNT_FILE][MAX_WORD_SIZE_FILE],
-                            short int *wordArrayMarkers, char usedWord[MAX_WORD_SIZE_FILE]){
+//writes detected Word marker in place of the current marker after the usedWord in the file
+short int writeMarkerInFile(char usedWord[MAX_WORD_SIZE_FILE]){
 
 
     FILE*file;
-    if((file=fopen("Hangman_Words.txt","a+"))) {
+    if((file=fopen("Hangman_Words.txt","r+"))) {
         char *tempWordString = calloc(MAX_WORD_SIZE_FILE, sizeof(char));
         char *tempMarkerString = calloc(SIZE_MARKERS, sizeof(char));
 
-        const char *compareFileMarkerUsable = "#";
-        const char *compareFileMarkerUnusable = "#+";
+        const char *compareFileMarkerUnusable = "#+\n";
         char checkIfNextCharEOF;
 
 
@@ -191,34 +186,22 @@ short int writeMarkerInFile(unsigned short int *wordCount,char wordArray[MAX_WOR
 
 //wile Loop to run through the input Words and assign them to the wordArray
 //also generates the WordMarkersArray according to the tempMarkerStrings
-        int arrayIndex = 0;
+
         while (true) {
 
             fscanf(file, "%s", tempWordString); //assign word to tempWordString
-
-
-
-
-            strcpy(wordArray[arrayIndex], tempWordString);
-
-
             fseek(file, seekOffset, SEEK_CUR); //skip Space
+
+            //check if the chosen word matches the tempWord in the file
+            if(0 == (strcmp(tempWordString, usedWord))){
+                fputc('+', file);
+            }
+
             fscanf(file, "%s", tempMarkerString);//assign Marker to tempMarkerString
 
 
-            if (0 == (strcmp(tempMarkerString, compareFileMarkerUsable))) { //case #
-                wordArrayMarkers[arrayIndex] = 1;
-            } else if (0 == (strcmp(tempMarkerString, compareFileMarkerUnusable))) { //case #+
-                wordArrayMarkers[arrayIndex] = 0;
-            } else {
-                //todo error stuff
-            }
-
             fseek(file, seekOffset, SEEK_CUR); //skip newline
 
-
-
-            *(wordCount) += 1; //Increment Word-counter so caller function knows how many entries in Array valid
 
 
 
@@ -232,14 +215,13 @@ short int writeMarkerInFile(unsigned short int *wordCount,char wordArray[MAX_WOR
                 seekOffset = 1; //reset to the def value
             }
 
-            arrayIndex++; //increment arrayIndex so on next run written to next spot
-
 
         }//endwhile true
 
         //FreeSpot
         free(tempWordString);
         free(tempMarkerString);
+
 
         //CLOSE the Filestream
         fclose(file);

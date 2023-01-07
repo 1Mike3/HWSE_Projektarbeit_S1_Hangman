@@ -30,7 +30,7 @@ enum errorCodes{
     ERFileManagementOpeningFileUnexpectedControlCharacter = 109,
     ERWrongInputGetWordFunction = 110,
     ERDefaultSwitchCaseGuessWholeWordFunction = 111,
-
+    ERNoUserInputDetectedFile = 112,
 };
 // creating a const struct for easier Error Management
 typedef const struct errorStruct {
