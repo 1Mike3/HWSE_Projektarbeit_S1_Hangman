@@ -137,10 +137,17 @@ void printManualInFileOnStartup(void){
     } else { //create file
         if ((file = fopen("Hangman_Manual.txt", "w+"))) {
             fprintf(file,"### Manual to my Hangman-Game :) ###\n\n");
-            fprintf(file,"-!!Configuration-File which contains the guess-words: Hangman_Words.txt(created on startup)\n");
-            fprintf(file,"-valid input characters letter-guessing(except program control numbers)\n"
-                   "are 26 lat. alphabet letters(lower or uppercase).\n");
-            fprintf(file,"-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss\n");
+            fprintf(file,"-!!Configuration-File which contains the guess-words: Hangman_Words.txt (created on startup).\n");
+            fprintf(file,"-when you encounter a problem with one of the files, delete it and the program\n"
+                         "will generate a new one on the next startup.");
+            fprintf(file,"\n");
+            fprintf(file,"The \"e\" function in the main menu only works if the program is executed\n"
+                         "on linux in the command line, of course you can also open the files manually.");
+            fprintf(file,"The WordFile is limited to 40 Words and each word 35 characters max.\n");
+            fprintf(file,"\n");
+            fprintf(file,"-valid input characters letter-guessing (except program control numbers).\n"
+                   "are 26 lat. alphabet letters (lower or uppercase).\n");
+            fprintf(file,"-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss.\n");
             fprintf(file,"-during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n");
 
             fclose(file);
