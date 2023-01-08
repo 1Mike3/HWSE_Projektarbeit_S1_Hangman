@@ -34,6 +34,8 @@
 
 int main(int argc, char **argv){
 
+   // system("./Hangman_Helper_Script.sh");
+
 
     //initialize random number generator
    time_t t;
@@ -144,8 +146,9 @@ int main(int argc, char **argv){
             errorManagement(EEStartSequenceReturn, ERROR);
             free(activeWord);
             return ERStartSequenceRet;
-
-
+        case 3://open word file
+            system("nano Hangman_Words.txt");
+            break;
         default://undefined return error behavior
             errorManagement(EEStartSequenceDefault, ERROR);
             free(activeWord);

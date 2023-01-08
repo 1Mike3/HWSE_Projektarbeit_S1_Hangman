@@ -43,12 +43,13 @@ int startSequence(void) {
         printf("Look up the Manual \"Hangman_Manual.txt\" (automatically generated on first startup)\n\n");
 
 
-        printf("Press \"s\" to start the Game / press \"q\" to quit the program.\n");
+        printf("Press \"s\" to start the Game, \"q\" to quit, \"e\" to edit the Word-file.\n");
+        printf("* Consult manual about the \"e\" option\n");
     }
     if (textFormat == 1) { //text on the following calls
     printf("Do you want to Play another Game?\n");
 
-    printf("Press \"s\" to start a new Game / press \"q\" to quit.\n");
+    printf("Press \"s\" to start a new Game / press \"q\" to quit,\"e\" to edit the Word-file. \n");
 }
     textFormat = 1;//set to 1 so different text on following calls
 
@@ -69,10 +70,11 @@ int startSequence(void) {
     //generate the return value
     if(controlCharacter == 's'){
         return 0;
-    }
-    if(controlCharacter == 'q'){
+    }else if(controlCharacter == 'q'){
         return 1;
-    } else{
+    } else if(controlCharacter == 'e'){
+        return 3;
+    }else{
         return 2; // error something went wrong if this is the return value
     }
 
@@ -109,13 +111,14 @@ unsigned char getSingleChar(void){
             return 'q';
         }else if(userInput == 's' || userInput == 'S'){
         return 's';
-    } else{
+    } else if(userInput == 'e' || userInput == 'E'){
+        return 'e';
+    }else{
         printf("invalid input or more than one letter, try again!\n");
         return 'I';
     }
 
 }
-
 
 
 
