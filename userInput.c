@@ -9,8 +9,8 @@
 
 
 #include <string.h>
-#include <stdbool.h>
-
+#include <unistd.h>
+#include <stdlib.h>
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
@@ -152,6 +152,30 @@ char *commLineArgManagement(int argc, char **argv){
         }
     }
 #endif
+
+    //START entered Raw Getopt
+    int nsecs = 0;
+    int nflag = 0;
+    int opt;
+    while ((opt = getopt(argc, argv, "hnt:")) != -1) {
+         switch (opt) {
+            case 'n': nflag = 1;
+                break;
+                case 't':
+                nsecs = atoi(optarg); // for brevity only
+                break;
+                case '?': // unknown option encountered
+                case ':': // missing argument for option
+                case 'h':
+                default:
+                fprintf(stderr, "Usage: %s [-n] [-t nsecs] NAME\n",
+                           argv[0]);
+                exit(EXIT_FAILURE);
+                 }
+        }
+
+
+    //END entered Raw Getopt
 
     //switch case to handle the different
     int wordValid = 0;
