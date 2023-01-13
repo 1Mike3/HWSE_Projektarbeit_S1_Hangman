@@ -37,7 +37,7 @@ enum errorCodes{
 
 
 // creating a const struct for easier Error Management
-typedef const struct errorStruct {
+typedef struct errorStruct {
     short int code;
    char message[150];
 }errorStruct;

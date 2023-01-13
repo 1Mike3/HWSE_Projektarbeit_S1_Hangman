@@ -8,9 +8,10 @@
 #endif //HANGMAN_USERINPUT_H
 
 #include "stdio.h"
+#include <stdbool.h>
 
 int startSequence(void);
 unsigned char getSingleChar(void);
-char *commLineArgManagement(int argc, char **argv);
+char *commLineArgManagement(int argc, char **argv,bool * activateFileInput);
 char letUserGuessLetters(short int *controlValue);
 short int getWord(unsigned long long wordLength, char *returnWord);

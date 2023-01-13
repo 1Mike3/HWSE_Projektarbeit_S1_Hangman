@@ -34,9 +34,6 @@
 
 int main(int argc, char **argv){
 
-   // system("./Hangman_Helper_Script.sh");
-
-
     //initialize random number generator
    time_t t;
    srand((unsigned) time(&t));
@@ -52,19 +49,20 @@ int main(int argc, char **argv){
     }
 #endif
 
-    //game Runtime Constants: (will be changed when new function available)
-    //!!i won't include a check so only one is active so just set only one to true!
-    //differentiate between old command line function and
-    bool commandLineInputActive, fileInputActive;
-    commandLineInputActive = false;
-    fileInputActive = true;
 
+    //marker which is set if the file input will be used during the game
+    bool activateFileInput;
+    activateFileInput = false;
+
+    //kinda self-explanatory
     createAnInputFileIfNoneExists();
 
     //#### Core Elements ####
-    //the central and most often Used Elements which will be used throughout the Program will be initialised here
-    char *activeWord = calloc(MAX_WORD_SIZE_FILE, sizeof (char )); //the Word which will be used to play the game (comm line arg || user input)
-    char** p_activeWord = &activeWord;
+
+    //the Word which was chosen for the game (comm line arg || user input)
+    //later used
+    char *activeWord = calloc(MAX_WORD_SIZE_FILE, sizeof (char ));
+
 
 
     do { //main loop to let the user run the Game multiple times
@@ -78,11 +76,17 @@ int main(int argc, char **argv){
 //               #### Hangman Game Active ####
         case 0: //the user has selected to run the Programm
 
-            if(commandLineInputActive == true)
-            activeWord = commLineArgManagement(argc, argv); //assign the activeWord from the commLineArg Function
 
-            if(fileInputActive == true){
-             short int tempRetVal = getTheWordFromTheInputFile(p_activeWord);
+            activeWord = commLineArgManagement(argc, argv, &activateFileInput); //assign the activeWord from the commLineArg Function
+
+            if(activateFileInput == true){
+                //DEBUG
+                //works if initialize new word here and pass to function
+                //strcpy doesn't work if word Previosly initialized
+                //oh i get it the string assignemnt changes the address
+                //change com line arg management function so active word passed as parameter and not touched if file input chosen.
+
+             short int tempRetVal = getTheWordFromTheInputFile(&activeWord);
                  //Return Value Management:
                 switch (tempRetVal) {
                     case 10: //no available words Abort Case
@@ -92,10 +96,9 @@ int main(int argc, char **argv){
                 }
             }
 
-
             //Error handling of the commLineArgManagement Function
-            //finishing with 104 is on purpose
-            int tempCompareValue = 1;
+            //checking if return of com line Arg management is #ERROR
+            int tempCompareValue;
             tempCompareValue = strcmp(activeWord, "#ERROR");
             if (tempCompareValue == 0) { //error handling
                 errorManagement(EECommandLineArgumentFunctionFailed, ERROR);

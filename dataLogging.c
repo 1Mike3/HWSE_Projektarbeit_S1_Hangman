@@ -15,7 +15,7 @@
 /*
 //file that logs the progress of the game into a Log file
  -control Character Meaning in associated Header file enum
- -if not necessary because of conrol char value constant # written for other values
+ -if not necessary because of control char value constant # written for other values
 */
 int saveGameProgressIntoLogFile(char UserInputChar, char* uncoveredWord, short int controlCharacter){
 

@@ -6,6 +6,7 @@
 #include "errorManagement.h"
 #include "helperFunctions.h"
 #include "dataLogging.h"
+#include "stdbool.h"
 
 
 #include <string.h>
@@ -103,6 +104,7 @@ unsigned char getSingleChar(void){
 
     if(loopCounter != 0){ //checking if more than one letter in input
         printf("invalid input or more than one letter, try again!\n");
+        fflush(stdin);
         return 'I';
     }
 
@@ -115,6 +117,7 @@ unsigned char getSingleChar(void){
         return 'e';
     }else{
         printf("invalid input or more than one letter, try again!\n");
+        fflush(stdin);
         return 'I';
     }
 
@@ -123,9 +126,10 @@ unsigned char getSingleChar(void){
 
 
 
-//manages the Input of the Word to be guessed on the command line
-char *commLineArgManagement(int argc, char **argv){
+//*
+char *commLineArgManagement(int argc, char **argv,bool * activateFileInput) {
     //!! important i am rewriting this whole function for getOpt, Will comment old code out and mark with %&&%
+    //!! Doing this just so it can be seen that i did the first part of the assignment
 
 #if DEBUG2
     printf("#F comLineArgManagement\n");
@@ -141,37 +145,52 @@ char *commLineArgManagement(int argc, char **argv){
     }
 #endif
 
-    //START entered Raw Getopt
+    bool wordValid = false; //marker for the checkword function
+    int getOptReturn; //return "char" of the getOpt function, used for  switch case to decide
 
-    int opt; //return "char" of the getOpt function, used for  switch case to decide
-    //ShortOpts is the string containing the different options/flags
-    while ((opt = getopt(argc, argv, "hnw:")) != -1) {
-         switch (opt) {
-            case 'n':
-                break;
-                case 't':
+    //while loop to manage the input arguments using getOpt
+    while ((getOptReturn = getopt(argc, argv, "fw:")) != -1) {
+        //switchCase to manage the getOpt returns
+        switch (getOptReturn) {
 
-                break;
-                case '?': // unknown option encountered
-                case ':': // missing argument for option
-                case 'h':
-                default:
-                fprintf(stderr, "Usage: %s [-n] [-t nsecs] NAME\n",
-                           argv[0]);
-                exit(EXIT_FAILURE);
-                 }
+            case 'f': //case User chose to use the input-file for the Game
+                printf("\n\n# file-input was chosen # \n\n");
+                *activateFileInput = true;
+ //todo check return Value
+                return "stringsdfasdfsdf";
+
+            case 'w': //case user chose to use a input Word on the command line
+                printf("\n\n# command-line-input was chosen # \n\n");
+                wordValid = checkWord(optarg); //check if the active Word meets the input criteria
+                if (wordValid == false) { //behavior if word does not meet input criteria
+                    errorManagement(EEInputCriteriaNotMet, WARNING);
+                    return "#ERROR";
+                } else {
+                    return optarg;
+                }
+
+                    case '?': // unknown option encountered
+                        printf("foo 1 ?\n");
+                    break;
+                    case ':': // missing argument for option
+                        printf("foo 2 :\n");
+                    break;
+                    default:
+                        fprintf(stderr, "Usage: %s [-n] [-t nsecs] NAME\n",
+                                argv[0]);
+                    exit(EXIT_FAILURE);
+                }
         }
 
 
-    //END entered Raw Getopt
 
+
+    /* %&&%
     //switch case to handle the different
     int wordValid = 0;
     switch (argc){
         case 1: //not enough input args
             errorManagement(EENotEnoughInputArguments, WARNING);
-            //TODO fix this edgecase (let user enter another word)
-            //!!Not Fixed
             return "#ERROR";
         case 2:// one Input arg, correct
              wordValid = checkWord(*(argv+1)); //check if the active Word meets the input criteria
@@ -187,10 +206,10 @@ char *commLineArgManagement(int argc, char **argv){
 
         default: //too many input args
             errorManagement(EEMoreThanOneInputArgument, WARNING);
-            //!!Not Fixed
-            //TODO fix this edgecase (let user enter another word)
             return "#ERROR";
     }
+    */
+    return "#ERROR";
 }
 
 
@@ -237,7 +256,7 @@ char *commLineArgManagement(int argc, char **argv){
             saveGameProgressIntoLogFile('a', "a",
                                        controlCharSaveProgressToLog_invalidUserInput);
         printf("invalid input or more than one letter, try again!\n");
-
+            fflush(stdin);
 
         userInput = (int) getchar(); //main input char
         enterCatcher = (int) getchar(); // temp var to catch the \n input and check if only one char has been entered
@@ -294,6 +313,7 @@ char *commLineArgManagement(int argc, char **argv){
         saveGameProgressIntoLogFile('a', "a",
                                     controlCharSaveProgressToLog_invalidUserInput);
         printf("invalid input or more than one letter, try again!\n");
+        fflush(stdin);
         return '#';
     } else{
         return checkedChar;
