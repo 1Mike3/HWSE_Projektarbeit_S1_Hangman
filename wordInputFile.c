@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-enum returnValues{
+enum returnValuesGetTheWordFromFile{
     returnNoAvailableInputWords = 10,
 };
 
@@ -65,7 +65,7 @@ void createAnInputFileIfNoneExists(void) {
     } else { //create file
         if ((file = fopen("Hangman_Words.txt", "w+"))) {
             fprintf(file,"## List of Hangman guess-words ## \n\n -enter guess-words in this Format: \n"
-                         "[Word]  [Space]  [#] or [+]\n                               \n"
+                         "[Word]  [Space]  [#] or [+] [\n]\n                           \n"
                          "-the + is a marker if the word already was used\n"
                          "(write it only if this word should be skipped)"
                          "-max word length is 35 characters, more info in Manual\n"
@@ -172,7 +172,6 @@ short int writeMarkerInFile(char usedWord[MAX_WORD_SIZE_FILE]){
         char *tempWordString = calloc(MAX_WORD_SIZE_FILE, sizeof(char));
         char *tempMarkerString = calloc(SIZE_MARKERS, sizeof(char));
 
-        const char *compareFileMarkerUnusable = "#+\n";
         char checkIfNextCharEOF;
 
 

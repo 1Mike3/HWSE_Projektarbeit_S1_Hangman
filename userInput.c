@@ -125,20 +125,8 @@ unsigned char getSingleChar(void){
 
 //manages the Input of the Word to be guessed on the command line
 char *commLineArgManagement(int argc, char **argv){
-    //Error Messages
-    errorStruct EENotEnoughInputArguments = {
-            .code = ERNotEnoughInputArgs  ,
-            .message = "No Input Argument Detected"
-    };
-    errorStruct EEMoreThanOneInputArgument = {
-            .code = ERMoreThanOneInputArg ,
-            .message = "More than one Input Argument has been entered"
-    };
+    //!! important i am rewriting this whole function for getOpt, Will comment old code out and mark with %&&%
 
-    errorStruct EEInputCriteriaNotMet = {
-            .code = ERInputCriteriaNotMet ,
-            .message = "The function which checks the Word for correctness determined it does not meet the requirements"
-    };
 #if DEBUG2
     printf("#F comLineArgManagement\n");
 #endif
@@ -154,15 +142,15 @@ char *commLineArgManagement(int argc, char **argv){
 #endif
 
     //START entered Raw Getopt
-    int nsecs = 0;
-    int nflag = 0;
-    int opt;
-    while ((opt = getopt(argc, argv, "hnt:")) != -1) {
+
+    int opt; //return "char" of the getOpt function, used for  switch case to decide
+    //ShortOpts is the string containing the different options/flags
+    while ((opt = getopt(argc, argv, "hnw:")) != -1) {
          switch (opt) {
-            case 'n': nflag = 1;
+            case 'n':
                 break;
                 case 't':
-                nsecs = atoi(optarg); // for brevity only
+
                 break;
                 case '?': // unknown option encountered
                 case ':': // missing argument for option
@@ -319,15 +307,12 @@ char *commLineArgManagement(int argc, char **argv){
 //0: it's all good man
 //1: wrong input
 short int getWord(unsigned long long wordLength, char *returnString){
-    errorStruct  EEWrongInputGetWordFunction = {
-            .code = ERWrongInputGetWordFunction ,
-            .message = "Invalid Input (not enough input characters), Try again!"
-    };
+
 
 #if DEBUG2
     printf("#F get word Function\n");
 #endif
-    char tempInputChar = '0';
+    unsigned char tempInputChar = '0';
  char TempString[wordLength];
    unsigned short int inputCounter = 0;
     for (unsigned int i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets

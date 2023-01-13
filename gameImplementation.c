@@ -25,18 +25,6 @@
 //Game behavior in runtime after all the checks have been done if another Game can/should start
 //returns 0 if Finished successfully and 1 if not
 int gameRuntime(char *activeWord){
-//Errors
-    errorStruct EEMemoryAllocationFailed = {
-            .code = ERMemoryAllocationFailed,
-            .message = "Heap ran out of Memory!"
-    };
-    errorStruct EEDefaultSwitchCaseGuessWholeWordSequence = {
-            .code = ERDefaultSwitchCaseGuessWholeWordFunction,
-            .message = "Exception function let user guess whole word, check switchCase Default!"
-    };
-
-
-
 
                //#### Uncovered Value Array ###
     //create An array which contains the Information if a letter was Uncovered or not

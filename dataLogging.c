@@ -18,16 +18,6 @@
  -if not necessary because of conrol char value constant # written for other values
 */
 int saveGameProgressIntoLogFile(char UserInputChar, char* uncoveredWord, short int controlCharacter){
-    //Error Messages
-    errorStruct EEFileManagementOpeningLogfileFailed = {
-            .code =  ERFileManagementOpeningFileFailed,
-            .message = "Opening or Creating Logfile failed",
-    };
-    errorStruct EEFileManagementOpeningLogfileUnexpectedControlInput = {
-            .code =  ERFileManagementOpeningFileUnexpectedControlCharacter,
-            .message = "Switch case save game progress into log file exception",
-    };
-
 
 
     //Start saving to File

@@ -52,28 +52,6 @@ int main(int argc, char **argv){
     }
 #endif
 
-//Error Messages
-    errorStruct EEStartSequenceReturn  = {
-            .code = ERStartSequenceRet,
-            .message = "start sequence returned a value it should not return during normal operation (2)"
-    };
-    errorStruct EEStartSequenceDefault = {
-            .code = ERStartSequenceDef,
-            .message = "default of switch-case after start sequence"
-    };
-    errorStruct EECommandLineArgumentFunctionFailed = {
-            .code =  ERComLineArgManagementFailed,
-            .message = "The ComLineArgManagement function has returned an error"
-    };
-    errorStruct EEGameRuntimeFailed= {
-            .code = ERGameRuntimeFunctionFailed,
-            .message = "An Error or Warning has caused the gameRuntime function to fail!"
-    };
-    errorStruct EENoInputDetectedFile = {
-            .code = ERNoUserInputDetectedFile ,
-            .message = "No Available Guess-Word in WordFile, Game is shutting Down!"
-    };
-
     //game Runtime Constants: (will be changed when new function available)
     //!!i won't include a check so only one is active so just set only one to true!
     //differentiate between old command line function and

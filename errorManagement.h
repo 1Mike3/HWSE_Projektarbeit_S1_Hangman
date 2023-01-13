@@ -4,8 +4,10 @@
 
 #ifndef HANGMAN_ERRORMANAGEMENT_H
 #define HANGMAN_ERRORMANAGEMENT_H
-
 #endif //HANGMAN_ERRORMANAGEMENT_H
+
+
+
 
 //Differentiating between Warning and Error Messages in ErrorManagement Function
 #define ERROR 1
@@ -32,13 +34,28 @@ enum errorCodes{
     ERDefaultSwitchCaseGuessWholeWordFunction = 111,
     ERNoUserInputDetectedFile = 112,
 };
+
+
 // creating a const struct for easier Error Management
 typedef const struct errorStruct {
     short int code;
    char message[150];
 }errorStruct;
 
-
+//Error Struct References
+extern const errorStruct EEMemoryAllocationFailed;
+extern const errorStruct EEDefaultSwitchCaseGuessWholeWordSequence;
+extern const errorStruct EENotEnoughInputArguments;
+extern const errorStruct EEMoreThanOneInputArgument;
+extern const errorStruct EEInputCriteriaNotMet;
+extern const errorStruct EEWrongInputGetWordFunction;
+extern const errorStruct EEFileManagementOpeningLogfileFailed;
+extern const errorStruct EEFileManagementOpeningLogfileUnexpectedControlInput;
+extern const errorStruct EEStartSequenceReturn;
+extern const errorStruct EEStartSequenceDefault;
+extern const errorStruct EECommandLineArgumentFunctionFailed;
+extern const errorStruct EEGameRuntimeFailed;
+extern const errorStruct EENoInputDetectedFile;
 
 /*
 errorStruct  = {
