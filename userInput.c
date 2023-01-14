@@ -126,8 +126,12 @@ unsigned char getSingleChar(void){
 
 
 
-//*
-char *commLineArgManagement(int argc, char **argv,bool * activateFileInput) {
+/*
+ * Function which manages com line Arguments
+ * Return 1 = file input chosen
+ * Return -1 = Error
+ */
+short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * activateFileInput) {
     //!! important i am rewriting this whole function for getOpt, Will comment old code out and mark with %&&%
     //!! Doing this just so it can be seen that i did the first part of the assignment
 
@@ -156,17 +160,17 @@ char *commLineArgManagement(int argc, char **argv,bool * activateFileInput) {
             case 'f': //case User chose to use the input-file for the Game
                 printf("\n\n# file-input was chosen # \n\n");
                 *activateFileInput = true;
- //todo check return Value
-                return "stringsdfasdfsdf";
+                return 1;
 
             case 'w': //case user chose to use a input Word on the command line
                 printf("\n\n# command-line-input was chosen # \n\n");
                 wordValid = checkWord(optarg); //check if the active Word meets the input criteria
                 if (wordValid == false) { //behavior if word does not meet input criteria
                     errorManagement(EEInputCriteriaNotMet, WARNING);
-                    return "#ERROR";
+                    return -1;
                 } else {
-                    return optarg;
+                    //return optarg;
+                    strcpy(active_Word, optarg);
                 }
 
                     case '?': // unknown option encountered
@@ -209,7 +213,7 @@ char *commLineArgManagement(int argc, char **argv,bool * activateFileInput) {
             return "#ERROR";
     }
     */
-    return "#ERROR";
+    return -1;
 }
 
 

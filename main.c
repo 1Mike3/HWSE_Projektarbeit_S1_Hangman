@@ -71,15 +71,16 @@ int main(int argc, char **argv){
     int bufferStartSequenceValue = startSequence();//execute the start sequence and proceed depending on it's ret val.
 
     //switch-case to interpret the return Value of the StartSequence
+        short int comLineArgManagementReturnValue = 0;
     switch (bufferStartSequenceValue) {
 
 //               #### Hangman Game Active ####
         case 0: //the user has selected to run the Programm
 
 
-            activeWord = commLineArgManagement(argc, argv, &activateFileInput); //assign the activeWord from the commLineArg Function
+            comLineArgManagementReturnValue = commLineArgManagement(activeWord,argc, argv, &activateFileInput); //assign the activeWord from the commLineArg Function
 
-            if(activateFileInput == true){
+            if(comLineArgManagementReturnValue == 1){
                 //DEBUG
                 //works if initialize new word here and pass to function
                 //strcpy doesn't work if word Previosly initialized
@@ -88,6 +89,7 @@ int main(int argc, char **argv){
 
              short int tempRetVal = getTheWordFromTheInputFile(&activeWord);
                  //Return Value Management:
+                 //switch case because expect to add more returns later
                 switch (tempRetVal) {
                     case 10: //no available words Abort Case
                         free(activeWord);
@@ -97,10 +99,8 @@ int main(int argc, char **argv){
             }
 
             //Error handling of the commLineArgManagement Function
-            //checking if return of com line Arg management is #ERROR
-            int tempCompareValue;
-            tempCompareValue = strcmp(activeWord, "#ERROR");
-            if (tempCompareValue == 0) { //error handling
+            //checking if return of com line Arg management is error (-1)
+            if (comLineArgManagementReturnValue == -1) { //error handling
                 errorManagement(EECommandLineArgumentFunctionFailed, ERROR);
                 return ERComLineArgManagementFailed;
             }

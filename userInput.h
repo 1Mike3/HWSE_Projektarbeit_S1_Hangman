@@ -11,7 +11,11 @@
 #include <stdbool.h>
 
 int startSequence(void);
+
 unsigned char getSingleChar(void);
-char *commLineArgManagement(int argc, char **argv,bool * activateFileInput);
+
+short int commLineArgManagement(char* active_Word,int argc, char **argv,bool * activateFileInput);
+
 char letUserGuessLetters(short int *controlValue);
+
 short int getWord(unsigned long long wordLength, char *returnWord);
