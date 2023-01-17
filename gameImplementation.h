@@ -25,7 +25,7 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
                               char *activeWord, char *statusWordUncovered);
 
 short int coveredWordManagement(char inputChar, char *convertedWord, short int *uncoveredArray,
-                                char *misses,  char *hits, char *StatusWordForDataLogging);
+                                char *misses, char *StatusWordForDataLogging);
 
 
 short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned long long activeWordLength);

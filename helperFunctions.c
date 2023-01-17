@@ -8,7 +8,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 #include <stdlib.h>
 
 //my constants
@@ -46,10 +45,10 @@ char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
             //check if lowercase
             if(letterToBeChecked <= 'z' && letterToBeChecked >= 'a'){ //if input was lowercase
                 letterReturnValue = (letterToBeChecked - ALPHABETOFFSET);
-                return letterReturnValue; //return lowercase char converted to uppercase char
+                return (char)letterReturnValue; //return lowercase char converted to uppercase char
             }else{ //if input was uppercase
                 letterReturnValue = letterToBeChecked;
-                return letterReturnValue; //return the char as entered
+                return (char)letterReturnValue; //return the char as entered
             }
 
         } // end if input was valid
@@ -68,7 +67,7 @@ void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,un
     for (unsigned int a = 0; a < stringLength; a++)
     {
         //writing the converted chars into the converted Word
-        convertedWord[a] = toupper(tempStringValue[a]);
+        convertedWord[a] = (char)toupper(tempStringValue[a]);
     }
 
     convertedWord[stringLength] = '\0';
@@ -85,7 +84,7 @@ void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,un
 //0: the word is incorrect
 //1: the word is correct
 int checkWord(char *Word){
-    unsigned long long stingLength = (size_t)strlen(Word); //unsigned long long so no conversion error from size_t
+    unsigned long long stingLength = strlen(Word); //unsigned long long so no conversion error from size_t
     int tempCompareChar= 'A'; //Starts with A and moves through the Alphabet, uses offset constant to also compare lowercase
     unsigned int correctLetterCounter = 0;
     unsigned char tempLetter;
@@ -136,6 +135,7 @@ void printManualInFileOnStartup(void){
         fclose(file);
     } else { //create file
         if ((file = fopen("Hangman_Manual.txt", "w+"))) {
+
             fprintf(file,"### Manual to my Hangman-Game :) ###\n\n");
             fprintf(file,"-!!Configuration-File which contains the guess-words: Hangman_Words.txt (created on startup).\n");
             fprintf(file,"-when you encounter a problem with one of the files, delete it and the program\n"

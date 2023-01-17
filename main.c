@@ -18,11 +18,9 @@
 
 
 //Including of external Header-Files
-#include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h> //for get-opt
 
 
 //Debugging Helpers
@@ -143,7 +141,6 @@ int main(int argc, char **argv){
     }//End switch case start sequence Return
 
     }  while (1); //end of the loop which lets the user play multiple times
-    return 0;
 }
 
 //all the todos

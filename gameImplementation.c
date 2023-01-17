@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+
 
 #define DEBUG1 0
 #define DEBUG2 0
@@ -148,7 +148,6 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
                 saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
                 return gameLost;
 
-                break;
             default:
                 errorManagement(EEDefaultSwitchCaseGuessWholeWordSequence, WARNING);
                 return gameRuntimeError;
@@ -159,7 +158,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 
 //   ####       Manage the arrays responsible for the covered Word          ####
    controlValueCoveredWordManagement = coveredWordManagement(guessedLetter, activeWordConverted, uncoveredArray,
-                          inputCharsMisses, inputCharsHits , statusWordUncovered);
+                          inputCharsMisses, statusWordUncovered);
 
 
 
@@ -257,7 +256,7 @@ void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncov
 //1: if falied
 //2: if no word has been correctly guessed
 short int coveredWordManagement(char inputChar, char *convertedWord,short int *uncoveredArray,
-                            char *misses,  char *hits, char *StatusWordForDataLogging) {
+                            char *misses, char *StatusWordForDataLogging) {
     char stringToAppend[2]; //converting input Char to string for StrCat functions
     stringToAppend[0] = inputChar;
     stringToAppend[1] = '\0';

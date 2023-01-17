@@ -11,7 +11,7 @@
 
 #include <string.h>
 #include <unistd.h>
-#include <stdlib.h>
+
 
 //Debugging Helpers
 #define DEBUG1 0 //TestPrint argc argv
@@ -349,14 +349,14 @@ short int getWord(unsigned long long wordLength, char *returnString){
     for (unsigned int i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets
         tempInputChar =  getchar();
         if(tempInputChar != '\n') //so enter not in string
-        TempString[i] =  tempInputChar;
+        TempString[i] =  (char)tempInputChar;
 
           inputCounter++;
     }
 
     TempString[wordLength] = '\0';
 
-    if( wordLength  != (inputCounter- 1)){ //-1 because offset in for loop
+    if( wordLength != (inputCounter- 1)){ //-1 because offset in for loop
         errorManagement(EEWrongInputGetWordFunction,ERROR);
         return 1;
     }

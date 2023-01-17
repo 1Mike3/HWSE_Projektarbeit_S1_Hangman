@@ -130,7 +130,7 @@ short int generateFileInformation(unsigned short int *wordCount,
             *(wordCount) += 1; //Increment Word-counter so caller function knows how many entries in Array valid
 
             //check if end of file is reached
-            checkIfNextCharEOF = fgetc(file);
+            checkIfNextCharEOF = (char)fgetc(file);
             if (checkIfNextCharEOF == EOF) {
                 break; //break loop if EOF is reached
             } else {
@@ -205,7 +205,7 @@ short int writeMarkerInFile(char usedWord[MAX_WORD_SIZE_FILE]){
 
 
             //check if end of file is reached
-            checkIfNextCharEOF = fgetc(file);
+            checkIfNextCharEOF =(char)fgetc(file);
             if (checkIfNextCharEOF == EOF) {
                 break; //break loop if EOF is reached
             } else {
