@@ -22,9 +22,9 @@ const errorStruct EEDefaultSwitchCaseGuessWholeWordSequence = {
         .message = "Exception function let user guess whole word, check switchCase Default!"
 };
 
-const errorStruct EENotEnoughInputArguments = {
-        .code = ERNotEnoughInputArgs  ,
-        .message = "No Input Argument Detected"
+const errorStruct EEDefaultGetOptSwitchCase = {
+        .code = ERDefaultGetOptSwitchCase  ,
+        .message = "Uexpected GetOpt Behavior, Shutting Down"
 };
 
 const errorStruct EEMoreThanOneInputArgument = {

@@ -1,13 +1,11 @@
 #include <stdio.h>
 
-/*  #### General Programm Information ####
-  -Created by: Michal Kuc 27.12.2022
-  -Project HWSE WS22
-  -Hangman Game with visualisation, user input and data logging
-
-  -I added Debug-Helpers in the source code: #if DEBUG segments are irrelevant for the programs functionality
-
-  -convert to Uppercase functions in helperFunctions.c
+/**#### General Programm Information ####
+ * -Created by: Michal Kuc 27.12.2022
+ * -Project HWSE WS22
+ * -Hangman Game with visualisation, user input and data logging
+ *-I added Debug-Helpers in the source code: #if DEBUG segments are irrelevant for the programs functionality
+ *-convert to Uppercase functions in helperFunctions.c
  */
 
 //Including of project-related Header-Files
@@ -38,6 +36,9 @@ int main(int argc, char **argv){
    time_t t;
    srand((unsigned) time(&t));
 
+   //for skipping of comlineArgManagement
+    bool skipComLineArgManagementAfterFirstEntry = false;
+
    //Print Manual
    printManualInFileOnStartup();
 
@@ -63,23 +64,28 @@ int main(int argc, char **argv){
     //later used
     char *activeWord = calloc(MAX_WORD_SIZE_FILE, sizeof (char ));
 
-
+//switch-case to interpret the return Value of the StartSequence
+    short int comLineArgManagementReturnValue = 0;
 
     do { //main loop to let the user run the Game multiple times
 
     //      ###         Program         start ###
     int bufferStartSequenceValue = startSequence();//execute the start sequence and proceed depending on it's ret val.
 
-    //switch-case to interpret the return Value of the StartSequence
-        short int comLineArgManagementReturnValue = 0;
+
     switch (bufferStartSequenceValue) {
 
 //               #### Hangman Game Active ####
         case 0: //the user has selected to run the Programm
 
+        //bool to skip comLineArgManagement
 
-            comLineArgManagementReturnValue = commLineArgManagement(activeWord,argc, argv, &activateFileInput); //assign the activeWord from the commLineArg Function
+        if(skipComLineArgManagementAfterFirstEntry == false) {
+            comLineArgManagementReturnValue = commLineArgManagement(activeWord, argc, argv,&activateFileInput); //assign the activeWord from the commLineArg Function
+        }
+            skipComLineArgManagementAfterFirstEntry = true;
 
+        //com LineArgManagement selected file Input
             if(comLineArgManagementReturnValue == 1){
                 //DEBUG
                 //works if initialize new word here and pass to function

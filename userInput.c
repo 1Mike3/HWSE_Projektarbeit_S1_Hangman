@@ -153,6 +153,9 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
     int getOptReturn; //return "char" of the getOpt function, used for  switch case to decide
 
     //while loop to manage the input arguments using getOpt
+    //1 retrurn = file  input selected
+    //-1 return if error in function
+    //2 for word command line enter selection
     while ((getOptReturn = getopt(argc, argv, "fw:")) != -1) {
         //switchCase to manage the getOpt returns
         switch (getOptReturn) {
@@ -171,18 +174,22 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
                 } else {
                     //return optarg;
                     strcpy(active_Word, optarg);
+                    return 2;
                 }
 
                     case '?': // unknown option encountered
-                        printf("foo 1 ?\n");
-                    break;
+                    //todo usual error stuff
+                        printf("\nGetOpt: unknown option encountered!\n");
+                return -1;
+
                     case ':': // missing argument for option
-                        printf("foo 2 :\n");
-                    break;
+                    //todo usual error stuff
+                        printf("\nmissing anargument :\n");
+                        return -1;
+
                     default:
-                        fprintf(stderr, "Usage: %s [-n] [-t nsecs] NAME\n",
-                                argv[0]);
-                    exit(EXIT_FAILURE);
+                        errorManagement(EEDefaultGetOptSwitchCase, ERROR);
+                    return -1;
                 }
         }
 

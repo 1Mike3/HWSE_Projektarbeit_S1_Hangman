@@ -22,6 +22,8 @@
 #define NOOOFTRYS 10          //the number of game rounds that is set from the start
 
 
+void foo(short *uncoveredArray, char *inputCharsHits, char *statusWordUncovered, char *activeWordConverted);
+
 //Game behavior in runtime after all the checks have been done if another Game can/should start
 //returns 0 if Finished successfully and 1 if not
 int gameRuntime(char *activeWord){
@@ -130,7 +132,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
             case 1:
                 printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
                 //      FREE Spot
-                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
+                foo(uncoveredArray, inputCharsHits, statusWordUncovered, activeWordConverted);
                 //save to LOG
                 saveGameProgressIntoLogFile('a', "a",
                                             controlCharSaveProgressToLog_gameHasBeenWon);
@@ -206,7 +208,15 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
   }
 } // End Round-loop while
 
-}// End Game Runtime function
+}
+
+void foo(short *uncoveredArray, char *inputCharsHits, char *statusWordUncovered, char *activeWordConverted) {
+    free(inputCharsHits);
+    free(activeWordConverted);
+    free(uncoveredArray);
+    free(statusWordUncovered);
+}
+// End Game Runtime function
 
 
 
@@ -263,7 +273,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
             uncoveredArray[i] = 1;
 
             if (appendedMarker == 0) { //so only once added to string even if 1+ in word // and only once print guessmeassage
-                strcat(hits, stringToAppend);
+               // strcat(hits, stringToAppend);
                 printf("Correct Guess! :)\n");
                 appendedMarker++;
             }

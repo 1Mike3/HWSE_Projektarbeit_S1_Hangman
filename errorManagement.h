@@ -33,6 +33,7 @@ enum errorCodes{
     ERWrongInputGetWordFunction = 110,
     ERDefaultSwitchCaseGuessWholeWordFunction = 111,
     ERNoUserInputDetectedFile = 112,
+    ERDefaultGetOptSwitchCase = 113,
 };
 
 
@@ -45,7 +46,7 @@ typedef struct errorStruct {
 //Error Struct References
 extern const errorStruct EEMemoryAllocationFailed;
 extern const errorStruct EEDefaultSwitchCaseGuessWholeWordSequence;
-extern const errorStruct EENotEnoughInputArguments;
+extern const errorStruct EEDefaultGetOptSwitchCase;
 extern const errorStruct EEMoreThanOneInputArgument;
 extern const errorStruct EEInputCriteriaNotMet;
 extern const errorStruct EEWrongInputGetWordFunction;
