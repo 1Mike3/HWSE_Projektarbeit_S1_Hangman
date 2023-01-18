@@ -156,10 +156,13 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
     //1 retrurn = file  input selected
     //-1 return if error in function
     //2 for word command line enter selection
-    while ((getOptReturn = getopt(argc, argv, "fw:")) != -1) {
+    while ((getOptReturn = getopt(argc, argv, "mfw:")) != -1) {
         //switchCase to manage the getOpt returns
         switch (getOptReturn) {
 
+            case  'm': //Print Manual
+                printf("\n\n ## Open Manual-input was chosen ## \n\n");
+                break;
             case 'f': //case User chose to use the input-file for the Game
                 printf("\n\n# file-input was chosen # \n\n");
                 *activateFileInput = true;
@@ -184,7 +187,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
 
                     case ':': // missing argument for option
                     //todo usual error stuff
-                        printf("\nmissing anargument :\n");
+                        printf("\nmissing argument :\n");
                         return -1;
 
                     default:

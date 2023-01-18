@@ -2,6 +2,7 @@
 // Created by osboxes on 31/12/22.
 //
 
+
 #ifndef HANGMAN_HELPERFUNCTIONS_H
 #define HANGMAN_HELPERFUNCTIONS_H
 
@@ -12,3 +13,4 @@ void convertInputWordToUppercase(char *wordToBeConverted,char *convertedWord,uns
 int checkWord(char *Word);
 int generateRandomNumber(int max);
 void printManualInFileOnStartup(void);
+
