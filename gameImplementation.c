@@ -40,7 +40,7 @@ int gameRuntime(char *activeWord){
 short int *uncoveredArray = calloc( wordLength , sizeof(short int));
 if(uncoveredArray == NULL){
     errorManagement(EEMemoryAllocationFailed, WARNING);
-    return gameRuntimeError;
+    return GAMERUNTIMEERROR;
 }
 // END #### Uncovered Value Array
 
@@ -56,14 +56,14 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
     char * inputCharsHits = calloc(wordLength +1 , sizeof(char));
     if(inputCharsHits == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
-        return gameRuntimeError;
+        return GAMERUNTIMEERROR;
     }
 
     //the uncovered Word Formatted for Data logging function
     char * statusWordUncovered = calloc(wordLength +1 , sizeof(char));
     if(statusWordUncovered == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
-        return gameRuntimeError;
+        return GAMERUNTIMEERROR;
     }
 
  char inputCharsMisses[NOOOFTRYS] = ""; //all the chars that have been entered by the User and are incorrect
@@ -76,7 +76,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
  char *activeWordConverted = malloc(wordLength +1 * sizeof(char));
     if(activeWordConverted == NULL){
         errorManagement(EEMemoryAllocationFailed, WARNING);
-        return gameRuntimeError;
+        return GAMERUNTIMEERROR;
     }
 //END ######### Game Variables #############
 
@@ -96,6 +96,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 //                  ###### start the Game ######
 
 //Write "Start of Game Marker" to log File
+
 saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_startOfTheGame);
 
 #if DEBUG3
@@ -119,7 +120,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
         printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
         free(inputCharsHits); free(activeWordConverted); free(uncoveredArray); free(statusWordUncovered);
         saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
-        return gameUserDecidedToQuit;
+        return GAMEUSERDECIDEDTOQUIT;
 
 
 
@@ -132,25 +133,24 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
             case 1:
                 printf("!! CONGRATULATIONS, you guessed the Word !!\n\n");
                 //      FREE Spot
-                foo(uncoveredArray, inputCharsHits, statusWordUncovered, activeWordConverted);
-                //save to LOG
+                free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
                 saveGameProgressIntoLogFile('a', "a",
                                             controlCharSaveProgressToLog_gameHasBeenWon);
                 saveGameProgressIntoLogFile('a', "A",
                                             controlCharSaveProgressToLog_endOfTheGame);
 
-                return gameWon;
+                return GAMEWON;
             case 2:
                 free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
                 saveGameProgressIntoLogFile('a', "a",
                                             controlCharSaveProgressToLog_gameHasBeenWon);
 
                 saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
-                return gameLost;
+                return GAMELOST;
 
             default:
                 errorManagement(EEDefaultSwitchCaseGuessWholeWordSequence, WARNING);
-                return gameRuntimeError;
+                return GAMERUNTIMEERROR;
         }
     }
 
@@ -162,11 +162,11 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
 
 
 
-    //        #####         Check if Game is Won        #####
-    unsigned int uncoveredLettersCounter = 0;
-    for (unsigned int i = 0; i < wordLength; ++i) {
-        if(uncoveredArray[i] == 1)
-            uncoveredLettersCounter++;
+            //        #####         Check if Game is Won        #####
+            unsigned int uncoveredLettersCounter = 0;
+        for (unsigned int i = 0; i < wordLength; ++i) {
+            if(uncoveredArray[i] == 1)
+                uncoveredLettersCounter++;
     }
     if(uncoveredLettersCounter == wordLength){
         printf("\n");
@@ -180,7 +180,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
         saveGameProgressIntoLogFile('a', "A",
                                     controlCharSaveProgressToLog_endOfTheGame);
 
-        return gameWon;
+        return GAMEWON;
     }
 
         //END        #####         Check if Game is Won        #####
@@ -203,18 +203,13 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
                                  controlCharSaveProgressToLog_gameHasBeenLost);
       saveGameProgressIntoLogFile('a', "a",
                                   controlCharSaveProgressToLog_endOfTheGame);
-      return gameLost;
+      return GAMELOST;
   }
 } // End Round-loop while
 
 }
 
-void foo(short *uncoveredArray, char *inputCharsHits, char *statusWordUncovered, char *activeWordConverted) {
-    free(inputCharsHits);
-    free(activeWordConverted);
-    free(uncoveredArray);
-    free(statusWordUncovered);
-}
+
 // End Game Runtime function
 
 

@@ -19,10 +19,10 @@
 */
 int saveGameProgressIntoLogFile(char UserInputChar, char* uncoveredWord, short int controlCharacter){
 
-
+   char *logFileName = "Hangman_Game_Logfile.txt";
     //Start saving to File
     FILE*file;
-    if((file=fopen("Hangman_Game_Logfile.txt","a"))){
+    if((file=fopen(logFileName, "a"))){
 
 
         //switch case for managing the different saving scenarios depending on the control Character

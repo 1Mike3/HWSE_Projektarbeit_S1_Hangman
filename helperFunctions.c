@@ -124,17 +124,18 @@ int checkWord(char *Word){
 //generate random integer from 0 to max
 int generateRandomNumber(int max){
     int r;
-          r = rand() % max; //the +2,if weirdness is so 0 also generated
+          r = rand() % max;
     return r;
 }
 
 //todo make Manualprint function
 void printManualInFileOnStartup(void){
+    char * manualFileName = "Hangman_Manual.txt";
     FILE *file;
-    if ((file = fopen("Hangman_Manual.txt", "r"))) { //check if File Exists
+    if ((file = fopen(manualFileName, "r"))) { //check if File Exists
         fclose(file);
     } else { //create file
-        if ((file = fopen("Hangman_Manual.txt", "w+"))) {
+        if ((file = fopen(manualFileName, "w+"))) {
 
             fprintf(file,"### Manual to my Hangman-Game :) ###\n\n");
             fprintf(file,"-!!Configuration-File which contains the guess-words: Hangman_Words.txt (created on startup).\n");

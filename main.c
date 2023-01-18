@@ -98,7 +98,7 @@ int main(int argc, char **argv){
                     case 10: //no available words Abort Case
                         free(activeWord);
                         errorManagement(EENoInputDetectedFile, ERROR);
-                        return ERNoUserInputDetectedFile;
+                        return ERNOUSERINPUTDETECTEDFILE;
                 }
             }
 
@@ -106,14 +106,14 @@ int main(int argc, char **argv){
             //checking if return of com line Arg management is error (-1)
             if (comLineArgManagementReturnValue == -1) { //error handling
                 errorManagement(EECommandLineArgumentFunctionFailed, ERROR);
-                return ERComLineArgManagementFailed;
+                return ERCOMLINEARGMANAGEMENTFAILED;
             }
 
             // #### Start game Sequence ####
             int returnGameRuntime = gameRuntime(activeWord);
-            if (returnGameRuntime == gameRuntimeError || returnGameRuntime == gameUnpredictedBehavior) {
+            if (returnGameRuntime == GAMERUNTIMEERROR || returnGameRuntime == GAMEUNPREDICTEDBEHAVIOR) {
                 errorManagement(EEGameRuntimeFailed, ERROR);
-                return ERGameRuntimeFunctionFailed;
+                return ERGAMERUNTIMEFUNCTIONFAILED;
             }
 
 
@@ -130,14 +130,14 @@ int main(int argc, char **argv){
         case 2://Return value of start sequence signals there has been an error in its function
             errorManagement(EEStartSequenceReturn, ERROR);
             free(activeWord);
-            return ERStartSequenceRet;
+            return ERSTARTSEQUENCERET;
         case 3://open word file
             system("nano Hangman_Words.txt");
             break;
         default://undefined return error behavior
             errorManagement(EEStartSequenceDefault, ERROR);
             free(activeWord);
-            return ERStartSequenceDef;
+            return ERSTARTSEQUENCEDEF;
     }//End switch case start sequence Return
 
     }  while (1); //end of the loop which lets the user play multiple times

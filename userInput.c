@@ -23,11 +23,11 @@
 #define ALPHABETOFFSET 32
 
 
-/*
-Start sequence, meaning of return value:
- 0: the user has selected to run the program
- 1: Abort the Programm execution
- 2: Error
+/*!
+ *Start sequence, meaning of return value:
+ *0: the user has selected to run the program
+ *1: Abort the Programm execution
+ *2: Error
 */
 int startSequence(void) {
 
@@ -126,7 +126,7 @@ unsigned char getSingleChar(void){
 
 
 
-/*
+/**
  * Function which manages com line Arguments
  * Return 1 = file input chosen
  * Return -1 = Error
@@ -162,6 +162,8 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
 
             case  'm': //Print Manual
                 printf("\n\n ## Open Manual-input was chosen ## \n\n");
+                //TODO finsih this
+                //TODO add change filename option
                 break;
             case 'f': //case User chose to use the input-file for the Game
                 printf("\n\n# file-input was chosen # \n\n");

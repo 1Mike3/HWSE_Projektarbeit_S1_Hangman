@@ -8,12 +8,12 @@
 #endif //HANGMAN_GAMEIMPLEMENTATION_H
 
 //enum containing the return Values of the game runtime function
-enum returnValuesGameRuntime{
-    gameWon = 0,
-    gameLost = 1,
-    gameUnpredictedBehavior = 2,
-    gameRuntimeError = 3,
-    gameUserDecidedToQuit = 4,
+enum RETURNVALUESGAMERUNTIME{
+    GAMEWON = 0,
+    GAMELOST = 1,
+    GAMEUNPREDICTEDBEHAVIOR = 2,
+    GAMERUNTIMEERROR = 3,
+    GAMEUSERDECIDEDTOQUIT = 4,
 };
 
 

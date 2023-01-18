@@ -19,21 +19,21 @@
 //The corresponding Structs Start with EE
 //find the corresponding struct by searching for usages of the enum elements
 //manually initialized for better overview of the codes
-enum errorCodes{
-    ERStartSequenceRet = 100,
-    ERStartSequenceDef = 101,
-    ERNotEnoughInputArgs = 102,
-    ERMoreThanOneInputArg = 103,
-    ERComLineArgManagementFailed = 104,
-    ERInputCriteriaNotMet = 105,
-    ERMemoryAllocationFailed = 106,
-    ERGameRuntimeFunctionFailed = 107,
-    ERFileManagementOpeningFileFailed = 108,
-    ERFileManagementOpeningFileUnexpectedControlCharacter = 109,
-    ERWrongInputGetWordFunction = 110,
-    ERDefaultSwitchCaseGuessWholeWordFunction = 111,
-    ERNoUserInputDetectedFile = 112,
-    ERDefaultGetOptSwitchCase = 113,
+enum ERRORCODES{
+    ERSTARTSEQUENCERET = 100,
+    ERSTARTSEQUENCEDEF = 101,
+    ERNOTENOUGHINPUTARGS = 102,
+    ERMORETHANONEINPUTARG = 103,
+    ERCOMLINEARGMANAGEMENTFAILED = 104,
+    ERINPUTCRITERIANOTMET = 105,
+    ERMEMORYALLOCATIONFAILED = 106,
+    ERGAMERUNTIMEFUNCTIONFAILED = 107,
+    ERFILEMANAGEMENTOPENINGFILEFAILED = 108,
+    ERFILEMANAGEMENTOPENINGFILEUNEXPECTEDCONTROLCHARACTER = 109,
+    ERWRONGINPUTGETWORDFUNCTION = 110,
+    ERDEFAULTSWITCHCASEGUESSWHOLEWORDFUNCTION = 111,
+    ERNOUSERINPUTDETECTEDFILE = 112,
+    ERDEFAULTGETOPTSWITCHCASE = 113,
 };
 
 

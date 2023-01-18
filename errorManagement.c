@@ -14,61 +14,61 @@
 
 //Error Structs used for generating Error Messages  using the Error Management Function
 const errorStruct EEMemoryAllocationFailed = {
-        .code = ERMemoryAllocationFailed,
+        .code = ERMEMORYALLOCATIONFAILED,
         .message = "Heap ran out of Memory!"
 };
 const errorStruct EEDefaultSwitchCaseGuessWholeWordSequence = {
-        .code = ERDefaultSwitchCaseGuessWholeWordFunction,
+        .code = ERDEFAULTSWITCHCASEGUESSWHOLEWORDFUNCTION,
         .message = "Exception function let user guess whole word, check switchCase Default!"
 };
 
 const errorStruct EEDefaultGetOptSwitchCase = {
-        .code = ERDefaultGetOptSwitchCase  ,
+        .code = ERDEFAULTGETOPTSWITCHCASE  ,
         .message = "Uexpected GetOpt Behavior, Shutting Down"
 };
 
 const errorStruct EEMoreThanOneInputArgument = {
-        .code = ERMoreThanOneInputArg ,
+        .code = ERMORETHANONEINPUTARG ,
         .message = "More than one Input Argument has been entered"
 };
 
 const errorStruct EEInputCriteriaNotMet = {
-        .code = ERInputCriteriaNotMet ,
+        .code = ERINPUTCRITERIANOTMET ,
         .message = "The function which checks the Word for correctness determined it does not meet the requirements"
 };
 
 const errorStruct EEWrongInputGetWordFunction = {
-        .code = ERWrongInputGetWordFunction ,
+        .code = ERWRONGINPUTGETWORDFUNCTION ,
         .message = "Wrong length of the Input Word"
 };
 
 const errorStruct EEFileManagementOpeningLogfileFailed = {
-        .code =  ERFileManagementOpeningFileFailed,
+        .code =  ERFILEMANAGEMENTOPENINGFILEFAILED,
         .message = "Opening or Creating Logfile failed",
 };
 const errorStruct EEFileManagementOpeningLogfileUnexpectedControlInput = {
-        .code =  ERFileManagementOpeningFileUnexpectedControlCharacter,
+        .code =  ERFILEMANAGEMENTOPENINGFILEUNEXPECTEDCONTROLCHARACTER,
         .message = "Switch case save game progress into log file exception",
 };
 
 const errorStruct EEStartSequenceReturn  = {
-        .code = ERStartSequenceRet,
+        .code = ERSTARTSEQUENCERET,
         .message = "start sequence returned a value it should not return during normal operation (2)"
 };
 const errorStruct EEStartSequenceDefault = {
-        .code = ERStartSequenceDef,
+        .code = ERSTARTSEQUENCEDEF,
         .message = "default of switch-case after start sequence"
 };
 const errorStruct EECommandLineArgumentFunctionFailed = {
-        .code =  ERComLineArgManagementFailed,
+        .code =  ERCOMLINEARGMANAGEMENTFAILED,
         .message = "The ComLineArgManagement function has returned an error"
 };
 const errorStruct EEGameRuntimeFailed = {
-        .code = ERGameRuntimeFunctionFailed,
+        .code = ERGAMERUNTIMEFUNCTIONFAILED,
         .message = "An Error or Warning has caused the gameRuntime function to fail!"
 };
 const errorStruct EENoInputDetectedFile = {
-        .code = ERNoUserInputDetectedFile ,
+        .code = ERNOUSERINPUTDETECTEDFILE ,
         .message = "No Available Guess-Word in WordFile, Game is shutting Down!"
 };
 

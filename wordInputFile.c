@@ -166,9 +166,10 @@ return 0;
 //writes detected Word marker in place of the current marker after the usedWord in the file
 short int writeMarkerInFile(char usedWord[MAX_WORD_SIZE_FILE]){
 
+    char * inputFileName = "Hangman_Words.txt";
 
     FILE*file;
-    if((file=fopen("Hangman_Words.txt","r+"))) {
+    if((file=fopen(inputFileName,"r+"))) {
         char *tempWordString = calloc(MAX_WORD_SIZE_FILE, sizeof(char));
         char *tempMarkerString = calloc(SIZE_MARKERS, sizeof(char));
 
