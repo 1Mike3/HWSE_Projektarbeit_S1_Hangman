@@ -84,7 +84,7 @@ void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,un
 //0: the word is incorrect
 //1: the word is correct
 int checkWord(char *Word){
-    unsigned long long stingLength = strlen(Word); //unsigned long long so no conversion error from size_t
+    unsigned short stingLength = strlen(Word); //unsigned long long so no conversion error from size_t
     int tempCompareChar= 'A'; //Starts with A and moves through the Alphabet, uses offset constant to also compare lowercase
     unsigned int correctLetterCounter = 0;
     unsigned char tempLetter;
@@ -162,4 +162,37 @@ void printManualInFileOnStartup(void){
             return;
         }
     }
+}
+
+/**
+ * @brief function which prints a file to the console
+ * @param filename
+ * @return -1 error, 0 every little things gonna be allright
+ */
+
+short int printFileTOConsole(char* filename){
+    FILE * file;
+    char tempC;
+    file = fopen(filename, "r");
+
+    if(file == NULL)
+        return -1;
+
+    tempC = (char)fgetc(file);
+    if(tempC == EOF)
+    return -1;
+
+     printf("%c", tempC);
+
+    while (tempC != EOF) {
+        printf("%c", tempC);
+        tempC = (char)fgetc(file);
+
+    }
+
+   int ret = fclose(file);
+   if(ret == -1)
+       return -1;
+
+    return 0;
 }

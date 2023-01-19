@@ -156,19 +156,21 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
     //1 retrurn = file  input selected
     //-1 return if error in function
     //2 for word command line enter selection
+    //0 return if programm should be no longer executed after function but no error
     while ((getOptReturn = getopt(argc, argv, "mfw:")) != -1) {
         //switchCase to manage the getOpt returns
         switch (getOptReturn) {
 
             case  'm': //Print Manual
                 printf("\n\n ## Open Manual-input was chosen ## \n\n");
-                //TODO finsih this
+                printFileTOConsole("Hangman_Manual.txt");
                 //TODO add change filename option
-                break;
+                return 3;
             case 'f': //case User chose to use the input-file for the Game
                 printf("\n\n# file-input was chosen # \n\n");
                 *activateFileInput = true;
                 return 1;
+
 
             case 'w': //case user chose to use a input Word on the command line
                 printf("\n\n# command-line-input was chosen # \n\n");

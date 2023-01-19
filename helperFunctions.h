@@ -18,4 +18,4 @@ int generateRandomNumber(int max);
 
 void printManualInFileOnStartup(void);
 
-
+short int printFileTOConsole(char* filename);
