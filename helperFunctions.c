@@ -60,7 +60,7 @@ char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
 //converts the InputWord to uppercase
 //TODO add error handling
 //+++ Tested +++ Works
-void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,unsigned long long stringLength){
+void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,unsigned short stringLength){
     char *tempStringValue = wordToBeConverted; //assigning temp var to be used in function
 
     // loop through string and convert the chars
@@ -94,19 +94,19 @@ int checkWord(char *Word){
     char DebugcharLower;
     char ComparedWord;
 */
-    for (unsigned long long i = 0; i < stingLength; ++i) {
+    for (unsigned short i = 0; i < stingLength; ++i) {
         tempLetter = *(Word+i);
         //checking all letters of the Alphabet, lower and upper case with offset
         //premeditated style-change to improve visibility
-        for (unsigned long long j = 0; j < ALPHABETSIZE; ++j) {
+        for (unsigned short j = 0; j < ALPHABETSIZE; ++j) {
             /*//little debug helper
             debugcharUpper = (tempCompareChar+j);
             DebugcharLower = (tempCompareChar+ALPHABETOFFSET+j);
             ComparedWord = (tempLetter + i);
              *///
-            if((tempLetter) == (unsigned long long) (tempCompareChar + j) //comp w upper case
+            if((tempLetter) == (unsigned short ) (tempCompareChar + j) //comp w upper case
                ||
-               (tempLetter) == (unsigned long long)(tempCompareChar + ALPHABETOFFSET + j) //comp w lower case
+               (tempLetter) == (unsigned short )(tempCompareChar + ALPHABETOFFSET + j) //comp w lower case
                     ){
                 correctLetterCounter++; //if hit one of the words increment correct letter counter and don't check other ones
                 break;

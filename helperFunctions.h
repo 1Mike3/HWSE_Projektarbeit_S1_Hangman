@@ -10,7 +10,7 @@
 
 char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked);
 
-void convertInputWordToUppercase(char *wordToBeConverted,char *convertedWord,unsigned long long stringLength);
+void convertInputWordToUppercase(char *wordToBeConverted,char *convertedWord,unsigned short stringLength);
 
 int checkWord(char *Word);
 

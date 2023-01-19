@@ -22,7 +22,6 @@
 #define NOOOFTRYS 10          //the number of game rounds that is set from the start
 
 
-void foo(short *uncoveredArray, char *inputCharsHits, char *statusWordUncovered, char *activeWordConverted);
 
 //Game behavior in runtime after all the checks have been done if another Game can/should start
 //returns 0 if Finished successfully and 1 if not
@@ -30,7 +29,7 @@ int gameRuntime(char *activeWord){
 
                //#### Uncovered Value Array ###
     //create An array which contains the Information if a letter was Uncovered or not
-    unsigned long long wordLength = strlen(activeWord); //var., contains length of word for uncov.arr. intialization
+    unsigned short wordLength = strlen(activeWord); //var., contains length of word for uncov.arr. intialization
 #if DEBUG1
     printf("DB the length of your Word is: %i \n", (unsigned long long)wordLength);
 #endif
@@ -223,7 +222,7 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
 
 
 //function to print out the active-word with the parts that haven't been guessed substituted by a '_'
-void printVariablyCoveredWord(unsigned long long wordSize,const short int *uncoveredArray,
+void printVariablyCoveredWord(unsigned short wordSize,const short int *uncoveredArray,
                               char *activeWordConverted, char *statusWordUncovered){
     printf("My Word: ");
 
@@ -257,11 +256,11 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     stringToAppend[1] = '\0';
 
 
-    unsigned int wordLength = strlen(convertedWord); //get the length of the word used in the game
+    unsigned short wordLength = strlen(convertedWord); //get the length of the word used in the game
     short int appendedMarker = 0; //Marker so if word was once added to the hits or misses list, won't added again if two times in word
 
 
-    for (unsigned int i = 0; i < wordLength; ++i) {//loop through word and check which uncovered
+    for (unsigned short i = 0; i < wordLength; ++i) {//loop through word and check which uncovered
 
         if (inputChar == convertedWord[i]) { //case if hit was made
             uncoveredArray[i] = 1;
@@ -275,7 +274,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     }
 
     //DATA Logging, code before for refreshing of Status Word
-        for (unsigned int j = 0; j < wordLength; ++j) {
+        for (unsigned short j = 0; j < wordLength; ++j) {
             if (*(uncoveredArray + j) == 0) {
                 StatusWordForDataLogging[j] = UNDISCOVEREDSYMBOL;
             }
@@ -292,7 +291,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
         //loop to check if misses char has already been added to misses array so no double entries
         unsigned long lengthOfMissesArray = strlen(misses);
         short int charAlreadyInArrayMarker = 0;
-        for (unsigned long i = 0; i < lengthOfMissesArray; ++i) {
+        for (unsigned short i = 0; i < lengthOfMissesArray; ++i) {
             if (stringToAppend[0] == misses[i])
                 charAlreadyInArrayMarker++;
         }
@@ -310,7 +309,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
     //1: user guessed correctly
     //2: user guessed incorrectly
     //3: function error
-    short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned long long activeWordLength){
+    short int sequenceLetUserGuessWord(char * activeWordConvert, unsigned short activeWordLength){
         printf("Enter the Word you want to guess:\n");
         char guessedWord[activeWordLength];
 

@@ -18,4 +18,4 @@ short int commLineArgManagement(char* active_Word,int argc, char **argv,bool * a
 
 char letUserGuessLetters(short int *controlValue);
 
-short int getWord(unsigned long long wordLength, char *returnWord);
+short int getWord(unsigned short wordLength, char *returnWord);

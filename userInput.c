@@ -342,7 +342,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
 //used for guess whole word function of the game
 //0: it's all good man
 //1: wrong input
-short int getWord(unsigned long long wordLength, char *returnString){
+short int getWord(unsigned short wordLength, char *returnString){
 
 
 #if DEBUG2
