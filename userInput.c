@@ -23,12 +23,6 @@
 #define ALPHABETOFFSET 32
 
 
-/*!
- *Start sequence, meaning of return value:
- *0: the user has selected to run the program
- *1: Abort the Programm execution
- *2: Error
-*/
 int startSequence(void) {
 
 
@@ -125,12 +119,6 @@ unsigned char getSingleChar(void){
 
 
 
-
-/**
- * Function which manages com line Arguments
- * Return 1 = file input chosen
- * Return -1 = Error
- */
 short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * activateFileInput) {
     //!! important i am rewriting this whole function for getOpt, Will comment old code out and mark with %&&%
     //!! Doing this just so it can be seen that i did the first part of the assignment
@@ -272,7 +260,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
 
         while (1){ // broken in end of loop
             saveGameProgressIntoLogFile('a', "a",
-                                       controlCharSaveProgressToLog_invalidUserInput);
+                                        CONTROLCHARSAVEPROGRESSTOLOG_INVALIDUSERINPUT);
         printf("invalid input or more than one letter, try again!\n");
             fflush(stdin);
 
@@ -329,7 +317,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
      char checkedChar = checkIfCharPartOfAlphabet(userInput);
     if(checkedChar == '#'){ //check if function failed
         saveGameProgressIntoLogFile('a', "a",
-                                    controlCharSaveProgressToLog_invalidUserInput);
+                                    CONTROLCHARSAVEPROGRESSTOLOG_INVALIDUSERINPUT);
         printf("invalid input or more than one letter, try again!\n");
         fflush(stdin);
         return '#';
@@ -353,7 +341,7 @@ short int getWord(unsigned short wordLength, char *returnString){
     unsigned char tempInputChar = '0';
  char TempString[wordLength];
    unsigned short int inputCounter = 0;
-    for (unsigned int i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets
+    for (unsigned short i = 0; i < (wordLength + 1) && (tempInputChar != '\n') ; ++i) { //wordlength +1 so nullbyte gets
         tempInputChar =  getchar();
         if(tempInputChar != '\n') //so enter not in string
         TempString[i] =  (char)tempInputChar;

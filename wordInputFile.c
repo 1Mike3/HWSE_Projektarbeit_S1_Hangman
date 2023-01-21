@@ -11,8 +11,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-enum returnValuesGetTheWordFromFile{
-    returnNoAvailableInputWords = 10,
+/*!
+ * enum for the return values of function below
+ */
+enum RETURNVALUESGETTHEWORDFROMFILE{
+    RETURNNOAVAILABLEINPUTWORDS = 10,
+    RETURNFINISHEDSUCCESSFULLY = 0,
 };
 
 
@@ -41,7 +45,7 @@ short int getTheWordFromTheInputFile(char** activeWord){
     }
 
     if(wordCountValid == 0)
-        return returnNoAvailableInputWords;
+        return RETURNNOAVAILABLEINPUTWORDS;
 
     //get random Number for Word choosing
     int randNum = generateRandomNumber(wordCountValid);
@@ -53,7 +57,7 @@ short int getTheWordFromTheInputFile(char** activeWord){
     //write Marker back into File
     writeMarkerInFile( *activeWord);
 
-    return 0;
+    return RETURNFINISHEDSUCCESSFULLY;
 }
 
 

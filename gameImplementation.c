@@ -96,7 +96,7 @@ short int tryCounter = NOOOFTRYS; //counts the number of available trys
 
 //Write "Start of Game Marker" to log File
 
-saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_startOfTheGame);
+saveGameProgressIntoLogFile('a', "A", CONTROLCHARSAVEPROGRESSTOLOG_STARTOFTHEGAME);
 
 #if DEBUG3
     printf("DB print save game return = %i\n", saveGameProgressReturn);
@@ -118,7 +118,7 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
     if(controlValueGuessLetters == 1){
         printf("You have chosen to abort the Game (Keystroke [1])!\n\n");
         free(inputCharsHits); free(activeWordConverted); free(uncoveredArray); free(statusWordUncovered);
-        saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
+        saveGameProgressIntoLogFile('a', "A", CONTROLCHARSAVEPROGRESSTOLOG_ENDOFTHEGAME);
         return GAMEUSERDECIDEDTOQUIT;
 
 
@@ -134,17 +134,17 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
                 //      FREE Spot
                 free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
                 saveGameProgressIntoLogFile('a', "a",
-                                            controlCharSaveProgressToLog_gameHasBeenWon);
+                                            CONTROLCHARSAVEPROGRESSTOLOG_GAMEHASBEENWON);
                 saveGameProgressIntoLogFile('a', "A",
-                                            controlCharSaveProgressToLog_endOfTheGame);
+                                            CONTROLCHARSAVEPROGRESSTOLOG_ENDOFTHEGAME);
 
                 return GAMEWON;
             case 2:
                 free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
                 saveGameProgressIntoLogFile('a', "a",
-                                            controlCharSaveProgressToLog_gameHasBeenWon);
+                                            CONTROLCHARSAVEPROGRESSTOLOG_GAMEHASBEENWON);
 
-                saveGameProgressIntoLogFile('a', "A", controlCharSaveProgressToLog_endOfTheGame);
+                saveGameProgressIntoLogFile('a', "A", CONTROLCHARSAVEPROGRESSTOLOG_ENDOFTHEGAME);
                 return GAMELOST;
 
             default:
@@ -175,9 +175,9 @@ while(1) { //Round loop, one Game-round is one loop through this while loop
         free(inputCharsHits); free(activeWordConverted); free(uncoveredArray);free(statusWordUncovered);
         //save to LOG
         saveGameProgressIntoLogFile('a', "a",
-                                    controlCharSaveProgressToLog_gameHasBeenWon);
+                                    CONTROLCHARSAVEPROGRESSTOLOG_GAMEHASBEENWON);
         saveGameProgressIntoLogFile('a', "A",
-                                    controlCharSaveProgressToLog_endOfTheGame);
+                                    CONTROLCHARSAVEPROGRESSTOLOG_ENDOFTHEGAME);
 
         return GAMEWON;
     }
@@ -199,9 +199,9 @@ tryCounter--; //decrement try-counter to keep track on how many guesses have bee
       free(inputCharsHits);   free(activeWordConverted); free(uncoveredArray); free(statusWordUncovered);
       //save to LOG
       saveGameProgressIntoLogFile('a', "a",
-                                 controlCharSaveProgressToLog_gameHasBeenLost);
+                                  CONTROLCHARSAVEPROGRESSTOLOG_GAMEHASBEENLOST);
       saveGameProgressIntoLogFile('a', "a",
-                                  controlCharSaveProgressToLog_endOfTheGame);
+                                  CONTROLCHARSAVEPROGRESSTOLOG_ENDOFTHEGAME);
       return GAMELOST;
   }
 } // End Round-loop while
@@ -283,7 +283,7 @@ short int coveredWordManagement(char inputChar, char *convertedWord,short int *u
             }
         }
         saveGameProgressIntoLogFile(inputChar, StatusWordForDataLogging,
-                                    controlCharSaveProgressToLog_normalInputSaving);
+                                    CONTROLCHARSAVEPROGRESSTOLOG_NORMALINPUTSAVING);
 
 
         if (appendedMarker == 0) {//case if no hits were made

@@ -8,7 +8,7 @@
                     -default if nothing is entered is to use the wordFile for word input.
                     -press -w and enter a word after it to play using a manually selected guessword.
                     -enter -f to play using the input file
-                    -enter -m to display the manual on startup
+                    -enter -m to display the manual on startup (should be entered with one of the other functions)
                     
 
 -when you encounter a problem with one of the files, delete it and the program will generate a new one on the next startup.

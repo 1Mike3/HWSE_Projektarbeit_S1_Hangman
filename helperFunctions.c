@@ -58,7 +58,6 @@ char checkIfCharPartOfAlphabet(unsigned char letterToBeChecked){
 
 
 //converts the InputWord to uppercase
-//TODO add error handling
 //+++ Tested +++ Works
 void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,unsigned short stringLength){
     char *tempStringValue = wordToBeConverted; //assigning temp var to be used in function
@@ -80,7 +79,6 @@ void convertInputWordToUppercase(char *wordToBeConverted, char *convertedWord,un
 
 
 //checks if word entered according to input criteria (alphabet 26 upper and lower)
-//!!build for "" case
 //0: the word is incorrect
 //1: the word is correct
 int checkWord(char *Word){
@@ -164,11 +162,6 @@ void printManualInFileOnStartup(void){
     }
 }
 
-/**
- * @brief function which prints a file to the console
- * @param filename
- * @return -1 error, 0 every little things gonna be allright
- */
 
 short int printFileTOConsole(char* filename){
     FILE * file;

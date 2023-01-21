@@ -1,34 +1,18 @@
+/**
+ * \brief
+ * Welcome to my hangman game :)
+ * main function of my program.
+ * see manual or readme for information about the program.
+ */
+
+
+/**
+* \file
+ */
+
+
+
 #include <stdio.h>
-
-/** \file
- *  \brief
- */
-
-
-/** \file  #### General Programm Information ####
- *  \brief  -Created by: Michal Kuc 27.12.2022
- * -Project HWSE WS22
- * -Hangman Game with visualisation, user input and data logging
- * -I added Debug-Helpers in the source code: #if DEBUG segments are irrelevant for the programs functionality
- *
- */
-
-
-/** \file
-  * \brief This is just an example file. */
- /**
- * \brief Calculates the quotient of two numbers.
- *
- * Divides two doubles and returns the resulting quotient.
- * Division by zero is handled explicitly and generates
- * a warning on \c stdout.
- *
- * \param dividend The number to be divided.
- * \param divisor The number to be divided by.
- * \return The resulting quotient, or
- * \c HUGE_VAL when zero is passed as \c divisor.
- */
-
 
 //Including of project-related Header-Files
 #include "dataLogging.h"

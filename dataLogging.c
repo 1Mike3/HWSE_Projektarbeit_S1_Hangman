@@ -30,41 +30,41 @@ int saveGameProgressIntoLogFile(char UserInputChar, char* uncoveredWord, short i
 char *timeString;
 
         switch (controlCharacter) {
-            case controlCharSaveProgressToLog_startOfTheGame:
+            case CONTROLCHARSAVEPROGRESSTOLOG_STARTOFTHEGAME:
 
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n\n==== Start of a new Hangman game ====");
                 fprintf(file, " [Timestamp: %s] \n\n", timeString);
                 break;
-            case controlCharSaveProgressToLog_normalInputSaving:
+            case CONTROLCHARSAVEPROGRESSTOLOG_NORMALINPUTSAVING:
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n++ User selected a letter: %c ", UserInputChar);
                 fprintf(file, " [Timestamp: %s] \n ", timeString);
                 fprintf(file, " Status of the guess-word: %s ++\n", uncoveredWord);
                 break;
-            case controlCharSaveProgressToLog_invalidUserInput:
+            case CONTROLCHARSAVEPROGRESSTOLOG_INVALIDUSERINPUT:
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n++ Invalid user Input ++");
                 fprintf(file, " [Timestamp: %s] \n", timeString);
                 break;
-            case controlCharSaveProgressToLog_endOfTheGame:
+            case CONTROLCHARSAVEPROGRESSTOLOG_ENDOFTHEGAME:
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n\n==== The Game has Ended ====");
                 fprintf(file, " [Timestamp: %s] \n\n", timeString);
                 break;
-            case controlCharSaveProgressToLog_gameHasBeenWon:
+            case CONTROLCHARSAVEPROGRESSTOLOG_GAMEHASBEENWON:
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n++ Game has been won ++");
                 fprintf(file, " [Timestamp: %s] \n", timeString);
                 break;
-            case controlCharSaveProgressToLog_gameHasBeenLost:
+            case CONTROLCHARSAVEPROGRESSTOLOG_GAMEHASBEENLOST:
                 timeString = getTimeString(); //get the time in the form of a String
                 fprintf(file, "\n++ Game has been lost ++");
                 fprintf(file, " [Timestamp: %s] \n", timeString);
                 break;
             default:
                 errorManagement(EEFileManagementOpeningLogfileUnexpectedControlInput, ERROR);
-                return saveProgressToLogFileFailed;
+                return SAVEPROGRESSTOLOGFILEFAILED;
         }
 
 //
@@ -72,9 +72,9 @@ char *timeString;
         fclose(file);
     }else{
         errorManagement(EEFileManagementOpeningLogfileFailed, ERROR);
-        return saveProgressToLogFileFailed;
+        return SAVEPROGRESSTOLOGFILEFAILED;
     }
-    return saveProgressToLogFileFinishedSuccessfully;
+    return SAVEPROGRESSTOLOGFILEFINISHEDSUCCESSFULLY;
 }
 
 //function to get the current system Time in the Form of a String

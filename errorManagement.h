@@ -2,6 +2,19 @@
 // Created by Michi on 27.12.2022.
 //
 
+
+
+/**
+ * \brief
+ * file for the handling of the different error behaviors.
+ */
+
+/**
+* \file
+ */
+
+
+
 #ifndef HANGMAN_ERRORMANAGEMENT_H
 #define HANGMAN_ERRORMANAGEMENT_H
 #endif //HANGMAN_ERRORMANAGEMENT_H
@@ -15,10 +28,13 @@
 
 
 
-//Listing of all the error codes and WaringIDs, start with ER for easier autocomplete
-//The corresponding Structs Start with EE
-//find the corresponding struct by searching for usages of the enum elements
-//manually initialized for better overview of the codes
+/*!
+ *
+ * //Listing of all the error codes and WaringIDs, start with ER for easier autocomplete
+ * //The corresponding Structs Start with EE
+ * //find the corresponding struct by searching for usages of the enum elements
+ * //manually initialized for better overview of the codes
+ */
 enum ERRORCODES{
     ERSTARTSEQUENCERET = 100,
     ERSTARTSEQUENCEDEF = 101,
@@ -36,14 +52,18 @@ enum ERRORCODES{
     ERDEFAULTGETOPTSWITCHCASE = 113,
 };
 
+/*!
+ * creating a struct for easier Error Management
+ */
 
-// creating a const struct for easier Error Management
 typedef struct errorStruct {
     short int code;
    char message[150];
 }errorStruct;
 
-//Error Struct References
+/*!
+ * Error struct references
+ */
 extern const errorStruct EEMemoryAllocationFailed;
 extern const errorStruct EEDefaultSwitchCaseGuessWholeWordSequence;
 extern const errorStruct EEDefaultGetOptSwitchCase;
@@ -63,6 +83,18 @@ errorStruct  = {
         .code =  ,
         .message = ""
 };
+*/
+
+
+/**
+* \brief
+ *
+*function which prints an error message and a corresponding error code.
+*
+* \param error struct containing error message and code.
+ * \param type constant type if Errror (1) or warning (0), PreProc constant.
+* \return
+* void, this function does not return a value.
 */
 void errorManagement(errorStruct error, short int type);
 
