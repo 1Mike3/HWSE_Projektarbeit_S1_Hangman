@@ -19,7 +19,7 @@
 
 #include "stdio.h"
 #include <stdbool.h>
-
+#include <getopt.h> //included because -std=c99 flag messes up getOpt compiling with GCC
 
 /**
 * \brief

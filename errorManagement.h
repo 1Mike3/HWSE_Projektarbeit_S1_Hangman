@@ -39,7 +39,7 @@ enum ERRORCODES{
     ERSTARTSEQUENCERET = 100,
     ERSTARTSEQUENCEDEF = 101,
     ERGETOPTUNKNOWNARGUMENT = 102,
-    ERMORETHANONEINPUTARG = 103,
+    ERUNEXPECTEDGETFILEINFORMATIONFUNCTIONBEHAVIOR = 103,
     ERCOMLINEARGMANAGEMENTFAILED = 104,
     ERINPUTCRITERIANOTMET = 105,
     ERMEMORYALLOCATIONFAILED = 106,
@@ -51,6 +51,7 @@ enum ERRORCODES{
     ERNOUSERINPUTDETECTEDFILE = 112,
     ERDEFAULTGETOPTSWITCHCASE = 113,
     ERGETOPTMISSINGARGUMENT = 114,
+    ERERRORWHILEOPENINGFILESTREAM = 115,
 };
 
 /*!
@@ -79,6 +80,8 @@ extern const errorStruct EECommandLineArgumentFunctionFailed;
 extern const errorStruct EEGameRuntimeFailed;
 extern const errorStruct EENoInputDetectedFile;
 extern const errorStruct EEGetOptMissingArgument;
+extern const errorStruct EEErrorOpeningFileStream;
+extern const errorStruct EEUnexpectedGetFileInformationFunctionBehavior;
 
 /*
 errorStruct  = {

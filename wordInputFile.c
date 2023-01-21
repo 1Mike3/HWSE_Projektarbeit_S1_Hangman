@@ -77,8 +77,7 @@ void createAnInputFileIfNoneExists(void) {
             fclose(file);
             return;
         }else{
-            printf("Error big Nono\n");
-            //todo usual error stuff
+            errorManagement(EEErrorOpeningFileStream,WARNING);
             return;
         }
     }
@@ -126,7 +125,8 @@ short int generateFileInformation(unsigned short int *wordCount,
             } else if (0 == (strcmp(tempMarkerString, compareFileMarkerUnusable))) { //case #+
                 wordArrayMarkers[arrayIndex] = 0;
             } else {
-                //todo error stuff
+                errorManagement(EEUnexpectedGetFileInformationFunctionBehavior, WARNING);
+                return -1;
             }
 
             fseek(file, seekOffset, SEEK_CUR); //skip newline
@@ -155,8 +155,7 @@ short int generateFileInformation(unsigned short int *wordCount,
         fclose(file);
 
     }else{ //file open error
-        printf("Error");
-        //todo usual error stuff + return
+        errorManagement(EEErrorOpeningFileStream, WARNING);
         return -1;
     }
 return 0;
@@ -232,8 +231,7 @@ short int writeMarkerInFile(char usedWord[MAX_WORD_SIZE_FILE]){
 
     }else{ //file open error
 
-        printf("Error");
-        //todo usual error stuff + return
+        errorManagement(EEErrorOpeningFileStream, WARNING);
         return -1;
     }
 

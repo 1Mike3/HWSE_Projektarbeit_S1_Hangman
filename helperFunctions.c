@@ -4,7 +4,7 @@
 //this File contains little helper functions which are not really belonging to any specific source-code file
 
 #include "helperFunctions.h"
-
+#include "errorManagement.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -126,7 +126,6 @@ int generateRandomNumber(int max){
     return r;
 }
 
-//todo make Manualprint function
 void printManualInFileOnStartup(void){
     char * manualFileName = "Hangman_Manual.txt";
     FILE *file;
@@ -135,28 +134,64 @@ void printManualInFileOnStartup(void){
     } else { //create file
         if ((file = fopen(manualFileName, "w+"))) {
 
-            fprintf(file,"### Manual to my Hangman-Game :) ###\n\n");
-            fprintf(file,"-!!Configuration-File which contains the guess-words: Hangman_Words.txt (created on startup).\n");
-            fprintf(file,"-when you encounter a problem with one of the files, delete it and the program\n"
-                         "will generate a new one on the next startup.");
-            fprintf(file,"\n");
-            fprintf(file,"The \"e\" function in the main menu only works if the program is executed\n"
-                         "on linux in the command line, of course you can also open the files manually.");
-            fprintf(file,"The WordFile is limited to 40 Words and each word 35 characters max.\n");
-            fprintf(file,"\n");
-            fprintf(file,"-valid input characters letter-guessing (except program control numbers).\n"
-                   "are 26 lat. alphabet letters (lower or uppercase).\n");
-            fprintf(file,"-When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss.\n");
-            fprintf(file,"-GET-OPT:\n"
-                         "default if nothing is entered is to use the wordFile for word input.\n"
-                         "press -w and enter a word after");
-            fprintf(file,"-during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n");
+
+            fprintf(file," ### Manual to my Hangman-Game :)  ###\n\n"
+                         "-!!Configuration-File which contains the guess-words: Hangman_Words.txt (created on startup).\n"
+
+                         " -the program only works with GETOPT now, an argument has to be provided on startup. (note that the game has to be started with [s] for the entered argument to take effect)\n"
+
+                         " -GET-OPT:\n\n"
+
+            "         \t -press -w and enter a word after it to play using a manually selected guessword.\n"
+            "    -\t enter -f to play using the input file"
+            "   -e\t enter -m to display the manual on startup (should be entered with one of the other functions)\n"
+            "   -w\t when you encounter a problem with one of the files, delete it and the program will generate a new one on the next startup.\n"
+
+            "    -The \"e\" function in the main menu only works if the program is executed on linux in the command line, of course you can also open the files manually.\n\n"
+
+            "    -The WordFile is limited to 40 Words and each word 35 characters max.\n"
+
+            "  -valid input characters letter-guessing (except program control numbers) are 26 lat. alphabet letters (lower or uppercase).\n"
+
+            "  -When too many invalid inputs(eg. AA or &) are made in one try it is counted as a miss.\n"
+
+            "  -during letter guesses, press [1] to quit the game and [2] to guess the whole word.\n\n"
+
+            "    -!argument options are only considered if start the game is selected\n"
+
+            "  -the format in which the words should be written into the file is printed out in the file header.\n"
+
+            "  -the program returns various error codes and messages if an exception occurs.\n"
+
+            "   -if you select the file option and the input file is empty the game will return an error and you will not be able to play.\n"
+
+            "   -How to Play:\n\n"
+            "  chose the input arguments which you want to use.\n"
+            "    (see GET-OPT, they are only considered if you press \"s\" on the next run)\n"
+
+            "   now you can chose between three options which are displayed in the command line.\n"
+            "   (not that if you wat to play using the file input, you have to write the words into the file first).\n"
+
+            "  when you press s the game starts, then you can guess letter after letter until you either guessed the word.\n"
+            "  or you run out of tries."
+
+            "    The Number 2 can also be pressed to guess the word in one go.\n"
+            "    (note that you will loose the game if you choose wrong)\n"
+
+            "  After that you will be able to start another game.\n"
+
+            "    With the file input option another word from the file will be selected.\n"
+            "     With the -w option you will play again using the same word from the command line.\n"
+
+            "      You can quit the programm by pressing q in the menue.\n"
+            "     (To get to the menue during the game you can press 1 to abbort the current game.)\n\n");
+
+
 
             fclose(file);
             return;
         }else{
-            printf("Error big Nono\n");
-            //todo usual error stuff
+            errorManagement(EEErrorOpeningFileStream, WARNING);
             return;
         }
     }

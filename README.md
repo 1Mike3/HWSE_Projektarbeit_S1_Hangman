@@ -35,4 +35,26 @@ on linux in the command line, of course you can also open the files manually.
 -How to Play:
 
                 chose the input arguments which you want to use.
+                (see GET-OPT, they are only considered if you press "s" on the next run)
+                
+                now you can chose between three options which are displayed in the command line
+                (not that if you wat to play using the file input, you have to write the words into the file first)
+                
+                when you press s the game starts, then you can guess letter after letter until you either guessed the word
+                or you run out of tries.
+                
+                The Number 2 can also be pressed to guess the word in one go.
+                (note that you will loose the game if you choose wrong)
+                
+                After that you will be able to start another game.
+                
+                With the file input option another word from the file will be selected.
+                With the -w option you will play again using the same word from the command line.
+                
+                You can quit the programm by pressing q in the menue.
+                To get to the menue during the game you can press 1 to abbort the current game.
+                
+                
+                
+                
    

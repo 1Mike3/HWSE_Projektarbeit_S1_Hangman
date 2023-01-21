@@ -145,6 +145,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
     //-1 return if error in function
     //2 for word command line enter selection
     //0 return if programm should be no longer executed after function but no error
+
     while ((getOptReturn = getopt(argc, argv, "mfw:")) != -1) {
         //switchCase to manage the getOpt returns
         switch (getOptReturn) {
@@ -186,6 +187,11 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
                 }
         }
 
+    //edgecase
+if(getOptReturn == -1 || getOptReturn == 0){
+    errorManagement(EEGetOptMissingArgument, WARNING);
+    return -1;
+}
 
 
 

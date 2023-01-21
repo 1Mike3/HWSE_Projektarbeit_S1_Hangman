@@ -29,10 +29,6 @@ const errorStruct EEDefaultGetOptSwitchCase = {
         .message = "Uexpected GetOpt Behavior, Shutting Down"
 };
 
-const errorStruct EEMoreThanOneInputArgument = {
-        .code = ERMORETHANONEINPUTARG ,
-        .message = "More than one Input Argument has been entered"
-};
 
 const errorStruct EEInputCriteriaNotMet = {
         .code = ERINPUTCRITERIANOTMET ,
@@ -81,6 +77,14 @@ const errorStruct EEGetOptMissingArgument = {
         .code = ERGETOPTMISSINGARGUMENT ,
         .message = "GetOpt: Missing Argument!"
 };
+const errorStruct EEErrorOpeningFileStream = {
+        .code = ERERRORWHILEOPENINGFILESTREAM,
+        .message = "FileStream could not be opened!"
+};
+const errorStruct EEUnexpectedGetFileInformationFunctionBehavior = {
+        .code = ERUNEXPECTEDGETFILEINFORMATIONFUNCTIONBEHAVIOR,
+        .message = "Exception in \"GetFileInformation\" function!"
+};
 
 
 
@@ -88,9 +92,9 @@ void errorManagement(errorStruct error, const short int type){
 
 
     //ternary used to differentiate between printout for Warnings and errors
-    type ? printf("\n## Runtime Error ##\n") : printf("\n## Warning ##\n");
+    type ? fprintf(stderr, "\n## Runtime Error ##\n") : fprintf(stderr,"\n## Warning ##\n");
 
-   type ? printf("Error-code: [ %i ]\n", error.code) : printf("WarningID: [ %i ]\n", error.code);
-    printf("[ %s ]\n\n", error.message);
+   type ? fprintf(stderr, "Error-code: [ %i ]\n", error.code) : fprintf(stderr,"WarningID: [ %i ]\n", error.code);
+    fprintf(stderr, "[ %s ]\n\n", error.message);
 
 }

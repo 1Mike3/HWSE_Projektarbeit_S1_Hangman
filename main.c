@@ -149,12 +149,6 @@ int main(int argc, char **argv){
     }  while (1); //end of the loop which lets the user play multiple times
 }
 
-//all the todos
-//TODO !!before final version set all DEBUG to 0!!
-
-//TODO change errorManagement() to write to Error log (add or change)
-
-
 
 
 
