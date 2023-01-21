@@ -293,7 +293,6 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
 
 
         if (tryCounter == 5){ // five trys to enter Valid char
-            //TODO add error message
             printf("too many wrong tries!\n");
             return ' '; //space for better optics in misses array
         }
