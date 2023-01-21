@@ -137,7 +137,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
     }
 #endif
 
-    bool wordValid = false; //marker for the checkword function
+    bool wordValid = false; //marker for the check-word function
     int getOptReturn; //return "char" of the getOpt function, used for  switch case to decide
 
     //while loop to manage the input arguments using getOpt
@@ -153,7 +153,7 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
                 printf("\n\n ## Open Manual-input was chosen ## \n\n");
                 printFileTOConsole("Hangman_Manual.txt");
                 //TODO add change filename option
-                return 3;
+                break;
             case 'f': //case User chose to use the input-file for the Game
                 printf("\n\n# file-input was chosen # \n\n");
                 *activateFileInput = true;
@@ -173,17 +173,15 @@ short int commLineArgManagement(char* active_Word, int argc, char **argv,bool * 
                 }
 
                     case '?': // unknown option encountered
-                    //todo usual error stuff
-                        printf("\nGetOpt: unknown option encountered!\n");
+                        errorManagement(EEGetOptUnknownArgument, WARNING);
                 return -1;
 
                     case ':': // missing argument for option
-                    //todo usual error stuff
-                        printf("\nmissing argument :\n");
+                        errorManagement(EEGetOptMissingArgument, WARNING);
                         return -1;
 
                     default:
-                        errorManagement(EEDefaultGetOptSwitchCase, ERROR);
+                        errorManagement(EEDefaultGetOptSwitchCase, WARNING);
                     return -1;
                 }
         }

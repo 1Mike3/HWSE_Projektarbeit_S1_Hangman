@@ -38,7 +38,7 @@
 enum ERRORCODES{
     ERSTARTSEQUENCERET = 100,
     ERSTARTSEQUENCEDEF = 101,
-    ERNOTENOUGHINPUTARGS = 102,
+    ERGETOPTUNKNOWNARGUMENT = 102,
     ERMORETHANONEINPUTARG = 103,
     ERCOMLINEARGMANAGEMENTFAILED = 104,
     ERINPUTCRITERIANOTMET = 105,
@@ -50,6 +50,7 @@ enum ERRORCODES{
     ERDEFAULTSWITCHCASEGUESSWHOLEWORDFUNCTION = 111,
     ERNOUSERINPUTDETECTEDFILE = 112,
     ERDEFAULTGETOPTSWITCHCASE = 113,
+    ERGETOPTMISSINGARGUMENT = 114,
 };
 
 /*!
@@ -67,7 +68,7 @@ typedef struct errorStruct {
 extern const errorStruct EEMemoryAllocationFailed;
 extern const errorStruct EEDefaultSwitchCaseGuessWholeWordSequence;
 extern const errorStruct EEDefaultGetOptSwitchCase;
-extern const errorStruct EEMoreThanOneInputArgument;
+extern const errorStruct EEGetOptUnknownArgument;
 extern const errorStruct EEInputCriteriaNotMet;
 extern const errorStruct EEWrongInputGetWordFunction;
 extern const errorStruct EEFileManagementOpeningLogfileFailed;
@@ -77,6 +78,7 @@ extern const errorStruct EEStartSequenceDefault;
 extern const errorStruct EECommandLineArgumentFunctionFailed;
 extern const errorStruct EEGameRuntimeFailed;
 extern const errorStruct EENoInputDetectedFile;
+extern const errorStruct EEGetOptMissingArgument;
 
 /*
 errorStruct  = {

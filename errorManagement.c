@@ -73,6 +73,14 @@ const errorStruct EENoInputDetectedFile = {
         .code = ERNOUSERINPUTDETECTEDFILE ,
         .message = "No Available Guess-Word in WordFile, Game is shutting Down!"
 };
+const errorStruct EEGetOptUnknownArgument = {
+        .code = ERGETOPTUNKNOWNARGUMENT ,
+        .message = "GetOpt: Unknown Argument!"
+};
+const errorStruct EEGetOptMissingArgument = {
+        .code = ERGETOPTMISSINGARGUMENT ,
+        .message = "GetOpt: Missing Argument!"
+};
 
 
 
